@@ -92,6 +92,13 @@ namespace Wpf_Dekidaka_app
             if (re.result == MessageBoxResult.Cancel) { return; }
 
 
+            StateWindow StateW = new StateWindow();
+
+            StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            StateW.Topmost = true;
+
+            StateW.Show();
+
             //タグを設定する
             PrintingTag Pt = new PrintingTag(DData);
 
@@ -100,6 +107,8 @@ namespace Wpf_Dekidaka_app
             //印刷する
             Pt.Print();
 
+            StateW.Close();
+            StateW = null;
 
             this.Close();
 

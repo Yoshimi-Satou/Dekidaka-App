@@ -400,12 +400,12 @@ namespace Wpf_Dekidaka_app
             if (cw.IsModified)
             {
                 //同期処理
-                SaveTempData();
+                //SaveTempData();
 
-                //非同期処理だとこう
+                //非同期処理
                 //await Task.Run(() =>
                 //                    {
-                //                        SaveTempData();
+                await SaveTempData();
                 //    
                 //                    }
                 //                );
@@ -428,7 +428,7 @@ namespace Wpf_Dekidaka_app
         /// 一時データとバックアップデータを保存する
         /// </summary>
         /// <returns></returns>
-        private bool SaveTempData()
+        private async Task<bool> SaveTempData()
         {
 
             DataTable TempData;
@@ -1090,6 +1090,14 @@ namespace Wpf_Dekidaka_app
                 { return; }
             }
 
+
+            StateWindow StateW = new StateWindow();
+
+            StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            StateW.Topmost = true;
+
+            StateW.Show();
+
             //テロップ印刷オブジェクトを作成
             PrintingTelop Pt = new PrintingTelop(Row);
 
@@ -1102,6 +1110,9 @@ namespace Wpf_Dekidaka_app
             //印刷ボタンの色を変える
             Row.SetPrintBottonColor(0);
 
+            StateW.Close();
+
+            StateW = null;
 
         }
 

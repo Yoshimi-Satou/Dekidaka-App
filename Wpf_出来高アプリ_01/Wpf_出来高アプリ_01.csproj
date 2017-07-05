@@ -104,6 +104,9 @@
       <DependentUpon>OKCancelDlg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="StateWindow.xaml.cs">
+      <DependentUpon>StateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TagEdit.xaml.cs">
       <DependentUpon>TagEdit.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OKCancelDlg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
