@@ -1,0 +1,123 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+             xmlns:WpfBind="clr-namespace:Wpf_Dekidaka_app" x:Class="Wpf_Dekidaka_app.Telop_Control"
+             mc:Ignorable="d">
+    <!-- d:DesignHeight="688" d:DesignWidth="484">-->
+    <!-- d:DesignHeight="430" d:DesignWidth="302" -->
+
+    <UserControl.Resources>
+
+        <!-- 縦向き印刷時　-->
+        <DataTemplate x:Key="PortraitTemplate">
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition x:Name="CustomerRow" Height="Auto" MinHeight="108"/>
+                    <RowDefinition x:Name="CoWRow" Height="Auto" MinHeight="160"/>
+                    <RowDefinition x:Name="AreaDayRow" Height="Auto" MinHeight="70"/>
+                    <RowDefinition x:Name="OutputRow" Height="Auto" MinHeight="400"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="464" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderThickness="0,1,0,0" Height="60" Width="464" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" BorderBrush="Black" />
+
+                <Border BorderBrush="Black" BorderThickness="10" Height="Auto" VerticalAlignment="Top" Width="464" CornerRadius="10" Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Customer" TextWrapping="Wrap" Text="{Binding strCustomer}" FontSize="100" TextAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />
+                </Border>
+
+                <Border Height="Auto" Width="464" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_ConOfWork" TextWrapping="Wrap" FontSize="90" TextAlignment="Center" Text="{Binding strConOfWork}"/>
+                </Border>
+
+                <Border Height="Auto" Width="464" Grid.Row="3" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Day_Area" TextWrapping="Wrap" Text="{Binding strDayArea}" FontSize="60" TextAlignment="Right"/>
+                </Border>
+
+                <Border x:Name="Border_Output" Height="Auto" Width="464" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" >
+                    <TextBlock x:Name="textBlock_OutPut" TextWrapping="Wrap" FontSize="100" TextAlignment="Center" Text="{Binding strOutput}"/>
+                </Border>
+
+                <Border Height="60" Width="464" VerticalAlignment="Top" Grid.Row="5" Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,0,1" />
+
+
+            </Grid>
+
+        </DataTemplate>
+
+
+        <!-- 横向き印刷時　-->
+        <DataTemplate x:Key="LandscapeTemplate">
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition x:Name="CustomerRow" Height="Auto" MinHeight="108"/>
+                    <RowDefinition x:Name="CoWRow" Height="Auto" MinHeight="108"/>
+                    <RowDefinition x:Name="AreaDayRow" Height="Auto" MinHeight="40"/>
+                    <RowDefinition x:Name="OutputRow" Height="Auto" MinHeight="208"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="Auto" MinWidth="664" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderThickness="1,0,0,0" Height="80" Width="60" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" BorderBrush="Black" Grid.RowSpan="6" />
+
+                <Border BorderBrush="Black" BorderThickness="10" Height="Auto" VerticalAlignment="Top" Width="Auto" CornerRadius="10" Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Customer" TextWrapping="Wrap" Text="{Binding strCustomer}" FontSize="100" TextAlignment="Center" Margin="0,0,0,0" FontWeight="Bold" />
+                </Border>
+
+                <Border Height="Auto" Width="Auto" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_ConOfWork" TextWrapping="Wrap" FontSize="90" TextAlignment="Center" Text="{Binding strConOfWork}"/>
+                </Border>
+
+                <Border Height="Auto" Width="Auto" Grid.Row="3" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Day_Area" TextWrapping="Wrap" Text="{Binding strDayArea}" FontSize="48" TextAlignment="Right"/>
+                </Border>
+
+                <Border x:Name="Border_Output" Height="Auto" Width="Auto" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" >
+                    <TextBlock x:Name="textBlock_OutPut" TextWrapping="Wrap" FontSize="80" TextAlignment="Center" Text="{Binding strOutput}"/>
+                </Border>
+
+                <Border Height="80" Width="60" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="0,0,1,0" Grid.RowSpan="6" />
+
+
+            </Grid>
+        </DataTemplate>
+
+        <!-- テンプレートセレクタの実体化　-->
+        <local:TelopTemplateSelector x:Key="PrintSelector"
+                            Portrait="{StaticResource PortraitTemplate}"
+                            Landscape="{StaticResource LandscapeTemplate}"/>
+
+
+    </UserControl.Resources>
+
+
+    <Viewbox x:Name="ViewBox" Height="Auto" Width="484"  RenderTransformOrigin="0.5,0.5">
+
+        <!-- セレクタでテンプレートを切り替える　-->
+        <ContentControl Content="{Binding}"
+                ContentTemplateSelector="{StaticResource PrintSelector}"/>
+
+        <!-- デザイン作業用　-->
+        <!--<ContentControl Content="{Binding}"
+                ContentTemplate="{StaticResource LandscapeTemplate}"/>-->
+
+    </Viewbox>
+
+</UserControl>

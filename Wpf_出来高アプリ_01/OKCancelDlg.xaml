@@ -1,0 +1,44 @@
+﻿<Window x:Class="Wpf_Dekidaka_app.OKCancelDlg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+        mc:Ignorable="d"
+        Title="確認"  Width="455" Height="389" WindowStyle="none" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Background="#FFFF6E6E">
+        <Grid Margin="10,10,10,10">
+            <Grid.Background>
+                <SolidColorBrush Color="White"/>
+            </Grid.Background>
+            <Rectangle HorizontalAlignment="Left" Height="200" Margin="20,20,0,0" RadiusY="10" RadiusX="10" Stroke="#FF63A3FF" VerticalAlignment="Top" Width="400">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFABCDFF" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <TextBlock x:Name="textBlock_Message" HorizontalAlignment="Left" Margin="40,41,0,0" TextWrapping="Wrap" Text="{Binding DisplayText}" VerticalAlignment="Top" Height="159" Width="360" FontFamily="Meiryo UI" FontSize="36"/>
+            <Button x:Name="button_ok" Content="OK" HorizontalAlignment="Left" Margin="20,240,0,0" VerticalAlignment="Top" Width="180" Height="80" FontSize="36" BorderThickness="2" Click="button_ok_Click" TouchUp="button_ok_TouchUp" TouchDown="button_TouchDown">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFF6262" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="button_Cancel" Content="キャンセル" HorizontalAlignment="Left" Margin="240,240,0,0" VerticalAlignment="Top" Width="180" Height="80" FontSize="36" BorderBrush="#FFBFBFBF" BorderThickness="4" Click="button_Cancel_Click" TouchUp="button_Cancel_TouchUp" TouchDown="button_TouchDown">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FF9AFFA4" Offset="0.707"/>
+                        <GradientStop Color="White"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+        </Grid>
+    </Grid>
+
+</Window>

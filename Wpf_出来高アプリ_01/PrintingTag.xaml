@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="Wpf_Dekidaka_app.Tag_Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+             mc:Ignorable="d" 
+             d:DesignHeight="280" d:DesignWidth="820">
+
+    <UserControl.Resources>
+
+        <!-- ダイアログ時　-->
+        <DataTemplate x:Key="TagDialogTemplate">
+
+            <Grid Margin="0" Background="White" Height="260" Width="800">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition x:Name="AreaCom" Height="90"/>
+                    <RowDefinition x:Name="CoWOut" Height="90"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition x:Name="Button" Height="60" MinHeight="60"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="290" />
+                    <ColumnDefinition Width="290" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+
+                <Border BorderBrush="Black" BorderThickness="4,4,2,2" Height="90" VerticalAlignment="Top" Width="Auto" CornerRadius="0" Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Customer" TextWrapping="Wrap" Text="{Binding strArea}" FontSize="48" TextAlignment="Center" Margin="0,0,0,0" />
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="2,4,4,2" Height="90" Width="Auto" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2">
+                    <TextBlock x:Name="textBlock_ConOfWork" TextWrapping="Wrap" FontSize="48" TextAlignment="Center" Text="{Binding strCommodity}"/>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="4,2,2,4" Height="90" Width="Auto" Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Day_Area" TextWrapping="Wrap" Text="{Binding strCow}" FontSize="48" TextAlignment="Center"/>
+                </Border>
+
+                <Border x:Name="Border_Output" BorderBrush="Black" BorderThickness="2,2,4,4" Height="90" Width="Auto" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" >
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="Textbox_Quantity" BorderBrush="Black" Margin="4" Background="#FFFDFFD7" Grid.Column="0" FontSize="48" Text="{Binding iQuantity}" SelectionOpacity="4" TextAlignment="Right" TouchDown="Textbox_Quantity_TouchDown" />
+                        <TextBlock Text="入" Margin="4" Grid.Column="1" FontSize="48" />
+
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Height="60" Width="780">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="Textbox_NumberCopies" BorderBrush="Black" Margin="4" Background="#FFFDFFCF" Grid.Column="0" FontSize="36" Text="{Binding iCopyCount}" SelectionOpacity="4" TextAlignment="Right" TouchDown="Textbox_NumberCopies_TouchDown" />
+                    <TextBlock Text="枚" Margin="4" Grid.Column="1" FontSize="36" />
+                    <Button x:Name="Button_Print" Margin="4" Grid.Column="2" BorderBrush="Black" Background="#FFCBFFD9" Content="印刷" FontSize="36" FontWeight="Normal" Click="Button_Print_Click" />
+                    <Button x:Name="Button_Cancel" Margin="4" Grid.Column="3" BorderBrush="Black" Background="#FFFFE7D3" Content="キャンセル" FontSize="36" Click="Button_Cancel_Click" />
+
+                </Grid>
+
+            </Grid>
+
+        </DataTemplate>
+
+
+        <!-- 印刷時　-->
+        <DataTemplate x:Key="TagPrintTemplate">
+
+            <Grid Margin="10" Background="White" Height="240" Width="600">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition x:Name="AreaCom" Height="110"/>
+                    <RowDefinition x:Name="CoWOut" Height="110"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="290" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+
+                <Border BorderBrush="Black" BorderThickness="4,4,2,2" Height="110" VerticalAlignment="Top" Width="Auto" CornerRadius="0" Grid.Row="1" Grid.Column="1">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="72"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="LabelArea" Text="産地" FontSize="12" />
+                        <TextBlock x:Name="textBlock_Customer" TextWrapping="Wrap" Text="{Binding strArea}" FontSize="40" TextAlignment="Center" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="2,4,4,2" Height="110" Width="Auto" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="72"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="LabelComodity" Text="品名" FontSize="12" />
+                        <TextBlock x:Name="textBlock_ConOfWork" TextWrapping="Wrap" FontSize="40" TextAlignment="Center" Text="{Binding strCommodity}" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="4,2,2,4" Height="110" Width="Auto" Grid.Row="2" Grid.Column="1">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="72"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="LabelCoW" Text="規格" FontSize="12" />
+                        <TextBlock x:Name="textBlock_Day_Area" TextWrapping="Wrap" Text="{Binding strCow}" FontSize="40" TextAlignment="Center" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                
+                <Border x:Name="Border_Size" BorderBrush="Black" BorderThickness="2,2,2,4" Height="110" Width="Auto" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" >
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="72"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="LabelSize" Text="サイズ" FontSize="12" />
+                        <TextBlock x:Name="textBlock_Size" TextWrapping="Wrap" FontSize="30" TextAlignment="Center" Text="{Binding strSize}" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                
+                <Border x:Name="Border_Output" BorderBrush="Black" BorderThickness="2,2,4,4" Height="110" Width="Auto" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" >
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="72"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="LabelQuantity" Text="入数" FontSize="12" />
+                        <TextBlock x:Name="textBlock_OutPut" TextWrapping="Wrap" FontSize="40" TextAlignment="Center" Text="{Binding strQuantity}" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+
+
+            </Grid>
+            
+        </DataTemplate>
+
+        <!-- テンプレートセレクタの実体化　-->
+        <local:TagTemplateSelector x:Key="TagSelector"
+                            TagDialog="{StaticResource TagDialogTemplate}"
+                            TagPrint="{StaticResource TagPrintTemplate}"/>
+
+
+    </UserControl.Resources>
+
+
+    <Viewbox x:Name="ViewBox" Height="Auto" Width="Auto"  RenderTransformOrigin="0.5,0.5">
+
+        <!-- セレクタでテンプレートを切り替える　-->
+        <ContentControl Content="{Binding}"
+                ContentTemplateSelector="{StaticResource TagSelector}"/>
+
+        <!-- デザイン作業用　-->
+        <!--<ContentControl Content="{Binding}"
+                ContentTemplate="{StaticResource TagPrintTemplate}"/>-->
+
+    </Viewbox>
+</UserControl>

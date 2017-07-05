@@ -1,0 +1,145 @@
+﻿<Window x:Class="Wpf_Dekidaka_app.InputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+        xmlns:Conv="clr-namespace:Wpf_Dekidaka_app.Bind.Converters"
+        mc:Ignorable="d"
+        Title="入力ウィンドウ" Height="800" Width="1280" WindowState="Maximized" WindowStyle="None"  ResizeMode="NoResize">
+    <!--WindowState="Maximized" WindowStyle="None">-->
+
+    <Window.Resources>
+        <Conv:BrsConverter x:Key="BrsConverter"/>
+    </Window.Resources>
+
+
+
+    <Grid x:Name="BGGrid">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="#FFBBFFE0" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Viewbox Margin="10" Stretch="Fill">
+            <Grid Height="749" Width="1252" FocusManager.IsFocusScope="True">
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="75" Margin="553,293,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="227"/>
+
+                <Rectangle Fill="{Binding strProductionArea, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="140" Margin="0,377,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="322"/>
+
+                <Rectangle Fill="{Binding strCommodity, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="140" Margin="333,144,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="447"/>
+
+                <Rectangle Fill="{Binding strCustomar, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="140" Margin="0,143,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="320"/>
+
+                <Rectangle Fill="{Binding strEndTime, Converter={StaticResource BrsConverter}}" Height="136" Stroke="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Width="454" RadiusX="10" RadiusY="10" Margin="0,0,5,0"/>
+
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="136" Stroke="Black" VerticalAlignment="Top" Width="780" RadiusX="10" RadiusY="10"/>
+                <Button x:Name="Button_Submit" Content="確定" Margin="0,0,247,84" FontSize="36" FontFamily="Meiryo UI" PreviewMouseLeftButtonUp="Button_Submit_Click" Height="70" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="165" Background="#FFFFCB8D" BorderThickness="6" BorderBrush="#FF72644B" TouchUp="Button_Submit_TouchUp" TouchDown="button_TouchDown"/>
+
+                <TextBox x:Name="GroupNo" HorizontalAlignment="Left" Height="45" Margin="164,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" FontSize="36" BorderBrush="#FF323232" Text="{Binding iPartGroup}" TouchUp="GroupNo_TouchUp"/>
+
+                <TextBlock x:Name="textBlock_GroupNo" HorizontalAlignment="Left" Margin="42,42,0,0" TextWrapping="Wrap" Text="班No." VerticalAlignment="Top" Height="49" Width="99" FontSize="36" TextDecorations="Underline"/>
+                <TextBlock x:Name="textBlock_PartNumber" HorizontalAlignment="Left" Margin="284,42,0,0" TextWrapping="Wrap" Text="人数" VerticalAlignment="Top" Height="49" Width="99" FontSize="36" TextDecorations="Underline"/>
+                <TextBox x:Name="PartNumber" HorizontalAlignment="Left" Height="45" Margin="383,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" FontSize="36" BorderBrush="#FF323232" Text="{Binding iPartNumber}" TouchUp="PartNumber_TouchUp"/>
+                <TextBlock x:Name="textBlock_WriteMember" HorizontalAlignment="Left" Margin="498,42,0,0" TextWrapping="Wrap" Text="記入者" VerticalAlignment="Top" Height="49" Width="113" FontSize="36" TextDecorations="Underline"/>
+                <TextBox x:Name="WriteMember" HorizontalAlignment="Left" Height="45" Margin="616,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" FontSize="36" BorderBrush="#FF323232" Text="{Binding strWriteMember}" TouchUp="WriteMember_TouchUp"/>
+                <TextBox x:Name="StartTime" Height="45" Margin="0,9,171,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" HorizontalAlignment="Right" Width="170" Text="{Binding strStartTime}" TouchUp="StartTime_TouchUp"/>
+                <TextBlock x:Name="textBlock_StartTime" HorizontalAlignment="Right" Margin="0,16,341,0" TextWrapping="Wrap" Text="開始時刻" VerticalAlignment="Top" Height="32" Width="113" FontSize="24" TextAlignment="Center" TextDecorations="Underline"/>
+                <TextBox x:Name="EndTime" Height="45" Margin="0,71,171,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" HorizontalAlignment="Right" Width="170" Text="{Binding strEndTime}" TouchUp="EndTime_TouchUp"/>
+                <TextBlock x:Name="textBlock_EndTime" HorizontalAlignment="Right" Margin="0,78,341,0" TextWrapping="Wrap" Text="終了時刻" VerticalAlignment="Top" Height="32" Width="113" FontSize="24" TextAlignment="Center" TextDecorations="Underline"/>
+                <TextBox x:Name="Customer" HorizontalAlignment="Left" Height="71" Margin="19,193,0,0" TextWrapping="Wrap" Text="{Binding strCustomar}" VerticalAlignment="Top" Width="277" FontSize="48" TextAlignment="Center" MouseDoubleClick="Customer_MouseDoubleClick" TouchUp="Customer_TouchUp"/>
+                <TextBox x:Name="Commodity" HorizontalAlignment="Left" Height="71" Margin="355,194,0,0" TextWrapping="Wrap" Text="{Binding strCommodity}" VerticalAlignment="Top" Width="394" FontSize="48" TextAlignment="Center" MouseDoubleClick="Commodity_MouseDoubleClick" TouchUp="Commodity_TouchUp"/>
+                <TextBox x:Name="ProductionArea" HorizontalAlignment="Left" Height="71" Margin="36,427,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" FontSize="48" TextAlignment="Center" Background="#FFF7F7F7" BorderBrush="White" Text="{Binding strProductionArea}" MouseDoubleClick="ProductionArea_MouseDoubleClick" TouchUp="ProductionArea_TouchUp"/>
+                <TextBlock x:Name="textBlock_Customer" HorizontalAlignment="Left" Margin="19,149,0,0" TextWrapping="Wrap" Text="発注者" VerticalAlignment="Top" Height="45" Width="277" FontSize="36" TextAlignment="Center" TextDecorations="Underline"/>
+                <TextBlock x:Name="textBlock_Comodity" HorizontalAlignment="Left" Margin="355,149,0,0" TextWrapping="Wrap" Text="品名" VerticalAlignment="Top" Height="45" Width="394" FontSize="36" TextAlignment="Center" TextDecorations="Underline"/>
+                <TextBlock x:Name="textBlock_ProductionArea" HorizontalAlignment="Left" Margin="36,383,0,0" TextWrapping="Wrap" Text="産地" VerticalAlignment="Top" Height="45" Width="261" FontSize="36" TextAlignment="Center" TextDecorations="Underline"/>
+                <Rectangle Fill="{Binding strContentsOfWork, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="140" Margin="331,377,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="450"/>
+                <TextBox x:Name="ContentsOfWork" HorizontalAlignment="Left" Height="71" Margin="353,427,0,0" TextWrapping="Wrap" Text="{Binding strContentsOfWork}" VerticalAlignment="Top" Width="398" FontSize="48" TextAlignment="Center" MouseDoubleClick="ContentsOfWork_MouseDoubleClick" TouchUp="ContentsOfWork_TouchUp"/>
+                <TextBlock x:Name="textBlock_ContentsOfWork" HorizontalAlignment="Left" Margin="353,383,0,0" TextWrapping="Wrap" Text="作業内容" VerticalAlignment="Top" Height="45" Width="398" FontSize="36" TextAlignment="Center" TextDecorations="Underline"/>
+                <Rectangle Fill="{Binding strOutput, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Right" Height="436" Margin="0,0,5,170" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Bottom" Width="454"/>
+                <TextBlock x:Name="textBlock_OutputQuantity" Margin="0,0,218,551" TextWrapping="Wrap" Text="入数" FontSize="36" TextAlignment="Center" HorizontalAlignment="Right" Width="120" Height="49" VerticalAlignment="Bottom" TextDecorations="Underline"/>
+                <TextBox x:Name="OutputQuantity0" Margin="0,0,218,487" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[0]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputQuantity1" Margin="0,0,218,435" TextWrapping="Wrap" HorizontalAlignment="Right" Width="120" Height="47" VerticalAlignment="Bottom" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[1]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputQuantity2" Margin="0,0,218,383" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[2]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputQuantity3" HorizontalAlignment="Right" Height="47" Margin="0,0,218,331" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[3]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputQuantity4" HorizontalAlignment="Right" Height="47" Margin="0,0,218,279" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[4]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputQuantity5" HorizontalAlignment="Right" Height="47" Margin="0,0,218,227" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputQuantity[5]}" MouseDoubleClick="OutputQuantity_MouseDoubleClick" TouchUp="OutputQuantity_TouchUp"/>
+                <TextBox x:Name="OutputNumber0" HorizontalAlignment="Right" Height="47" Margin="0,0,22,487" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[0]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBox x:Name="OutputNumber1" HorizontalAlignment="Right" Height="47" Margin="0,0,22,435" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[1]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBox x:Name="OutputNumber2" HorizontalAlignment="Right" Height="47" Margin="0,0,22,383" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[2]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBox x:Name="OutputNumber3" HorizontalAlignment="Right" Height="47" Margin="0,0,22,331" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[3]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBox x:Name="OutputNumber4" HorizontalAlignment="Right" Height="47" Margin="0,0,22,279" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[4]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBox x:Name="OutputNumber5" HorizontalAlignment="Right" Height="47" Margin="0,0,22,227" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" FontSize="36" TextAlignment="Right" Text="{Binding iaOutputNumber[5]}" MouseDoubleClick="OutputNumber_MouseDoubleClick" TouchUp="OutputNumber_TouchUp"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Right" Margin="0,0,147,492" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Right" Margin="0,0,147,440" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Right" Margin="0,0,147,388" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Right" Margin="0,0,147,334" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Right" Margin="0,0,147,284" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Right" Margin="0,0,147,232" TextWrapping="Wrap" Text="×" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="48" TextAlignment="Center"/>
+                <Rectangle Fill="{Binding strChainedMaterials, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" RadiusY="10" RadiusX="10" Stroke="Black" Width="780" Height="214" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="textBlock_Materials" HorizontalAlignment="Left" Margin="22,0,0,169" TextWrapping="Wrap" Text="資材 (と1パックあたりに使う個数)" VerticalAlignment="Bottom" Height="45" Width="690" FontSize="36" TextAlignment="Center" TextDecorations="Underline"/>
+                <Button x:Name="button_Cancel" Content="キャンセル" HorizontalAlignment="Right" Margin="0,0,35,84" VerticalAlignment="Bottom" Width="151" Height="70" FontSize="36" Background="#FFE4E4E3" PreviewMouseLeftButtonUp="Button_Cancel_Click" TouchUp="button_Cancel_TouchUp" TouchDown="button_TouchDown"/>
+                <TextBox x:Name="Materials0" Margin="39,0,0,119" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[0]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="Materials1" Margin="39,0,0,72" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[1]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="Materials2" Margin="39,0,0,25" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[2]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber0" Margin="256,0,0,119" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="36" TextAlignment="Right" HorizontalAlignment="Left" Width="65" Text="{Binding iaMaterialsNumber[0]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber1" Margin="256,0,0,72" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="65" FontSize="36" TextAlignment="Right" Text="{Binding iaMaterialsNumber[1]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber2" Margin="256,0,0,25" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="65" FontSize="36" TextAlignment="Right" Text="{Binding iaMaterialsNumber[2]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Right" Margin="0,0,865,119" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Right" Margin="0,0,865,72" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Right" Margin="0,0,865,25" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <TextBox x:Name="Materials3" Margin="402,0,0,119" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[3]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="Materials4" Margin="402,0,0,72" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[4]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="Materials5" Margin="402,0,0,25" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="20" TextAlignment="Right" HorizontalAlignment="Left" Width="217" Text="{Binding straMaterials[5]}" MouseDoubleClick="Materials_MouseDoubleClick" TouchUp="Materials_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber3" Margin="619,0,0,119" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" FontSize="36" TextAlignment="Right" HorizontalAlignment="Left" Width="65" Text="{Binding iaMaterialsNumber[3]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber4" Margin="619,0,0,72" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="65" FontSize="36" TextAlignment="Right" Text="{Binding iaMaterialsNumber[4]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBox x:Name="MaterialsNumber5" Margin="619,0,0,25" TextWrapping="Wrap" Height="47" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="65" FontSize="36" TextAlignment="Right" Text="{Binding iaMaterialsNumber[5]}" MouseDoubleClick="MaterialsNumber_MouseDoubleClick" TouchUp="MaterialsNumber_TouchUp"/>
+                <TextBlock x:Name="textBlock_Copy8" HorizontalAlignment="Right" Margin="0,0,502,119" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy9" HorizontalAlignment="Right" Margin="0,0,502,72" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_Copy10" HorizontalAlignment="Right" Margin="0,0,502,25" TextWrapping="Wrap" Text="個" VerticalAlignment="Bottom" Height="47" Width="66" FontSize="36" TextAlignment="Center"/>
+                <Button x:Name="button_StartTime" Content="現在時刻で" HorizontalAlignment="Right" Margin="0,10,31,0" VerticalAlignment="Top" Width="120" Height="44" FontSize="18"  PreviewMouseLeftButtonUp="button_StartTime_Click" TouchDown="button_TouchDown" TouchUp="button_StartTime_TouchUp"/>
+                <Button x:Name="button_EndTime" Content="現在時刻で" HorizontalAlignment="Right" Margin="0,71,31,0" VerticalAlignment="Top" Width="120" Height="44" FontSize="18"  PreviewMouseLeftButtonUp="button_EndTime_Click" TouchDown="button_TouchDown" TouchUp="button_EndTime_TouchUp"/>
+                <CheckBox x:Name="checkBox_Fruit" Content="果実はﾁｪｯｸ" HorizontalAlignment="Left" Margin="615,321,0,0" VerticalAlignment="Top" Height="20" Width="104" RenderTransformOrigin="0.5,0.5" FontSize="16" IsChecked="{Binding bKind}" Checked="checkBox_Fruit_Checked" Unchecked="checkBox_Fruit_Unchecked" TouchUp="checkBox_Fruit_TouchUp" PreviewTouchDown="CheckBox_TouchDown" Click="checkBox_Fruit_Click">
+                    <CheckBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </CheckBox.RenderTransform>
+                </CheckBox>
+                <Button x:Name="button_Delete" Content="削除する" HorizontalAlignment="Right" Margin="0,0,35,0" VerticalAlignment="Bottom" Width="151" Height="70" FontSize="36" Background="#FFE4E4E3"  PreviewMouseLeftButtonUp="Button_Delete_Click" IsEnabled="{Binding bActionable}" TouchUp="button_Delete_TouchUp" TouchDown="button_TouchDown"/>
+                <Rectangle Fill="{Binding strSize, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="75" Margin="0,293,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="256"/>
+                <TextBox x:Name="Size" HorizontalAlignment="Left" Height="47" Margin="114,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="36" Text="{Binding strSize}" TextAlignment="Center" SelectionOpacity="1" MouseDoubleClick="Size_MouseDoubleClick" TouchUp="Size_TouchUp"/>
+                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,307,0,0" TextWrapping="Wrap" Text="サイズ" VerticalAlignment="Top" Height="43" Width="88" FontSize="36" TextDecorations="Underline" TextAlignment="Center"/>
+                <CheckBox x:Name="checkBox_MultiDay" Content="日付項目有効" HorizontalAlignment="Left" Margin="897,543,0,0" VerticalAlignment="Top" Width="129" Height="15" RenderTransformOrigin="0.5,0.5" IsChecked="{Binding bMulti}" Checked="checkBox_MultiDay_Checked" Unchecked="checkBox_MultiDay_Unchecked" TouchDown="CheckBox_TouchDown" TouchUp="checkBox_MultiDay_TouchUp" PreviewTouchDown="CheckBox_TouchDown" Click="checkBox_MultiDay_Click">
+                    <CheckBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </CheckBox.RenderTransform>
+                </CheckBox>
+                <Rectangle Fill="{Binding iArrival, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="75" Margin="261,293,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="287"/>
+                <TextBlock x:Name="textBlock_arrival" HorizontalAlignment="Left" Margin="263,307,0,0" TextWrapping="Wrap" Text="入荷数" VerticalAlignment="Top" Height="43" Width="120" FontSize="36" TextDecorations="Underline" TextAlignment="Center"/>
+                <TextBox x:Name="Arrival" HorizontalAlignment="Left" Height="47" Margin="402,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="36" Text="{Binding iArrival}" TextAlignment="Center" SelectionOpacity="1" MouseDoubleClick="Arrival_MouseDoubleClick" TouchUp="Arrival_TouchUp"/>
+                <Button x:Name="button_Print_Tag" Content="タグ印刷" HorizontalAlignment="Right" Margin="0,0,247,0" VerticalAlignment="Bottom" Width="165" Height="70" FontSize="36" Background="#FFE4E4E3" PreviewMouseLeftButtonUp="Button_Print_Click" TouchUp="button_Print_TouchUp" TouchDown="button_TouchDown"/>
+                <TextBox x:Name="OutputShipment0" Margin="0,0,348,492" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[0]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBox x:Name="OutputShipment1" Margin="0,0,348,440" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[1]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBox x:Name="OutputShipment2" Margin="0,0,348,388" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[2]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBox x:Name="OutputShipment3" Margin="0,0,348,334" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[3]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBox x:Name="OutputShipment4" Margin="0,0,348,284" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[4]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBox x:Name="OutputShipment5" Margin="0,0,348,232" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[5]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
+                <TextBlock x:Name="textBlock_Shipment" Margin="0,0,348,535" TextWrapping="Wrap" Text="日付" FontSize="20" TextAlignment="Center" HorizontalAlignment="Right" Width="74" Height="26" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="textBlock_OutputNumber" Margin="0,0,22,551" TextWrapping="Wrap" Text="個数" FontSize="36" TextAlignment="Center" HorizontalAlignment="Right" Width="120" Height="49" VerticalAlignment="Bottom" TextDecorations="Underline"/>
+                <!--<Button x:Name="button_Print" Content="テロップ印刷" HorizontalAlignment="Right" Margin="0,0,247,0" VerticalAlignment="Bottom" Width="151" Height="70" FontSize="24" Background="#FFE4E4E3"  PreviewMouseLeftButtonUp="Button_Print_Click" IsEnabled="{Binding bActionable}" TouchUp="button_Print_TouchUp" TouchDown="button_TouchDown"/>-->
+
+            </Grid>
+        </Viewbox>
+
+    </Grid>
+</Window>

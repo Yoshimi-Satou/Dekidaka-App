@@ -1,0 +1,79 @@
+﻿<Window x:Class="Wpf_Dekidaka_app.TagEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+        mc:Ignorable="d"
+        Title="見出し印刷" Height="306" Width="816" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Grid x:Name="RootGrid" >
+        <Border BorderBrush="#FFFF9999" BorderThickness="8">
+            <Grid Margin="0" Background="White" Height="290" Width="800">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition x:Name="AreaCom" Height="90"/>
+                    <RowDefinition x:Name="CoWOut" Height="90"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition x:Name="Button" Height="60" MinHeight="60"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="390" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+
+                <Border BorderBrush="Black" BorderThickness="4,4,2,2" Height="90" VerticalAlignment="Top" Width="Auto" CornerRadius="0" Grid.Row="1" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Customer" TextWrapping="Wrap" Text="{Binding strArea}" FontSize="48" TextAlignment="Center" Margin="0,0,0,0" />
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="2,4,4,2" Height="90" Width="Auto" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="textBlock_ConOfWork" TextWrapping="Wrap" FontSize="48" TextAlignment="Center" Text="{Binding strCommodity}"/>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="4,2,2,4" Height="90" Width="Auto" Grid.Row="2" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_Day_Area" TextWrapping="Wrap" Text="{Binding strCow}" FontSize="48" TextAlignment="Center"/>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="2,2,2,4" Height="90" Width="Auto" Grid.Row="2" Grid.Column="2">
+                    <TextBlock x:Name="textBlock_Size" TextWrapping="Wrap" Text="{Binding strSize}" FontSize="36" TextAlignment="Center"/>
+                </Border>
+
+
+                <Border x:Name="Border_Output" BorderBrush="Black" BorderThickness="2,2,4,4" Height="90" Width="Auto" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" >
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="Textbox_Quantity" BorderBrush="Black" Margin="4" Background="#FFFDFFD7" Grid.Column="0" FontSize="48" Text="{Binding iQuantity}" SelectionOpacity="4" TextAlignment="Right" TouchDown="button_TouchDown" TouchUp="Textbox_Quantity_TouchUp" MouseDoubleClick="Textbox_Quantity_MouseDoubleClick" />
+                        <TextBlock Text="入" Margin="4" Grid.Column="1" FontSize="48" />
+
+                    </Grid>
+                </Border>
+
+                <TextBlock x:Name="Textbox_Infomation" Margin="4" Grid.Column="1" FontSize="18" Text="入数に0を入力すると入数表示なしのタグになります。入数が決まっていない場合に使って下さい。" TextAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3"  />
+
+                <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Height="60" Width="780">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="Textbox_NumberCopies" BorderBrush="Black" Margin="4" Background="#FFFDFFCF" Grid.Column="0" FontSize="36" Text="{Binding iCopyCount}" SelectionOpacity="4" TextAlignment="Right" TouchDown="button_TouchDown" TouchUp="Textbox_NumberCopies_TouchUp" MouseDoubleClick="Textbox_NumberCopies_MouseDoubleClick" />
+                    <TextBlock Text="枚" Margin="4" Grid.Column="1" FontSize="36" />
+                    <Button x:Name="Button_Print" Margin="4" Grid.Column="2" BorderBrush="Black" Background="#FFCBFFD9" Content="印刷" FontSize="36" FontWeight="Normal" Click="Button_Print_Click" TouchDown="button_TouchDown" TouchUp="Button_Print_TouchUp" />
+                    <Button x:Name="Button_Cancel" Margin="4" Grid.Column="3" BorderBrush="Black" Background="#FFFFE7D3" Content="キャンセル" FontSize="36" Click="Button_Cancel_Click" TouchDown="button_TouchDown" TouchUp="Button_Cancel_TouchUp" />
+
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

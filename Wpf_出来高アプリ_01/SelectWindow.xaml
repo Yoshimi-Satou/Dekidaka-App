@@ -1,0 +1,117 @@
+﻿<Window x:Class="Wpf_Dekidaka_app.SelectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Dekidaka_app"
+        mc:Ignorable="d"
+        Title="選択" Height="800" Width="1280" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+
+    <Grid x:Name="SBGGrid">
+        <Viewbox >
+
+            <Grid x:Name="ButtonGrid" ShowGridLines="false" Width="1280" Height="800">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="{Binding straButtonText[0]}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[0]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[0]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[1]}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[1]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[1]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[2]}" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[2]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[2]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[3]}" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[3]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[3]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[4]}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[4]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[4]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[5]}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[5]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[5]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[6]}" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[6]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[6]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[7]}" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[7]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[7]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[8]}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[8]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[8]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[9]}" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[9]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[9]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[10]}" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[10]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[10]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[11]}" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[11]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[11]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[12]}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[12]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[12]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[13]}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[13]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[13]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[14]}" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[14]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[14]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[15]}" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[15]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[15]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[16]}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[16]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[16]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[17]}" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[17]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[17]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[18]}" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[18]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[18]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[19]}" Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[19]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[19]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[20]}" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[20]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[20]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[21]}" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[21]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[21]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[22]}" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[22]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[22]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[23]}" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[23]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[23]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[24]}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[24]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[24]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[25]}" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[25]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[25]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[26]}" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[26]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[26]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[27]}" Grid.Row="8" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[27]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[27]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[28]}" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[28]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[28]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[29]}" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[29]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[29]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[30]}" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[30]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[30]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[31]}" Grid.Row="9" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[31]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[31]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[32]}" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[32]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[32]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[33]}" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[33]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[33]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[34]}" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[34]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[34]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[35]}" Grid.Row="10" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[35]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[35]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[36]}" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[36]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[36]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[37]}" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[37]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[37]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[38]}" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[38]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[38]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[39]}" Grid.Row="11" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[39]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[39]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[40]}" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[40]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[40]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[41]}" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[41]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[41]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[42]}" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[42]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[42]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[43]}" Grid.Row="12" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[43]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[43]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[44]}" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[44]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[44]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[45]}" Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[45]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[45]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[46]}" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[46]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[46]}" TouchDown="button_TouchDown" />
+                <Button Content="{Binding straButtonText[47]}" Grid.Row="13" Grid.Column="6" Grid.ColumnSpan="2" FontFamily="Meiryo UI" FontSize="24" Click="Button_Click" IsEnabled="{Binding baIsButtonEnable[47]}" TouchUp="button_select_TouchUp" Margin="2" Background="{Binding BlBottonColor[47]}" TouchDown="button_TouchDown" />
+                <!--<Button.Content>
+
+                        <TextBlock Text="{Binding straButtonText[47]}" TextWrapping="WrapWithOverflow" />
+
+                </Button.Content>-->
+
+
+
+
+                <Button x:Name="Button_Back" Content="戻る" Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" FontFamily="Meiryo UI" FontSize="24" Background="#FF5BFF5B" BorderBrush="#FF633D06" BorderThickness="4"  PreviewMouseLeftButtonUp="Button_Back_Click" TouchUp="Button_Back_TouchDown" TouchDown="button_TouchDown" />
+                <Button x:Name="Button_Del" Content="入力項目削除" Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" FontFamily="Meiryo UI" FontSize="24" Background="#FFFF5B5B" BorderBrush="#FF633D06" BorderThickness="4"  PreviewMouseLeftButtonUp="Button_Del_Click" TouchUp="Button_Del_TouchUp" TouchDown="button_TouchDown" />
+                <Button x:Name="Button_Input" Content="入力" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" FontFamily="Meiryo UI" FontSize="24" Background="#FFF9FFBE" BorderBrush="#FF633D06" BorderThickness="4" IsEnabled="{Binding bIsInputButtonEnable}"  PreviewMouseLeftButtonUp="Button_Input_Click" TouchUp="Button_Input_TouchUp" TouchDown="button_TouchDown" />
+                <TextBox x:Name="textBox_Input" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="95" Margin="10,10,0,0" Grid.Row="0" Grid.RowSpan="2" TextWrapping="Wrap" Text="自由入力" VerticalAlignment="Top" Width="460" FontSize="48" Background="#FFF0F0F0" IsEnabled="{Binding bIsInputButtonEnable}" TouchUp="textBox_Input_TouchUp" GotFocus="textBox_Input_GotFocus" LostFocus="textBox_Input_LostFocus" TouchDown="button_TouchDown"/>
+                <!--<Button x:Name="Button_Enter" Content="選択" Grid.Row="12" Grid.Column="1" Grid.RowSpan="2" FontFamily="Meiryo UI" FontSize="24" Background="#FFFF5B5B" BorderBrush="#FF633D06" BorderThickness="4"  PreviewMouseLeftButtonUp="Button_Enter_Click" TouchUp="Button_Enter_TouchEnter" />-->
+
+
+
+            </Grid>
+
+
+        </Viewbox>
+
+    </Grid>
+
+</Window>
