@@ -6,7 +6,9 @@ using System.Windows.Media;
 namespace DekiDaka_Data
 {
 
-
+    /// <summary>
+    /// 出来高のデータクラス
+    /// </summary>
     [Serializable()]
     public class Dekidaka_Data : INotifyPropertyChanged
     {
@@ -34,12 +36,17 @@ namespace DekiDaka_Data
         //   MainWindow.xaml.csのSaveTempData()も要修正
         //
 
+        /// <summary>
+        /// 入数・個数・資材・出荷日などの配列要素数
+        /// </summary>
         private const int MaxIndex = 6;
 
 
 
-        //ボタンの色番号の中身の色を定義する配列 #BFE8FFDB
-        private Color[] _ColoraButtonColorIndex = { Color.FromArgb(0xBF,0xE8, 0xFF, 0xDB), //デフォルト灰色
+        /// <summary>
+        /// 一覧表示ボタンの色番号の中身の色を定義する配列 デフォ色#BFE8FFDB
+        /// </summary>
+        private Color[] _ColoraButtonColorIndex = { Color.FromArgb(0xBF,0xE8, 0xFF, 0xDB), //デフォルト
                                                     Color.FromArgb(0xBF,0xFF, 0xD8, 0xD8) }; //赤
         /// <summary>
         /// 印刷ボタンの色
@@ -148,7 +155,7 @@ namespace DekiDaka_Data
 
         private bool _bMulti;
         /// <summary>
-        /// イオンの複数日分の出来高対応用フラグ
+        /// 複数日分の出来高対応用フラグ
         /// </summary>
         public bool bMulti //イオンの複数日分フラグ
         {
