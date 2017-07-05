@@ -16,8 +16,14 @@ namespace Wpf_Dekidaka_app
     /// </summary>
     public static class Settings
     {
+        /// <summary>
+        /// 果実のデフォルト設定
+        /// </summary>
         private const string strFruits = "有田みかん,愛媛みかん,青島みかん,みかん,ポンカン,デコポン,不知火,金柑,せとか,清美,マーコット,ミネオラ,オレンジ,マンダリン,タンカン,スイートスプリング,れいこう,はるか,はまさき,紅香,津の輝,せとみ,サンクィン,タンゴール,伊予柑,八朔,甘夏,サンフルーツ,グレープフルーツ,文旦,ブラッドオレンジ,セミノール,リンゴ,ふじ,サンふじ,早生ふじ,つがる,王林,ジョナゴールド,シナノゴールド,シナノスイート,紅玉,昂林,千秋,トキ,レッドゴールド,ひめかみ,ハックナイン,梨,幸水,豊水,新高,二十世紀,あきづき,新興,南水,親水,長十郎,愛宕,晩三吉,洋梨,ラ・フランス,ル・レクチェ,バートレット,オーロラ,バラード,プレコース,葡萄,巨峰,デラウェア,ピオーネ,キャンベル,ナイアガラ,スチューベン,シャインマスカット,ナガノパープル,瀬戸ジャイアンツ,甲斐路,ゴルビー,旅路,柿,庄内柿,富士柿,富有柿,イチゴ,アメリカンチェリー,さくらんぼ,プラム,太陽,貴陽,サマービュート,サマーエンジェル,ソルダム,大石早生,桃,黄桃";
 
+        /// <summary>
+        /// 日付欄追加項目のデフォルト設定
+        /// </summary>
         private const string strOutputShipment = "３Ｓ ２Ｓ Ｓ Ｍ Ｌ ２Ｌ ３Ｌ 外品 先出し分 後出し分 大 小 ２Ｐ ３Ｐ ４Ｐ ５Ｐ Ａ Ｂ";
 
         /// <summary>
@@ -32,7 +38,7 @@ namespace Wpf_Dekidaka_app
 
 
         /// <summary>
-        /// 設定ファイルのパス
+        /// 設定ファイルのパスを設定する
         /// </summary>
         public static string PreferenceFilePath = "";
 
@@ -191,10 +197,12 @@ namespace Wpf_Dekidaka_app
             _BackupSaveGeneration = 3;
 
             csvStreamFruit = strFruits;
-            _IsInitialized = true;
-
             csvStreamPanelData = "";
             OutputShipment = strOutputShipment;
+
+            _IsInitialized = true;
+
+
 
         }
 
