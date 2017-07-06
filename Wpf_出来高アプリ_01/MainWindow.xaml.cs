@@ -529,6 +529,13 @@ namespace Wpf_Dekidaka_app
             { return; }
 
 
+            StateWindow StateW = new StateWindow();
+
+            StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            StateW.Topmost = true;
+
+            StateW.Show();
+
             DataTable TempData;
 
             TempData = GetDekidakaDataTable();
@@ -573,14 +580,17 @@ namespace Wpf_Dekidaka_app
             tool.ConvertDataTableToCsv(TempData, filename, true,false);
 
 
-            
+            StateW.Close();
+            StateW = null;
+
+
             //結果のメッセージを表示
             re = new OKCancelDlg(message);
 
             re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             re.ShowDialog();
-
+            
 
             return;
 
