@@ -403,12 +403,12 @@ namespace Wpf_Dekidaka_app
                 //SaveTempData();
 
                 //非同期処理
-                //await Task.Run(() =>
-                //                    {
-                await SaveTempData();
-                //    
-                //                    }
-                //                );
+                await Task.Run(() =>
+                                    {
+                 SaveTempData();
+                    
+                                    }
+                                );
 
 
             }
@@ -428,13 +428,14 @@ namespace Wpf_Dekidaka_app
         /// 一時データとバックアップデータを保存する
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> SaveTempData()
+        private bool SaveTempData()
         {
 
             DataTable TempData;
 
             TempData = GetDekidakaDataTable();
 
+            //Thread.Sleep(3000);
 
             //string inputdate = mwContext.mwInputDate.ToShortDateString();
             //inputdate = inputdate.Replace('/', '_');
@@ -475,12 +476,12 @@ namespace Wpf_Dekidaka_app
 
 
             //バックアップデータを保存する
-            if(Settings.BackupFilePath != "")
+            if (Settings.BackupFilePath != "")
             {
                 string inputdate = mwContext.mwInputDate.ToShortDateString();
                 inputdate = inputdate.Replace('/', '_');
 
-                string backfilename =  "出来高バックアップ" + inputdate + "_" + mwContext.mwPartGroupNo.ToString() + "_" + BackupSaveCount.ToString() + ".csv";
+                string backfilename = "出来高バックアップ" + inputdate + "_" + mwContext.mwPartGroupNo.ToString() + "_" + BackupSaveCount.ToString() + ".csv";
 
                 filename = Settings.BackupFilePath + "\\" + backfilename;
 
@@ -909,7 +910,7 @@ namespace Wpf_Dekidaka_app
 
         }
 
-        private void Clear_Data(object sender)
+        private async void Clear_Data(object sender)
         {
 
             string message = "現在の出来高を消去しますか？";
@@ -944,8 +945,14 @@ namespace Wpf_Dekidaka_app
             mwContext.mwPartNumber = 0;
 
             ModuleData.ModuleDataSetup();
+
+            await Task.Run(() =>
+            {
+                SaveTempData();
+
+            }
+                );
             
-            SaveTempData();
 
         }
 
