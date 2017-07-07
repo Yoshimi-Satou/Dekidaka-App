@@ -225,6 +225,7 @@ namespace Wpf_Dekidaka_app
         }
 
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -238,17 +239,7 @@ namespace Wpf_Dekidaka_app
 
         }
 
-        //private void Button_TouchEnter(object sender, TouchEventArgs e)
-        //{
-        //    Button bt = (Button)sender;
 
-        //    ReturnText = (string)bt.Content.ToString();
-        //    //MessageBox.Show(swContext.straButtonText[0].ToString());
-
-        //    this.Close();
-
-
-        //}
 
         private void button_select_TouchUp(object sender, TouchEventArgs e)
         {
@@ -320,6 +311,10 @@ namespace Wpf_Dekidaka_app
 
         }
 
+        /// <summary>
+        /// 自由入力のボタンを押した時の処理、設定に履歴も書き込む
+        /// </summary>
+        /// <param name="sender"></param>
         private void Button_Input_Press(object sender)
         {
 
@@ -327,6 +322,7 @@ namespace Wpf_Dekidaka_app
             {
                 ReturnText = this.textBox_Input.Text;
 
+                //設定に自由入力履歴を書き込む
                 if(Sentext != "ProductionArea")
                 {
 

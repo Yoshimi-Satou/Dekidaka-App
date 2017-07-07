@@ -387,7 +387,10 @@ namespace Wpf_Dekidaka_app
 
         }
 
-
+        /// <summary>
+        /// 果実に分類される品名かどうかを調べる
+        /// </summary>
+        /// <param name="sender"></param>
         private void SerchFruits(Dekidaka_Data sender)
         {
             Dekidaka_Data Data = sender as Dekidaka_Data;
@@ -449,6 +452,7 @@ namespace Wpf_Dekidaka_app
             //ReturnValue.PropertyChanged += DekidakaPropertyChanged;
 
         }
+
 
 
 
@@ -1105,7 +1109,11 @@ namespace Wpf_Dekidaka_app
 
 
 
-        //テンキーボードを表示する
+        /// <summary>
+        /// テンキーボードを表示する
+        /// </summary>
+        /// <param name="value">初期表示の数字</param>
+        /// <returns>入力結果</returns>
         private int TouchPanelTenkeyShow(int value = 0) 
         {
 
@@ -1131,7 +1139,12 @@ namespace Wpf_Dekidaka_app
         }
 
 
-        //テキストボックスのNameプロパティから数字を検索して最初にマッチした数値を返す
+        
+        /// <summary>
+        /// テキストボックスのNameプロパティから数字を検索して最初にマッチした数値を返す
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
         private int IndexSerch(TextBox sender)
         {
 
@@ -1349,6 +1362,11 @@ namespace Wpf_Dekidaka_app
 
         }
 
+        /// <summary>
+        /// 時刻入力ウィンドウを開いて返答をもらう
+        /// </summary>
+        /// <param name="dtTime"></param>
+        /// <returns></returns>
         private DateTime GetInputTime(DateTime dtTime)
         {
 
@@ -1413,6 +1431,10 @@ namespace Wpf_Dekidaka_app
 
         }
 
+        /// <summary>
+        /// 記入者の返答をもらう
+        /// </summary>
+        /// <param name="sender"></param>
         private void WriteMember_getresponse(object sender)
         {
             ////記入者の返答をもらう
