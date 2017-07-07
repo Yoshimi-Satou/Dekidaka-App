@@ -92,7 +92,7 @@ namespace Wpf_Dekidaka_app
             if (re.result == MessageBoxResult.Cancel) { return; }
 
 
-            StateWindow StateW = new StateWindow();
+            StateWindow StateW = new StateWindow("印刷データ作成中");
 
             StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             StateW.Topmost = true;

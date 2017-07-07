@@ -891,6 +891,51 @@ namespace Wpf_Dekidaka_app.Bind
     }
 
 
+    public class StateWindowCx : INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged メンバ 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        #endregion
+
+
+        private string _strDisplayMessage;
+
+        public string strDisplayMessage
+        {
+            get { return _strDisplayMessage; }
+
+
+            set
+            {
+                _strDisplayMessage = value;
+                OnPropertyChanged("strDisplayMessage");
+            }
+
+
+        }
+
+        public StateWindowCx()
+        {
+
+            strDisplayMessage = "処理しています";
+
+        }
+
+
+
+    }
+
+
 }
 
 
@@ -951,6 +996,9 @@ namespace Wpf_Dekidaka_app.Bind.Converters
 
 
     }
+
+
+
 
 
 }

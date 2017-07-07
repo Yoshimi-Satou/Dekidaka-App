@@ -9,7 +9,7 @@
 
     <Grid Background="White">
         <Border BorderThickness="10,10,10,10" CornerRadius="1" BorderBrush="Black" Background="White">
-            <TextBlock Margin="42,25,42,25" TextWrapping="Wrap" Text="処理しています" FontFamily="Meiryo UI" FontSize="36" TextAlignment="Center"/>
+            <TextBlock x:Name="TextBlock_Message" Margin="14,25" TextWrapping="Wrap" Text="{Binding strDisplayMessage}" FontFamily="Meiryo UI" FontSize="36" TextAlignment="Center"/>
         </Border>
     </Grid>
 </Window>

@@ -36,7 +36,7 @@ namespace Wpf_Dekidaka_app
 
         private InputWindow cw = null;
 
-        private Dekidaka_Data Row = null;
+        //private Dekidaka_Data Row = null;
 
         private bool bEdited = false;
 
@@ -310,7 +310,7 @@ namespace Wpf_Dekidaka_app
             if(cw != null) { return; } //子ウィンドウのハンドルがnullじゃなければ（子ウィンドウが開いていれば）なにもせず戻る
 
             //呼び出し元ボタンから、tagに紐付けられた行のitemを取得
-            Row = ((Button)sender).Tag as Dekidaka_Data;
+            Dekidaka_Data Row = ((Button)sender).Tag as Dekidaka_Data;
             
 
             if(Row == null) { return; }//asキャストに失敗したら戻る
@@ -399,23 +399,28 @@ namespace Wpf_Dekidaka_app
             /// 
             if (cw.IsModified)
             {
-                //同期処理
-                //SaveTempData();
+                StateWindow StateW = new StateWindow("データを保存しています");
 
-                //非同期処理
+                StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                StateW.Topmost = true;
+                StateW.Show();
+
+
                 await Task.Run(() =>
-                                    {
-                 SaveTempData();
-                    
-                                    }
-                                );
+                {
+                    SaveTempData();
+
+                }
+                    );
+
+
+                StateW.Close();
+                StateW = null;
 
 
             }
 
-
             cw = null;
-            Row = null;
 
             bEdited = false;
 
@@ -530,7 +535,7 @@ namespace Wpf_Dekidaka_app
             { return; }
 
 
-            StateWindow StateW = new StateWindow();
+            StateWindow StateW = new StateWindow("データを保存しています");
 
             StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             StateW.Topmost = true;
@@ -946,13 +951,28 @@ namespace Wpf_Dekidaka_app
 
             ModuleData.ModuleDataSetup();
 
+            StateWindow StateW = new StateWindow("データを保存しています");
+
+            StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            StateW.Topmost = true;
+
+            StateW.Show();
+
             await Task.Run(() =>
             {
+
+
                 SaveTempData();
+
+
+
 
             }
                 );
-            
+
+            StateW.Close();
+
+            StateW = null;
 
         }
 
@@ -1072,7 +1092,7 @@ namespace Wpf_Dekidaka_app
         {
 
             //ボタンからtagに紐付けられたitemを取得する
-            Row = ((Button)sender).Tag as Dekidaka_Data;
+            Dekidaka_Data Row = ((Button)sender).Tag as Dekidaka_Data;
 
             if (Row == null) { return; }//asキャストに失敗したら戻る
 
@@ -1108,7 +1128,7 @@ namespace Wpf_Dekidaka_app
             }
 
 
-            StateWindow StateW = new StateWindow();
+            StateWindow StateW = new StateWindow("印刷データ作成中");
 
             StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             StateW.Topmost = true;
