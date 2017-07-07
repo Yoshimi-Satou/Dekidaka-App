@@ -32,8 +32,8 @@ namespace DekiDaka_Data
 
 
         //
-        //   メンバを増やしたらインポートメソッドも修正すること
-        //   MainWindow.xaml.csのSaveTempData()も要修正
+        //  メンバを増やしたら MainWindow.Load_Data()インポートメソッドと
+        //  GetDekidakaDataTable()も修正すること
         //
 
         /// <summary>

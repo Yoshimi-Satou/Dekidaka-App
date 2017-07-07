@@ -9,6 +9,7 @@ using System.Collections;
 using Wpf_Dekidaka_app.Bind;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Text;
 
 namespace Wpf_Dekidaka_app
 {
@@ -468,9 +469,21 @@ namespace Wpf_Dekidaka_app
             System.IO.StreamWriter sr =
                 new System.IO.StreamWriter(filename, false, enc);
 
-            //班番号、日付、記入者、人数などを書き込む ****出来高メンバを増やしたらこのカンマも増やす****                                                                                                                         10          20          30          40          メンバ数-1(インデックス添え字最大値)
-            sr.Write(mwContext.mwInputDate.ToShortDateString() + "," + mwContext.mwWriteMember + "," + mwContext.mwPartGroupNo.ToString() + "," + mwContext.mwPartNumber.ToString() + "," + BackupSaveCount.ToString() + ",,,,,,  ,,,,,,,,,,  ,,,,,,,,,,  ,,,,,,,,,,  ,,\r\n");
-            //****出来高メンバを増やしたらこのカンマも増やす****             10          20          30          40          メンバ数-1(インデックス添え字最大値)
+
+            //班番号、日付、記入者、人数などのデータを追加する
+            StringBuilder sb = new StringBuilder(300);
+            sb.Append(mwContext.mwInputDate.ToShortDateString() + "," + mwContext.mwWriteMember + "," + mwContext.mwPartGroupNo.ToString() + "," + mwContext.mwPartNumber.ToString() + "," + BackupSaveCount.ToString() + ",");
+
+            // カンマを追加する　iの初期値は記入済み項目数の次の項目数　（現在5項目記入しているので6)
+            for (int i = 6; i < TempData.Columns.Count; i++)
+            {
+                sb.Append(",");
+            }
+            //改行を追加する
+            sb.Append("\r\n");
+            //書き込む
+            sr.Write(sb.ToString());
+
 
 
             sr.Close();
@@ -659,7 +672,7 @@ namespace Wpf_Dekidaka_app
             TempData.Columns.Add("資材数4");
             TempData.Columns.Add("資材数5");
 
-            TempData.Columns.Add("イオン複数日");
+            TempData.Columns.Add("複数日");
             TempData.Columns.Add("入荷数");
 
             TempData.Columns.Add("出荷日0");
