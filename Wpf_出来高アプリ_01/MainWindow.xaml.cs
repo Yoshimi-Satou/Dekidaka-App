@@ -333,7 +333,7 @@ namespace Wpf_Dekidaka_app
         private async void EditDataAsync(object sender)
         {
 
-            if(cw != null) { return; } //子ウィンドウのハンドルがnullじゃなければ（子ウィンドウが開いていれば）なにもせず戻る
+            if(cw != null) { return; } //子ウィンドウのポインタがnullじゃなければ（子ウィンドウが開いていれば）なにもせず戻る
 
             //呼び出し元ボタンから、tagに紐付けられた行のitemを取得
             Dekidaka_Data Row = ((Button)sender).Tag as Dekidaka_Data;
@@ -436,12 +436,7 @@ namespace Wpf_Dekidaka_app
                 StateW.Show();
 
 
-                await Task.Run(() =>
-                {
-                    SaveTempData();
-
-                }
-                    );
+                await Task.Run(() =>{ SaveTempData(); } );
 
 
                 StateW.Close();
