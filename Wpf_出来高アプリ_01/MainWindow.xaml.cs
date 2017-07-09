@@ -422,19 +422,24 @@ namespace Wpf_Dekidaka_app
             }
 
 
-            //子ウィンドウを解放
-            cw = null;
+
 
 
             // 一時データを保存する
             if (cw.IsModified)
             {
+
+                //子ウィンドウを解放
+                cw = null;
+
+
                 StateWindow StateW = new StateWindow("データを保存しています");
 
                 StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 StateW.Topmost = true;
                 StateW.Show();
 
+                
 
                 await Task.Run(() =>{ SaveTempData(); } );
 
@@ -443,6 +448,11 @@ namespace Wpf_Dekidaka_app
                 StateW = null;
 
 
+            }
+            else
+            {
+                //子ウィンドウを解放
+                cw = null;
             }
 
 
