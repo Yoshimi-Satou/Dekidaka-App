@@ -23,34 +23,52 @@ namespace Wpf_Dekidaka_app
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        /// <summary>
+        /// タッチイベントの不具合解消の為のクラスのインスタンス
+        /// </summary>
         private TouchEventProcessor tp = new TouchEventProcessor();
 
-
+        /// <summary>
+        /// 出来高データのコレクション、全ての出来高データの本体
+        /// </summary>
         private ObservableCollection<Dekidaka_Data> DekiDakaDataCollection;
 
-
+        /// <summary>
+        /// メインウィンドウのデータコンテキスト
+        /// </summary>
         public MwContext mwContext = new MwContext();
 
+        /// <summary>
+        /// データの個数をなんとなくカウントする
+        /// </summary>
         public int iDataCollectionIndex = 0;
 
-
+        /// <summary>
+        /// メインウィンドウから開ける唯一の入力ウィンドウのインスタンス用
+        /// </summary>
         private InputWindow cw = null;
 
-        //private Dekidaka_Data Row = null;
-
-        private bool bEdited = false;
-
-
+        /// <summary>
+        /// 一時データのパス
+        /// </summary>
         private string tempfilepath = Settings.PreferenceFilePath;
+
+        /// <summary>
+        /// 一時データのファイル名
+        /// </summary>
         private string tempfilename = "temp.csv";
 
+        /// <summary>
+        /// バックアップファイルの世代数を保持する
+        /// </summary>
         private int BackupSaveCount = 0;
 
 
         //private Settings Preference  = null;
 
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public MainWindow()
         {
 
@@ -106,6 +124,10 @@ namespace Wpf_Dekidaka_app
 
         }
 
+        /// <summary>
+        /// 出来高データを読み込むする
+        /// </summary>
+        /// <param name="filepath">データファイルのパス</param>
         public void Load_Data(string filepath)
         {
 
@@ -277,7 +299,7 @@ namespace Wpf_Dekidaka_app
         private void Edit_TouchUp(object sender, TouchEventArgs e)
         {
 
-            EventProcess Prs = EditData;
+            EventProcess Prs = EditDataAsync;
 
             tp.button_TouchUp(sender, e, Prs);
 
@@ -301,11 +323,14 @@ namespace Wpf_Dekidaka_app
         private void Button_Edit_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //MessageBox.Show("Pre");
-            EditData(sender);
+            EditDataAsync(sender);
         }
 
-
-        private async void EditData(object sender)
+        /// <summary>
+        /// 入力用の子ウィンドウを開いて出来高データを入力する。変更されたら一時データとバックアップを保存する
+        /// </summary>
+        /// <param name="sender">呼び出し元編集ボタンオブジェクト</param>
+        private async void EditDataAsync(object sender)
         {
 
             if(cw != null) { return; } //子ウィンドウのハンドルがnullじゃなければ（子ウィンドウが開いていれば）なにもせず戻る
@@ -319,7 +344,7 @@ namespace Wpf_Dekidaka_app
             int id = Row.iUID;
 
             //元の編集状態（未作成か作成済みか）を保持する
-            bEdited = Row.bActionable;
+            bool bEdited = Row.bActionable;
 
 
             //タッチイベントから呼んだときには選択行がボタンの行にないときがあるので、選択行をデータのインデックスに合わせる
@@ -396,8 +421,12 @@ namespace Wpf_Dekidaka_app
 
             }
 
-            /// 一時データを保存する
-            /// 
+
+            //子ウィンドウを解放
+            cw = null;
+
+
+            // 一時データを保存する
             if (cw.IsModified)
             {
                 StateWindow StateW = new StateWindow("データを保存しています");
@@ -421,9 +450,7 @@ namespace Wpf_Dekidaka_app
 
             }
 
-            cw = null;
 
-            bEdited = false;
 
 
         }
@@ -532,7 +559,7 @@ namespace Wpf_Dekidaka_app
         /// <summary>
         /// 出来高データを設定したフォルダに保存する
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">呼び出し元ボタンオブジェクト</param>
         public void SaveCsvData(object sender)
         {
 
@@ -914,7 +941,7 @@ namespace Wpf_Dekidaka_app
 
         private void button_Clear_TouchUp(object sender, TouchEventArgs e)
         {
-            EventProcess Prs = Clear_Data;
+            EventProcess Prs = Clear_DataAsync;
 
             tp.button_TouchUp(sender, e, Prs);
 
@@ -924,11 +951,15 @@ namespace Wpf_Dekidaka_app
         private void button_Clear_Click(object sender, MouseButtonEventArgs e)
         {
             //MessageBox.Show("mouse");
-            Clear_Data(sender);
+            Clear_DataAsync(sender);
 
         }
 
-        private async void Clear_Data(object sender)
+        /// <summary>
+        /// 現在の出来高データを消去して、日付やパネルデータも読み直す
+        /// </summary>
+        /// <param name="sender">呼び出し元ボタンオブジェクト</param>
+        private async void Clear_DataAsync(object sender)
         {
 
             string message = "現在の出来高を消去しますか？";
@@ -971,20 +1002,10 @@ namespace Wpf_Dekidaka_app
 
             StateW.Show();
 
-            await Task.Run(() =>
-            {
-
-
-                SaveTempData();
-
-
-
-
-            }
-                );
+            //一時データを保存
+            await Task.Run(() => { SaveTempData(); }  );
 
             StateW.Close();
-
             StateW = null;
 
         }
@@ -1011,6 +1032,11 @@ namespace Wpf_Dekidaka_app
 
         }
 
+
+        /// <summary>
+        /// 確認してアプリを終了する
+        /// </summary>
+        /// <param name="sender"></param>
         private void buttom_Exit_Press(object sender)
         {
 
@@ -1101,6 +1127,10 @@ namespace Wpf_Dekidaka_app
             Button_Print_Press(sender);
         }
 
+        /// <summary>
+        /// テロップを印刷する
+        /// </summary>
+        /// <param name="sender">呼び出し元印刷ボタン</param>
         private  void Button_Print_Press(object sender)
         {
 
@@ -1161,7 +1191,6 @@ namespace Wpf_Dekidaka_app
             Row.SetPrintBottonColor(0);
 
             StateW.Close();
-
             StateW = null;
 
         }
