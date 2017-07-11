@@ -537,7 +537,7 @@ namespace Wpf_Dekidaka_app
             //フルーツ種別が変更されていたら、設定のフルーツ種別を追加/削除する
             if(IsFruitModified)
             {
-                if (ModuleData.Fruits.Array != null)
+                if (ModuleData.Fruits.Array != null && strModifiedFruit != null && strModifiedFruit != "")
                 {
 
                     ArrayList csvField = new ArrayList();
