@@ -41,8 +41,14 @@ namespace Wpf_Dekidaka_app
         /// </summary>
         private TouchEventProcessor tp = new TouchEventProcessor();
 
+        /// <summary>
+        /// データが変更された時に立つフラグ
+        /// </summary>
         public bool IsModified = false;
 
+        /// <summary>
+        /// 品名に対する果実の種別が変更されたときに立つフラグ
+        /// </summary>
         private bool IsFruitModified = false;
         private string strModifiedFruit = "";
 
@@ -538,7 +544,7 @@ namespace Wpf_Dekidaka_app
             //フルーツ種別が変更されていたら、設定のフルーツ種別を追加/削除する
             if(IsFruitModified)
             {
-                if (ModuleData.Fruits.Array != null)
+                if (ModuleData.Fruits.Array != null && strModifiedFruit != null && strModifiedFruit != "")
                 {
 
                     List<string> csvField = new List<string>();
