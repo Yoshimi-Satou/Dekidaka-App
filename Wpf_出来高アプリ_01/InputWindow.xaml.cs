@@ -9,6 +9,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using System.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Wpf_Dekidaka_app
 {
@@ -554,17 +555,28 @@ namespace Wpf_Dekidaka_app
 
                     int flag = 0;
 
-                    //新規文字列かどうかを確認する
-                    for (int j = 0; j < cols; j++)
+
+                    var el =
+                        from p in csvField
+                        where p == strModifiedFruit
+                        select p;
+
+                    if(el.Count<string>() != 0)
                     {
-
-                        if (csvField[j] == strModifiedFruit)
-                        {
-                            flag = 1;
-                            break;
-                        }
-
+                        flag = 1;
                     }
+
+                    //新規文字列かどうかを確認する
+                    //for (int j = 0; j < cols; j++)
+                    //{
+
+                    //    if (csvField[j] == strModifiedFruit)
+                    //    {
+                    //        flag = 1;
+                    //        break;
+                    //    }
+
+                    //}
 
                     
                     
