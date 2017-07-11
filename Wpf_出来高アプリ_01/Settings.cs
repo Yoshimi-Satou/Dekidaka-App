@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Printing;
@@ -249,52 +250,49 @@ namespace Wpf_Dekidaka_app
             InitializeSetting();
 
 
-
-            ArrayList csvData = new ArrayList();
-            csvData = CSVTool.CSVTool.CsvToArrayList2(csvstream);
+            //CSVから設定データを読み出す
+            List<List<string>> csvData = new List<List<string>>();
+            csvData = CSVTool.CSVTool.CsvToList(csvstream);
 
 
             int csvRow = csvData.Count;
 
-            ArrayList csvField = new ArrayList();
 
-            csvField = (ArrayList)csvData[0];
-
-            foreach (ArrayList Field in csvData)
+            foreach (List<string> Field in csvData)
             {
-                switch((string)Field[0])
+                switch(Field[0])
                 {
 
                     case "SaveFilePath" :
-                        SaveFilePath = (string)Field[1];
+                        SaveFilePath = Field[1];
                         break;
 
                     case "BackupFilePath":
-                        BackupFilePath = (string)Field[1];
+                        BackupFilePath = Field[1];
                         break;
 
                     case "PrintLandscape":
-                        PrintLandscape = bool.Parse((string)Field[1]);
+                        PrintLandscape = bool.Parse(Field[1]);
                         break;
 
                     case "PrinterName":
-                        PrinterName = (string)Field[1];
+                        PrinterName = Field[1];
                         break;
 
                     case "csvStreamFruit":
-                        csvStreamFruit = (string)Field[1];
+                        csvStreamFruit = Field[1];
                         break;
 
                     case "csvStreamPanelData":
-                        csvStreamPanelData = (string)Field[1];
+                        csvStreamPanelData = Field[1];
                         break;
 
                     case "BackupSaveGeneration":
-                        _BackupSaveGeneration = int.Parse((string)Field[1]);
+                        _BackupSaveGeneration = int.Parse(Field[1]);
                         break;
 
                     case "OutputShipment":
-                        OutputShipment = (string)Field[1];
+                        OutputShipment = Field[1];
                         break;
 
                 }
@@ -460,8 +458,7 @@ namespace Wpf_Dekidaka_app
 
 
             //CSVとして設定ファイルを保存する
-            CSVTool.CSVTool tool = new CSVTool.CSVTool();
-            tool.ConvertDataTableToCsv(TempData, path, true, false);
+            CSVTool.CSVTool.ConvertDataTableToCsv(TempData, path, true, false);
 
 
 

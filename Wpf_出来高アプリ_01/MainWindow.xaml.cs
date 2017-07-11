@@ -521,8 +521,7 @@ namespace Wpf_Dekidaka_app
             sr.Close();
 
             //出来高データをCSVとして書き込む
-            CSVTool.CSVTool tool = new CSVTool.CSVTool();
-            tool.ConvertDataTableToCsv(TempData, filename, true, true);
+            CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true, true);
 
 
             //バックアップデータを保存する
@@ -547,7 +546,7 @@ namespace Wpf_Dekidaka_app
                 }
 
 
-                tool.ConvertDataTableToCsv(TempData, filename, true, false);
+                CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true, false);
 
                 BackupSaveCount = (BackupSaveCount + 1) % Settings.BackupSaveGeneration;
 
@@ -627,8 +626,7 @@ namespace Wpf_Dekidaka_app
 
 
             //CSVとして保存する
-            CSVTool.CSVTool tool = new CSVTool.CSVTool();
-            tool.ConvertDataTableToCsv(TempData, filename, true,false);
+            CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true,false);
 
 
             StateW.Close();

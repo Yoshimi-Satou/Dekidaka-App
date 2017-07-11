@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Collections;
 using Wpf_Dekidaka_app.Bind;
 using System.Data;
+using System.Collections.Generic;
 
 namespace Wpf_Dekidaka_app
 {
@@ -43,7 +44,7 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.Panel.Array != null)
             {
 
-                ArrayList csvData = ModuleData.Panel.Array;
+                List<List<string>> csvData = ModuleData.Panel.Array;
 
 
                 //csvの行数を保持 （csvData[index]が一行分のデータ）
@@ -52,8 +53,8 @@ namespace Wpf_Dekidaka_app
 
 
                 //csvFieldでcsvData行の中の列セルにアクセスする
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+                List<string> csvField = new List<string>();
+                csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
 
 
                 //親ウィンドウから送られた文字列でヘッダ名を検索する
@@ -80,8 +81,8 @@ namespace Wpf_Dekidaka_app
                     for (int i = 1; i < csvRow && i < 48; i++)
                     {
 
-                        csvField = (ArrayList)csvData[i];
-                        string ftext = (string)csvField[TargetColNo];
+                        csvField = csvData[i];
+                        string ftext = csvField[TargetColNo];
 
                         if (ftext != "")
                         {
@@ -119,8 +120,8 @@ namespace Wpf_Dekidaka_app
 
                         for (int i = 0; i < csvData.Count; i++)
                         {
-                            csvField = (ArrayList)csvData[i];
-                            string FieldText = (string)csvField[0];
+                            csvField = csvData[i];
+                            string FieldText = csvField[0];
                             if (FieldText == sendedtext)
                             {
                                 TargetRowNo = i;
@@ -133,12 +134,12 @@ namespace Wpf_Dekidaka_app
                         //見つかったらパネルに設定
                         if(TargetRowNo != -1)
                         {
-                            csvField = (ArrayList)csvData[TargetRowNo];
+                            csvField = csvData[TargetRowNo];
 
                             for (int i = 1; i < csvField.Count; i++)
                             {
 
-                                string ftext = (string)csvField[i];
+                                string ftext = csvField[i];
 
                                 if (ftext != "")
                                 {
@@ -332,9 +333,9 @@ namespace Wpf_Dekidaka_app
                     {
                         //拡張パネルデータが無いなら作成する
 
-                        ModuleData.ExtPanel.Array = new ArrayList();
+                        ModuleData.ExtPanel.Array = new List<List<string>>();
 
-                        ArrayList addfield = new ArrayList();
+                        List<string> addfield = new List<string>();
 
                         addfield.Add(Sentext);
                         addfield.Add(ReturnText);
@@ -352,8 +353,8 @@ namespace Wpf_Dekidaka_app
                     { 
 
 
-                        ArrayList csvData = ModuleData.ExtPanel.Array;
-                        ArrayList csvField;
+                        List<List<string>> csvData = ModuleData.ExtPanel.Array;
+                        List<string> csvField;
 
 
                         //親ウィンドウから送られた文字列で拡張データのヘッダ名を検索する
@@ -361,8 +362,8 @@ namespace Wpf_Dekidaka_app
 
                         for (int i = 0; i < csvData.Count; i++)
                         {
-                            csvField = (ArrayList)csvData[i];
-                            string FieldText = (string)csvField[0];
+                            csvField = csvData[i];
+                            string FieldText = csvField[0];
                             if (FieldText == Sentext)
                             {
                                 TargetRowNo = i;
@@ -376,7 +377,7 @@ namespace Wpf_Dekidaka_app
                         //見つからなかったら拡張データ行を作成して1項目目に入力文字列を追加する
                         if(TargetRowNo == -1)
                         {
-                            ArrayList addfield = new ArrayList();
+                            List<string> addfield = new List<string>();
 
                             addfield.Add(Sentext);
                             addfield.Add(ReturnText);
@@ -389,13 +390,13 @@ namespace Wpf_Dekidaka_app
                         }
                         else
                         {
-                            csvField = (ArrayList)csvData[TargetRowNo];
+                            csvField = csvData[TargetRowNo];
 
                             bool IsExist = false;
 
                             for(int i = 1; i < 5;i++)
                             {
-                                if((string)csvField[i] == ReturnText)
+                                if(csvField[i] == ReturnText)
                                 {
                                     IsExist = true;
                                     break;
@@ -447,23 +448,23 @@ namespace Wpf_Dekidaka_app
                 //ArreyListをDataTableに変換してCsvStreamFruisを更新する
                 DataTable TempData = new DataTable();
 
-                ArrayList field = (ArrayList)ModuleData.ExtPanel.Array[0];
+                List<string> field = ModuleData.ExtPanel.Array[0];
 
                 foreach (var Col in field)
                 {
-                    TempData.Columns.Add((string)Col);
+                    TempData.Columns.Add(Col);
                 }
 
                 
 
-                foreach(ArrayList el in (ArrayList)ModuleData.ExtPanel.Array)
+                foreach(List<string> el in ModuleData.ExtPanel.Array)
                 { 
 
                     DataRow row = TempData.NewRow();
 
                     for (int i = 0; i < el.Count; i++)
                     {
-                        row[i] = ((string)el[i]);
+                        row[i] = (el[i]);
 
                     }
 
@@ -472,10 +473,8 @@ namespace Wpf_Dekidaka_app
                     
                 }
 
-
-                CSVTool.CSVTool csv = new CSVTool.CSVTool();
-
-                string strcsv = csv.ConvertDataTableToCsvStream(TempData, false);
+                
+                string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
 
 
 

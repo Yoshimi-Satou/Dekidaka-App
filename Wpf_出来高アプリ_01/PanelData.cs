@@ -32,13 +32,13 @@ namespace Wpf_Dekidaka_app
                 //パネルデータに日付データを追加する
 
                 //ヘッダカラム
-                ArrayList field = (ArrayList)ModuleData.Panel.Array[0];
+                List<string> field = ModuleData.Panel.Array[0];
                 field.Add("OutputShipment");
 
                 //データロウ　日付分
                 for (int i = 1; i < 9; i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add(DateTime.Today.AddDays(i - 1).ToShortDateString().Substring(5, 5) + "%5");
 
@@ -52,7 +52,7 @@ namespace Wpf_Dekidaka_app
 
                 for (int i = 9; i < ModuleData.Panel.Array.Count && (i - 9 < size.Length); i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add(size[i - 9]);
 
@@ -63,7 +63,7 @@ namespace Wpf_Dekidaka_app
                 //データロウ　空欄
                 for (int i = 9 + size.Length; i < ModuleData.Panel.Array.Count; i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add("");
 
@@ -100,7 +100,7 @@ namespace Wpf_Dekidaka_app
     public class CsvData
     {
 
-        public ArrayList Array = null;
+        public List<List<string>> Array = null;
 
         /// <summary>
         /// データをロードする
@@ -151,7 +151,7 @@ namespace Wpf_Dekidaka_app
 
 
             //csvデータをArrayListに読み込む
-            Array = CSVTool.CSVTool.CsvToArrayList2(csvstream);
+            Array = CSVTool.CSVTool.CsvToList(csvstream);
 
             return;
 

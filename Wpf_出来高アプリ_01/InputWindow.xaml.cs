@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.Data;
+using System.Collections.Generic;
 
 namespace Wpf_Dekidaka_app
 {
@@ -142,8 +143,8 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.Materials.Array != null)
             {
                 //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.Materials.Array[0];
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.Materials.Array[0];
 
                 int rows = ModuleData.Materials.Array.Count;
                 int cols = csvField.Count;
@@ -156,29 +157,29 @@ namespace Wpf_Dekidaka_app
                 //項目を見ていく
                 for (int i = 1; i < rows;i++)
                 {
-                    csvField = (ArrayList)ModuleData.Materials.Array[i];
+                    csvField = ModuleData.Materials.Array[i];
 
 
                     //作業内容を見る
-                    if (!IsMached(CheckRegEx((string)csvField[2]), Data.strContentsOfWork == null ? "" : Data.strContentsOfWork)) { continue; }
+                    if (!IsMached(CheckRegEx(csvField[2]), Data.strContentsOfWork == null ? "" : Data.strContentsOfWork)) { continue; }
 
                     //品名を見る
-                    if (!IsMached(CheckRegEx((string)csvField[1]), Data.strCommodity == null ? "" : Data.strCommodity)) { continue; }
+                    if (!IsMached(CheckRegEx(csvField[1]), Data.strCommodity == null ? "" : Data.strCommodity)) { continue; }
 
                     //得意先がマッチするか見る
-                    if ( !IsMached(CheckRegEx((string)csvField[0]) , Data.strCustomar == null ? "" : Data.strCustomar)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[0]) , Data.strCustomar == null ? "" : Data.strCustomar)) { continue; }
                         
                     //サイズを見る
-                    if ( !IsMached(CheckRegEx((string)csvField[3]), Data.strSize == null ? "" : Data.strSize)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[3]), Data.strSize == null ? "" : Data.strSize)) { continue; }
 
                     //産地を見る
-                    if ( !IsMached(CheckRegEx((string)csvField[4]), Data.strProductionArea == null ? "" : Data.strProductionArea)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[4]), Data.strProductionArea == null ? "" : Data.strProductionArea)) { continue; }
 
 
                     //全てマッチしたら資材と数を入力する
                     for (int j = 0; j < 3; j++)
                     {
-                        string MateName = (string)csvField[MatelialstrCol + j * 2];
+                        string MateName = csvField[MatelialstrCol + j * 2];
 
                         if (MateName == "") { break; }
 
@@ -208,7 +209,7 @@ namespace Wpf_Dekidaka_app
 
                                 //数
                                 int mnum;
-                                if(int.TryParse((string)csvField[MatelialnumCol + j * 2], out mnum))
+                                if(int.TryParse(csvField[MatelialnumCol + j * 2], out mnum))
                                 { Data.iMaterialsNumber(mnum, materials_count); }
                                 else { Data.iMaterialsNumber(1, materials_count); }
                                                 
@@ -299,10 +300,10 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.FG.Array != null)
             {
 
-                
+
                 //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.FG.Array[0];
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.FG.Array[0];
 
                 int rows = ModuleData.FG.Array.Count;
                 int cols = csvField.Count;
@@ -321,15 +322,15 @@ namespace Wpf_Dekidaka_app
 
                     for (int i = 0; i < rows && flag == -1; i++)
                     {
-                        csvField = (ArrayList)ModuleData.FG.Array[i];
+                        csvField = ModuleData.FG.Array[i];
 
 
                         for (int j = 1; j < cols; j++)
                         {
 
-                            if ((string)csvField[j] == ""){ break; }
+                            if (csvField[j] == ""){ break; }
 
-                            if ((string)csvField[j] == Data.straMaterials[index])
+                            if (csvField[j] == Data.straMaterials[index])
                             {
                                 flag = i;
                                 break;
@@ -348,12 +349,12 @@ namespace Wpf_Dekidaka_app
                 if(flag != -1)
                 {
                     bool IsExist = false;
-                    csvField = (ArrayList)ModuleData.FG.Array[flag];
+                    csvField = ModuleData.FG.Array[flag];
 
                     for (int materials_count = 0; materials_count < 6; materials_count++)
                     {
                      
-                        if (Data.straMaterials[materials_count] == (string)csvField[0])
+                        if (Data.straMaterials[materials_count] == csvField[0])
                         {
                             IsExist = true;
                             break;
@@ -368,7 +369,7 @@ namespace Wpf_Dekidaka_app
                             if (Data.straMaterials[materials_count] == "" || Data.straMaterials[materials_count] == null)
                             {
 
-                                Data.strMaterials( (string)csvField[0], materials_count);
+                                Data.strMaterials(csvField[0], materials_count);
 
                                 break;
                             }
@@ -406,8 +407,8 @@ namespace Wpf_Dekidaka_app
 
 
                 //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.Fruits.Array[0];
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.Fruits.Array[0];
 
                 int cols = csvField.Count;
 
@@ -419,9 +420,9 @@ namespace Wpf_Dekidaka_app
                 for (int j = 0; j < cols; j++)
                 {
 
-                    if ((string)csvField[j] == "") { break; }
+                    if (csvField[j] == "") { break; }
 
-                    if ((string)csvField[j] == Data.strCommodity)
+                    if (csvField[j] == Data.strCommodity)
                     {
                         flag = 1;
                         break;
@@ -540,8 +541,8 @@ namespace Wpf_Dekidaka_app
                 if (ModuleData.Fruits.Array != null)
                 {
 
-                    ArrayList csvField = new ArrayList();
-                    csvField = (ArrayList)ModuleData.Fruits.Array[0];
+                    List<string> csvField = new List<string>();
+                    csvField = ModuleData.Fruits.Array[0];
 
                     int cols = csvField.Count;
 
@@ -551,7 +552,7 @@ namespace Wpf_Dekidaka_app
                     for (int j = 0; j < cols; j++)
                     {
 
-                        if ((string)csvField[j] == strModifiedFruit)
+                        if (csvField[j] == strModifiedFruit)
                         {
                             flag = 1;
                             break;
@@ -587,7 +588,7 @@ namespace Wpf_Dekidaka_app
 
                         foreach (var str in csvField )
                         {
-                            TempData.Columns.Add((string)str);
+                            TempData.Columns.Add(str);
 
                         }
 
@@ -595,16 +596,13 @@ namespace Wpf_Dekidaka_app
 
                         for(int i = 0;i < csvField.Count;i++)
                         {
-                            row[i] = ((string)csvField[i]);
+                            row[i] = csvField[i];
 
                         }
 
                         TempData.Rows.Add(row);
 
-
-                        CSVTool.CSVTool csv = new CSVTool.CSVTool();
-
-                        string strcsv = csv.ConvertDataTableToCsvStream(TempData, false);
+                        string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
 
 
 
