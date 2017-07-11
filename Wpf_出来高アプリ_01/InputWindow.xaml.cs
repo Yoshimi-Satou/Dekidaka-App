@@ -1489,12 +1489,12 @@ namespace Wpf_Dekidaka_app
 
         private void checkBox_Fruit_Checked(object sender, RoutedEventArgs e)
         {
-            IsModified = true;
+            //IsModified = true;
         }
 
         private void checkBox_Fruit_Unchecked(object sender, RoutedEventArgs e)
         {
-            IsModified = true;
+            //IsModified = true;
         }
 
 
