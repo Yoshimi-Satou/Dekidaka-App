@@ -29,11 +29,9 @@ namespace Wpf_Dekidaka_app
         public SelectWindow(string sendedtext,string InputText = "")
         {
 
-            //パネルデータの最大数を設定
-            SelectionData.iDataIndexNumber = 48;
 
             //データコンテキスト用のデータの用意
-            swContext = new SelectionData();
+            swContext = new SelectionData(48);
 
 
             Sentext = sendedtext;

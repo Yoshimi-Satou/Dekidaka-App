@@ -295,14 +295,21 @@ namespace Wpf_Dekidaka_app.Bind
 
         #endregion
 
-        static public int iDataIndexNumber;
+        public int iDataIndexNumber;
 
         public int iMaxIndexNo;
 
 
 
-        public SelectionData()
+
+        public SelectionData(int MaxindexNumber = 48)
         {
+            iDataIndexNumber = MaxindexNumber;
+
+            _straButtonText = new string[iDataIndexNumber];
+            _intaButtonColor = new int[iDataIndexNumber];
+            _BlBottonColor = new Brush[iDataIndexNumber];
+            _baIsButtonEnable = new bool[iDataIndexNumber];
 
 
             for (int i = 0; i < iDataIndexNumber; i++)
@@ -325,8 +332,7 @@ namespace Wpf_Dekidaka_app.Bind
 
         }
 
-
-        private string[] _straButtonText = new string[iDataIndexNumber];//ボタンのテキスト
+        private string[] _straButtonText;// = new string[iDataIndexNumber];//ボタンのテキスト
 
         public string[] straButtonText
         {
@@ -364,7 +370,7 @@ namespace Wpf_Dekidaka_app.Bind
 
 
         //ボタンの色番号
-        private int[] _intaButtonColor = new int[iDataIndexNumber];
+        private int[] _intaButtonColor;// = new int[iDataIndexNumber];
 
         public int[] intaButtonColor
         {
@@ -401,7 +407,7 @@ namespace Wpf_Dekidaka_app.Bind
         }
 
         //ボタンの色の実体
-        private Brush[] _BlBottonColor = new Brush[iDataIndexNumber];
+        private Brush[] _BlBottonColor;// = new Brush[iDataIndexNumber];
 
         public Brush[] BlBottonColor
         {
@@ -454,7 +460,7 @@ namespace Wpf_Dekidaka_app.Bind
 
 
 
-        private bool[] _baIsButtonEnable = new bool[iDataIndexNumber];//ボタン有効/無効
+        private bool[] _baIsButtonEnable;// = new bool[iDataIndexNumber];//ボタン有効/無効
 
         public bool[] baIsButtonEnable
         {
@@ -945,7 +951,7 @@ namespace Wpf_Dekidaka_app.Bind.Converters
     class BrsConverter : IValueConverter
     {
 
-        private static Brush[] Brs = { new SolidColorBrush(Color.FromRgb(0xF4, 0xF4, 0xF5)), //入力済み欄の色　グレー
+        private Brush[] Brs = { new SolidColorBrush(Color.FromRgb(0xF4, 0xF4, 0xF5)), //入力済み欄の色　グレー
                                 new SolidColorBrush(Color.FromRgb(0xFF, 0xCA, 0xE0))  //未入力欄の色　ピンク
                               };
 

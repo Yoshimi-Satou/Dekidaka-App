@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Title="入力ウィンドウ" Height="800" Width="1280" WindowState="Maximized" WindowStyle="None"  ResizeMode="NoResize">
     <!--WindowState="Maximized" WindowStyle="None">-->
-
+    <!-- ↑コンバーターの定義のためのxmlns:Conv="clr-namespace:Wpf_Dekidaka_app.Bind.Converters" -->
+    
+    <!-- コンバータークラスの実体化-->
     <Window.Resources>
         <Conv:BrsConverter x:Key="BrsConverter"/>
     </Window.Resources>
