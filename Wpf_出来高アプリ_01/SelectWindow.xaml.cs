@@ -53,9 +53,10 @@ namespace Wpf_Dekidaka_app
 
 
                 //csvFieldでcsvData行の中の列セルにアクセスする
-                List<string> csvField = new List<string>();
-                csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+                List<string> csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
 
+
+                
 
                 //親ウィンドウから送られた文字列でヘッダ名を検索する
                 for (int i = 0; i < csvField.Count; i++)
@@ -69,6 +70,8 @@ namespace Wpf_Dekidaka_app
                     }
 
                 }
+
+
 
                 //見つからなかったらメッセージを表示
                 if (TargetColNo == -1)

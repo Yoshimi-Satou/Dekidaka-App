@@ -27,9 +27,10 @@ namespace Wpf_Dekidaka_app
             ModuleData.Panel.Array = null;
 
 
+            //パネルデータを読み込む
             if (ModuleData.Panel.LoadData("PanelData.csv"))
             {
-                //パネルデータに日付データを追加する
+                //読み込めたらパネルデータに日付データを追加する
 
                 //ヘッダカラム
                 List<string> field = ModuleData.Panel.Array[0];
@@ -73,6 +74,7 @@ namespace Wpf_Dekidaka_app
 
 
             }
+
 
             //各種データの読み込み
             if (!ModuleData.FG.LoadData("FG_Net.csv"))

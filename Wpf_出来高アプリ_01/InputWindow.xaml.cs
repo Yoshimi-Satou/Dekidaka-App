@@ -561,6 +561,8 @@ namespace Wpf_Dekidaka_app
                         where p == strModifiedFruit
                         select p;
 
+                    
+
                     if(el.Count<string>() != 0)
                     {
                         flag = 1;

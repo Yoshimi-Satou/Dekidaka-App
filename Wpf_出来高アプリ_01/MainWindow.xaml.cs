@@ -626,7 +626,10 @@ namespace Wpf_Dekidaka_app
 
 
             //CSVとして保存する
-            CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true,false);
+            if (CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true,false) == false)
+            {
+                message = "出来高の保存に失敗しました。";
+            }
 
 
             StateW.Close();

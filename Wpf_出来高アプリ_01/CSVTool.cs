@@ -123,7 +123,7 @@ namespace CSVTool
 
 
         /// <summary>
-        /// CSVをListに変換
+        /// CSVをList<string>に変換
         /// </summary>
         /// <param name="csvText">CSVの内容が入ったString</param>
         /// <returns>変換結果のList</returns>
@@ -232,6 +232,22 @@ namespace CSVTool
         }
 
 
+        public static DataTable ListToDataTable(List<List<string>> ListString)
+        {
+            DataTable ListData = new DataTable();
+
+
+
+
+
+
+
+
+
+
+            return ListData;
+
+        }
 
 
         /// <summary>
@@ -241,7 +257,7 @@ namespace CSVTool
         /// <param name="csvPath">保存先のCSVファイルのパス</param>
         /// <param name="writeHeader">ヘッダを書き込む時はtrue。</param>
         /// <param name="append">続きで書き込む時はtrue。</param>
-        public static void ConvertDataTableToCsv(
+        public static bool ConvertDataTableToCsv(
             DataTable dt, string csvPath, bool writeHeader,bool append = false)
         {
 
@@ -270,12 +286,13 @@ namespace CSVTool
             }
             catch
             {
-                MessageBox.Show("ファイルの書き込みに失敗しました");
+                //MessageBox.Show("ファイルの書き込みに失敗しました");
 
-
+                return false;
 
             }
 
+            return true;
 
         }
 
