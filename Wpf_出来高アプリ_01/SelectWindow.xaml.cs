@@ -44,79 +44,100 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.Panel.Array != null)
             {
 
+
                 List<List<string>> csvData = ModuleData.Panel.Array;
+                DataTable csvTable = ModuleData.Panel.Table;
 
 
                 //csvの行数を保持 （csvData[index]が一行分のデータ）
-                int csvRow = csvData.Count;
+                int csvRow = csvTable.Rows.Count;
                 int TargetColNo = -1; //目的のデータの列番号を入れる変数
 
 
-                //csvFieldでcsvData行の中の列セルにアクセスする
-                List<string> csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+                ////csvFieldでcsvData行の中の列セルにアクセスする
+                //List<string> csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+
+                ////親ウィンドウから送られた文字列でヘッダ名を検索する
+                //for (int i = 0; i < csvField.Count; i++)
+                //{
+                //    string FieldText = (string)csvField[i];
+                //    if (FieldText == sendedtext)
+                //    {
+                //        TargetColNo = i;
+                //        break;
+
+                //    }
+
+                //}
 
 
-                
 
-                //親ウィンドウから送られた文字列でヘッダ名を検索する
-                for (int i = 0; i < csvField.Count; i++)
+
+                DataTable PanelData = new DataTable();
+
+                try
                 {
-                    string FieldText = (string)csvField[i];
-                    if (FieldText == sendedtext)
-                    {
-                        TargetColNo = i;
-                        break;
-
-                    }
-
+                    //パネルデータを抽出テキストの列で絞り込む
+                    PanelData = csvTable.DefaultView.ToTable("PanelData", false, Sentext);
                 }
-
-
-
-                //見つからなかったらメッセージを表示
-                if (TargetColNo == -1)
+                catch
                 {
+                    //見つからなかったらメッセージを表示
                     MessageBox.Show(sendedtext + "のデータが見つかりません");
                     TargetColNo = 0;
+
                 }
-                else //見つかったらパネルデータの設定
+
+
+
+                if (TargetColNo != 0)
                 {
-                    for (int i = 1; i < csvRow && i < 48; i++)
+
+                    int count = 0;
+
+                    foreach (DataRow drEle in PanelData.AsEnumerable())
                     {
 
-                        csvField = csvData[i];
-                        string ftext = csvField[TargetColNo];
+                        string ftext = drEle.Field<string>(Sentext);
 
                         if (ftext != "")
                         {
-                            swContext.bIsButtonEnable(true, i - 1);
+                            swContext.bIsButtonEnable(true, count);
 
                             string[] txdata = ftext.Split('%');
 
-                            swContext.strButtonText(txdata[0], i - 1);
+                            swContext.strButtonText(txdata[0], count);
 
                             if (txdata.Count<string>() > 1)
                             {
                                 int color = 0;
                                 if (int.TryParse(txdata[1], out color))
                                 {
-                                    swContext.intButtonColor(color, i - 1);
+                                    swContext.intButtonColor(color, count);
                                 }
                                 else
-                                { swContext.intButtonColor(0, i - 1); }
+                                { swContext.intButtonColor(0, count); }
                             }
                             else
-                            { swContext.intButtonColor(0, i - 1); }
+                            { swContext.intButtonColor(0, count); }
 
 
                         }
+
+                        count++;
+                        if (count > 47) break;
+
+
                     }
+
 
 
                     //拡張パネル設定
                     if(ModuleData.ExtPanel.Array != null)
                     {
                         csvData = ModuleData.ExtPanel.Array;
+
+                        List<string> csvField;
 
                         //親ウィンドウから送られた文字列で拡張データのヘッダ名を検索する
                         int TargetRowNo = -1;

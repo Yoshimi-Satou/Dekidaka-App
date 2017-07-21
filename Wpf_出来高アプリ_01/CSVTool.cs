@@ -234,18 +234,49 @@ namespace CSVTool
 
         public static DataTable ListToDataTable(List<List<string>> ListString)
         {
+
+            if(ListString.Count < 2) { return null; }
+
             DataTable ListData = new DataTable();
 
 
+            GetTableHeader(ref ListData, ListString[0]);
 
+            for(int i = 1; i < ListString.Count; i++)
+            {
+                GetTableDataRow(ref ListData, ListString[i]);
 
-
-
-
-
+            }
 
 
             return ListData;
+
+        }
+
+
+        private static bool GetTableHeader(ref DataTable DestTable,List<string> strlRow)
+        {
+
+            foreach(string strCol in strlRow)
+            {
+                DestTable.Columns.Add(strCol);
+
+            }
+
+            return true;
+            
+        }
+
+
+        private static bool GetTableDataRow(ref DataTable DestTable, List<string> strlRow)
+        {
+            DataRow dtRow = DestTable.NewRow();
+
+            dtRow.ItemArray = strlRow.ToArray();
+
+            DestTable.Rows.Add(dtRow);
+
+            return true;
 
         }
 

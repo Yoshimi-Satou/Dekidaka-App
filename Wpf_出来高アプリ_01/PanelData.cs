@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,8 @@ namespace Wpf_Dekidaka_app
 
                 }
 
+                //追加されたので再度データテーブルを設定
+                ModuleData.Panel.Table = CSVTool.CSVTool.ListToDataTable(ModuleData.Panel.Array);
 
 
             }
@@ -103,6 +106,7 @@ namespace Wpf_Dekidaka_app
     {
 
         public List<List<string>> Array = null;
+        public DataTable Table = null;
 
         /// <summary>
         /// データをロードする
@@ -139,6 +143,7 @@ namespace Wpf_Dekidaka_app
             //csvデータをArrayListに読み込む
             LoadDataFromString(csvstream);
 
+
             return true;
 
 
@@ -152,8 +157,11 @@ namespace Wpf_Dekidaka_app
         {
 
 
-            //csvデータをArrayListに読み込む
+            //csvデータをListに読み込む
             Array = CSVTool.CSVTool.CsvToList(csvstream);
+
+            //ListをDataTableに変換して保持
+            Table = CSVTool.CSVTool.ListToDataTable(Array);
 
             return;
 
