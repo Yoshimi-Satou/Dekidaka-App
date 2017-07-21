@@ -128,7 +128,7 @@ namespace CSVTool
         /// <param name="csvPath">保存先のCSVファイルのパス</param>
         /// <param name="writeHeader">ヘッダを書き込む時はtrue。</param>
         /// <param name="append">続きで書き込む時はtrue。</param>
-        public void ConvertDataTableToCsv(
+        public bool ConvertDataTableToCsv(
             DataTable dt, string csvPath, bool writeHeader,bool append = false)
         {
 
@@ -159,11 +159,11 @@ namespace CSVTool
             {
                 MessageBox.Show("ファイルの書き込みに失敗しました");
 
-
+                return false;
 
             }
 
-
+            return true;
         }
 
         public string ConvertDataTableToCsvStream(DataTable dt, bool writeHeader)
