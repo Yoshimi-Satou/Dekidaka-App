@@ -52,23 +52,32 @@ namespace Wpf_Dekidaka_app
             }
 
 
-            //設定の読み出し
+            //状況表示
+            StateWindow StateW = new StateWindow("設定の読み込み中…");
+            StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            StateW.Show();
+
+                //設定の読み出し
             Settings.PreferenceFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + SettingPath;
             if(Settings.LoadSetting() == false)
             {
                 Settings.InitializeSetting();
             }
 
-
+            StateW.cx.strDisplayMessage = "パネルの読み込み中…";
 
             ModuleData.ModuleDataSetup();
-
 
 
 
             // メイン ウィンドウ表示
             MainWindow window = new MainWindow();
             window.Show();
+
+            //状況表示クローズ
+            StateW.Close();
+            StateW = null;
 
         }
 

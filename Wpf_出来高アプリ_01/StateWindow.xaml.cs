@@ -26,10 +26,13 @@ namespace Wpf_Dekidaka_app
     public partial class StateWindow : Window
     {
 
-        private StateWindowCx cx = new StateWindowCx(); 
+        /// <summary>
+        /// データコンテキスト
+        /// </summary>
+        public StateWindowCx cx = new StateWindowCx(); 
 
 
-        public StateWindow(string strMessage = "処理しています")
+        public StateWindow(string strMessage = "お待ち下さい")
         {
 
             cx.strDisplayMessage = strMessage;
