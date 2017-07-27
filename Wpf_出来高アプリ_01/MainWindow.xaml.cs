@@ -326,6 +326,24 @@ namespace Wpf_Dekidaka_app
             EditDataAsync(sender);
         }
 
+
+        private MessageBoxResult ShowMessageDlg(string message)
+        {
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+            OKCancelDlg re = new OKCancelDlg(message);
+
+            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            re.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            return re.result;
+
+        }
+
+
         /// <summary>
         /// 入力用の子ウィンドウを開いて出来高データを入力する。変更されたら一時データとバックアップを保存する
         /// </summary>
@@ -355,11 +373,7 @@ namespace Wpf_Dekidaka_app
 
                 string message = "記入者名と人数を設定して下さい。";
 
-                OKCancelDlg re = new OKCancelDlg(message);
-
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
+                ShowMessageDlg(message);
 
                 return ;
 
@@ -569,13 +583,8 @@ namespace Wpf_Dekidaka_app
 
             string message = "現在の出来高を保存しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if(re.result == MessageBoxResult.Cancel)
+            if(ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
 
@@ -637,12 +646,9 @@ namespace Wpf_Dekidaka_app
 
 
             //結果のメッセージを表示
-            re = new OKCancelDlg(message);
+            ShowMessageDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            re.ShowDialog();
-            
 
             return;
 
@@ -820,10 +826,12 @@ namespace Wpf_Dekidaka_app
 
             TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
 
-
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
 
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             if (sw.result != -1) { mwContext.mwPartGroupNo = sw.result; }
 
@@ -834,11 +842,15 @@ namespace Wpf_Dekidaka_app
         private void textBox_GroupNo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
 
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartGroupNo = sw.result; }
@@ -850,11 +862,16 @@ namespace Wpf_Dekidaka_app
 
         private void textBox_PartNumber_TouchDown(object sender, TouchEventArgs e)
         {
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
 
 
+
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
@@ -864,11 +881,15 @@ namespace Wpf_Dekidaka_app
         private void textBox_PartNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
 
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
@@ -970,20 +991,20 @@ namespace Wpf_Dekidaka_app
 
             string message = "現在の出来高を消去しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
             ConfirmationWindow conf = new ConfirmationWindow("クリア");
 
             conf.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             conf.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
 
             if (conf.result == false)
             { return; }
@@ -1048,13 +1069,8 @@ namespace Wpf_Dekidaka_app
 
             string message = "アプリを終了しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
             this.Close();
@@ -1150,13 +1166,8 @@ namespace Wpf_Dekidaka_app
             //内容を確認するダイアログ
             string message = Row.strCustomar + "の" + Row.strCommodity + Row.strContentsOfWork + "のテロップを印刷しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
 
@@ -1166,13 +1177,8 @@ namespace Wpf_Dekidaka_app
             {
                 message = "出来高が入力されていませんがよろしいですか？";
 
-                re = new OKCancelDlg(message);
 
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
-
-                if (re.result == MessageBoxResult.Cancel)
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
                 { return; }
             }
 

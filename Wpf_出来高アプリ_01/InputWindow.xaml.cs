@@ -478,6 +478,23 @@ namespace Wpf_Dekidaka_app
 
         }
 
+
+        private MessageBoxResult ShowMessageDlg(string message)
+        {
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+            OKCancelDlg re = new OKCancelDlg(message);
+
+            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            re.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            return re.result;
+
+        }
+
         /// <summary>
         /// 確定ボタンが押されたときの処理
         /// </summary>
@@ -498,13 +515,8 @@ namespace Wpf_Dekidaka_app
             {
                 message = message + "が入力されていませんが続行しますか？";
 
-                OKCancelDlg re = new OKCancelDlg(message);
 
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
-
-                if (re.result == MessageBoxResult.Cancel)
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
                 { return; }
 
             }
@@ -528,13 +540,7 @@ namespace Wpf_Dekidaka_app
                 if (message != "OK")
                 {
 
-                    OKCancelDlg re = new OKCancelDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？");
-
-                    re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                    re.ShowDialog();
-
-                    if (re.result == MessageBoxResult.Cancel)
+                    if (ShowMessageDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？") == MessageBoxResult.Cancel)
                     { return; }
 
 
@@ -681,25 +687,10 @@ namespace Wpf_Dekidaka_app
         private void Button_Cancel_Press(object sender)
         {
 
-            // Configure message box
             string message = "現在の変更内容を破棄\nして戻りますか？";
-            //string caption = "確認";
-            //MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            //MessageBoxImage icon = MessageBoxImage.Information;
-            //MessageBoxResult defaultResult = MessageBoxResult.OK;
-            //MessageBoxOptions options = MessageBoxOptions.None;
-            //// Show message box
-            //MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult, options);
 
-            OKCancelDlg re = new OKCancelDlg(message);
-
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-
-
-            if (re.result == MessageBoxResult.Cancel) { return; }
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+            { return; }
 
 
             //ReturnValue.Data_Import(Original);
@@ -740,31 +731,21 @@ namespace Wpf_Dekidaka_app
         {
 
 
-            // Configure message box
             string message = "内容が削除されますが\nよろしいですか？";
-            //string caption = "確認";
-            //MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            //MessageBoxImage icon = MessageBoxImage.Information;
-            //MessageBoxResult defaultResult = MessageBoxResult.OK;
-            //MessageBoxOptions options = MessageBoxOptions.None;
-            //// Show message box
-            //MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult, options);
 
-            OKCancelDlg re = new OKCancelDlg(message);
-
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+            { return; }
 
 
-            if (re.result == MessageBoxResult.Cancel) { return; }
-
+            this.Grid_Opa.Visibility = Visibility.Visible;
             ConfirmationWindow conf = new ConfirmationWindow("削除");
             conf.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             conf.ShowDialog();
 
-            if(conf.result == false) { return; }
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            if (conf.result == false) { return; }
 
             ReturnValue.bActionable = false;
 
@@ -772,7 +753,7 @@ namespace Wpf_Dekidaka_app
 
             IsModified = true;
 
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
 
             this.Close();
@@ -1135,6 +1116,9 @@ namespace Wpf_Dekidaka_app
         private int TouchPanelTenkeyShow(int value = 0) 
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+
             //MessageBox.Show("ダブルクリック");
 
             //var txtbx_sender = (TextBox)sender;
@@ -1150,6 +1134,9 @@ namespace Wpf_Dekidaka_app
             tw.ShowDialog();
 
             IsModified = true;
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
 
             return tw.result;
 
@@ -1388,11 +1375,16 @@ namespace Wpf_Dekidaka_app
         private DateTime GetInputTime(DateTime dtTime)
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             TimeInput tiw = new TimeInput(dtTime);
 
             //tiw.Topmost = true;
 
             tiw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             DateTime resultTime;
 
@@ -1686,10 +1678,13 @@ namespace Wpf_Dekidaka_app
         private void Button_Print_Press(object sender)
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             TagEdit te = new TagEdit(ReturnValue);
 
             te.ShowDialog();
 
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
         }

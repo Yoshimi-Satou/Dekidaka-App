@@ -142,6 +142,7 @@
 
             </Grid>
         </Viewbox>
-
+        <Grid x:Name="Grid_Opa" Background="#7F000000" Visibility="Collapsed" />
     </Grid>
+    
 </Window>
