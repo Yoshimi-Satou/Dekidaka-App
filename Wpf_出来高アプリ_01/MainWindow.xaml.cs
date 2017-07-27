@@ -1088,7 +1088,11 @@ namespace Wpf_Dekidaka_app
 
             pw.Topmost = true;
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             pw.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
 
@@ -1104,7 +1108,11 @@ namespace Wpf_Dekidaka_app
 
                 pw.Topmost = true;
 
+                this.Grid_Opa.Visibility = Visibility.Visible;
+
                 pw.ShowDialog();
+
+                this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             };
 

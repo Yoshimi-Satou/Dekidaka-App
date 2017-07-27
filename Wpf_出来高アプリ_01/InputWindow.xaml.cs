@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
 
 namespace Wpf_Dekidaka_app
 {
@@ -53,6 +54,9 @@ namespace Wpf_Dekidaka_app
         private bool IsFruitModified = false;
         private string strModifiedFruit = "";
 
+
+        private Brush SelectedBg = new SolidColorBrush(Color.FromRgb(0xFF, 0xD8, 0xD8));
+
         /// <summary>
         /// 入力ウィンドウを初期化する
         /// </summary>
@@ -70,7 +74,7 @@ namespace Wpf_Dekidaka_app
             DataContext = ReturnValue;
 
             //出来高のイベントが変更された時に呼び出されるイベントを登録
-            ReturnValue.PropertyChanged += DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged += DekidakaPropertyChanged;
 
             //日付欄の初期化
             this.OutputShipment0.IsEnabled = ReturnValue.bMulti;
@@ -655,7 +659,7 @@ namespace Wpf_Dekidaka_app
             Original.Data_Import(ReturnValue);
 
 
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
             this.Close();
         }
@@ -697,7 +701,7 @@ namespace Wpf_Dekidaka_app
 
             IsModified = false;
 
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
             this.Close();
 
@@ -1173,49 +1177,6 @@ namespace Wpf_Dekidaka_app
 
         }
 
-
-        private void OutputQuantity_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-            int index = IndexSerch((TextBox)sender);
-            
-            if(index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
-
-
-
-            if(result != -1)
-            {
-                ReturnValue.iOutputQuantity(result, index);
-            }
-
-
-        }
-
-        private void OutputQuantity_TouchUp(object sender, TouchEventArgs e)
-        {
-
-            int index = IndexSerch((TextBox)sender);
-
-            if (index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
-
-            
-
-            if (result != -1)
-            {
-                ReturnValue.iOutputQuantity(result, index);
-            }
-
-
-        }
-
         private void OutputShipmext_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //OutputShipment
@@ -1254,31 +1215,74 @@ namespace Wpf_Dekidaka_app
         }
 
 
-        private void OutputNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OutputQuantity_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int index = IndexSerch((TextBox)sender);
+
+            OutputQuantity_Press(sender);
+
+
+        }
+
+        private void OutputQuantity_TouchUp(object sender, TouchEventArgs e)
+        {
+
+            OutputQuantity_Press(sender);
+
+
+        }
+
+        private void OutputQuantity_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
             int result = -1;
 
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputNumber[index]);
+            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
 
 
 
             if (result != -1)
             {
-                ReturnValue.iOutputNumber(result, index);
-
+                ReturnValue.iOutputQuantity(result, index);
             }
+
+            tb.Background = Bc;
+
+
+        }
+
+
+        private void OutputNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OutputNumber_Press(sender);
 
         }
 
         private void OutputNumber_TouchUp(object sender, TouchEventArgs e)
         {
-            
 
-            int index = IndexSerch((TextBox)sender);
+            OutputNumber_Press(sender);
+        }
+
+        private void OutputNumber_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
@@ -1292,34 +1296,35 @@ namespace Wpf_Dekidaka_app
             {
                 ReturnValue.iOutputNumber(result, index);
             }
+
+            tb.Background = Bc;
+
         }
+
 
         private void MaterialsNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int index = IndexSerch((TextBox)sender);
-
-            if (index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaMaterialsNumber[index]);
-
-
-
-            if (result != -1)
-            {
-                ReturnValue.iMaterialsNumber(result, index);
-
-            }
+            MaterialsNumber_Press(sender);
 
         }
 
         private void MaterialsNumber_TouchUp(object sender, TouchEventArgs e)
         {
 
-            
+            MaterialsNumber_Press(sender);
 
-            int index = IndexSerch((TextBox)sender);
+        }
+
+        private void MaterialsNumber_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
@@ -1335,12 +1340,20 @@ namespace Wpf_Dekidaka_app
 
             }
 
+            tb.Background = Bc;
 
         }
 
+
         private void StartTime_TouchUp(object sender, TouchEventArgs e)
         {
-            
+
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
 
             DateTime result = GetInputTime(ReturnValue.dtStartTime);
             DateTime None = new DateTime(1, 1, 1);
@@ -1350,11 +1363,19 @@ namespace Wpf_Dekidaka_app
                 ReturnValue.dtStartTime = result;
             }
 
+            tb.Background = Bc;
+
+
         }
 
         private void EndTime_TouchUp(object sender, TouchEventArgs e)
         {
-            
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
 
             DateTime result = GetInputTime(ReturnValue.dtEndTime);
             DateTime None = new DateTime(1, 1, 1);
@@ -1364,6 +1385,7 @@ namespace Wpf_Dekidaka_app
                 ReturnValue.dtEndTime = result;
             }
 
+            tb.Background = Bc;
 
         }
 
