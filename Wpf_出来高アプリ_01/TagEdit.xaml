@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Dekidaka_app"
         mc:Ignorable="d"
-        Title="見出し印刷" Height="306" Width="816" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+        Title="見出し印刷" Height="306" Width="816" WindowStartupLocation="CenterScreen" WindowStyle="none" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize">
     <Grid x:Name="RootGrid" >
-        <Border BorderBrush="#FFFF9999" BorderThickness="8">
-            <Grid Margin="0" Background="White" Height="290" Width="800">
+        <Border BorderBrush="#FFFF9999" BorderThickness="8" CornerRadius="8" Background="White">
+            <Grid Margin="0" Height="290" Width="800">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10"/>
                     <RowDefinition x:Name="AreaCom" Height="90"/>

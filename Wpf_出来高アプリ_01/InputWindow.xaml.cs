@@ -153,7 +153,7 @@ namespace Wpf_Dekidaka_app
             //データが読み込まれていれば
             if (ModuleData.Materials.Array != null)
             {
-                //Arraylistの行数と列数をもらう
+                //Listの行数と列数をもらう
                 List<string> csvField = new List<string>();
                 csvField = ModuleData.Materials.Array[0];
 
@@ -241,7 +241,7 @@ namespace Wpf_Dekidaka_app
                 } //for i
                 
 
-            }// if arrey
+            }// if array
 
             
             //終わったらイベントを再登録
@@ -417,7 +417,7 @@ namespace Wpf_Dekidaka_app
             {
 
 
-                //Arraylistの行数と列数をもらう
+                //Listの行数と列数をもらう
                 List<string> csvField = new List<string>();
                 csvField = ModuleData.Fruits.Array[0];
 

@@ -146,12 +146,6 @@ namespace Wpf_Dekidaka_app
             string strSize = Dekidaka.strSize;
 
 
-
-
-
-
-
-
             //関連オブジェクトを作成
             pageContent = new PageContent();
             fixedPage = new FixedPage();
@@ -185,7 +179,6 @@ namespace Wpf_Dekidaka_app
 
             Pt.PageOrientation = System.Printing.PageOrientation.Landscape;
             Pt.CopyCount = iNumberCopies;
-
 
 
 

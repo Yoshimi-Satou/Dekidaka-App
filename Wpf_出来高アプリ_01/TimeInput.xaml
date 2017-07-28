@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Dekidaka_app"
         mc:Ignorable="d"
-        Title="時刻入力" WindowStartupLocation="CenterScreen" Height="649" Width="649" WindowStyle="None" ResizeMode="NoResize">
+        Title="時刻入力" WindowStartupLocation="CenterScreen" Height="649" Width="649" WindowStyle="none" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize">
     <Viewbox Stretch="None" HorizontalAlignment="Center" >
-        <Grid Height="639" Width="639" Background="#FFFF7070" >
-            <Grid Margin="5,5,5,5" Background="White">
+        <Border Height="649" Width="649" Background="White" BorderBrush="#FFFF7070" BorderThickness="5" CornerRadius="5" >
+            <Grid Margin="0,0,0,0">
 
                 <Grid Margin="0,195,74,84" HorizontalAlignment="Right" Width="480" >
 
@@ -40,6 +40,6 @@
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="140,55,0,0" TextWrapping="Wrap" Text="時刻入力" VerticalAlignment="Top" Height="90" Width="375" FontSize="72"/>
             
             </Grid>
-        </Grid>
+        </Border>
     </Viewbox>
 </Window>

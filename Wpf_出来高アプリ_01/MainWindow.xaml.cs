@@ -64,7 +64,7 @@ namespace Wpf_Dekidaka_app
         private int BackupSaveCount = 0;
 
 
-        private System.Media.SoundPlayer TouchSound;
+        //private System.Media.SoundPlayer TouchSound;
 
         //private Settings Preference  = null;
 

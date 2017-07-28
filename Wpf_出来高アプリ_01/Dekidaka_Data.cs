@@ -32,7 +32,7 @@ namespace DekiDaka_Data
 
 
         //
-        //  メンバを増やしたら MainWindow.Load_Data()インポートメソッドと
+        //  メンバを増やしたら このクラス自身のインポートメソッドとMainWindow.Load_Data()インポートメソッドと
         //  GetDekidakaDataTable()も修正すること
         //
 
