@@ -64,6 +64,8 @@ namespace Wpf_Dekidaka_app
         private int BackupSaveCount = 0;
 
 
+        private System.Media.SoundPlayer TouchSound;
+
         //private Settings Preference  = null;
 
         /// <summary>
@@ -118,6 +120,7 @@ namespace Wpf_Dekidaka_app
 
             // DataGridに設定する
             this.dataGrid.ItemsSource = DekiDakaDataCollection;
+
 
 
             
@@ -1147,6 +1150,7 @@ namespace Wpf_Dekidaka_app
 
         private void button_Print_TouchUp(object sender, TouchEventArgs e)
         {
+            
             EventProcess Prs = Button_Print_Press;
 
             tp.button_TouchUp(sender, e, Prs);
