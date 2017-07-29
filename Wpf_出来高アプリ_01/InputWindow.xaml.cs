@@ -506,160 +506,165 @@ namespace Wpf_Dekidaka_app
         private void Button_Submit_Press(object sender)
         {
 
-            //未入力箇所を調べる
-            string message = "";
 
-            if(ReturnValue.strCustomar == null || ReturnValue.strCustomar == "") { message = "発注者"; }
-            if(ReturnValue.strCommodity == null || ReturnValue.strCommodity == "") { message = "品名"; }
-            if(ReturnValue.strContentsOfWork == null || ReturnValue.strContentsOfWork == "") { message = "作業内容"; }
-            if(ReturnValue.strEndTime == "0:00") { message = "終了時刻"; }
-            if(ReturnValue.strOutput == null || ReturnValue.strOutput == "") { message = "出来高"; }
-
-            if (message != "")
+            if (IsModified)
             {
-                message = message + "が入力されていませんが続行しますか？";
+                //未入力箇所を調べる
+                string message = "";
 
+                if (ReturnValue.strCustomar == null || ReturnValue.strCustomar == "") { message = "発注者"; }
+                if (ReturnValue.strCommodity == null || ReturnValue.strCommodity == "") { message = "品名"; }
+                if (ReturnValue.strContentsOfWork == null || ReturnValue.strContentsOfWork == "") { message = "作業内容"; }
+                if (ReturnValue.strEndTime == "0:00") { message = "終了時刻"; }
+                if (ReturnValue.strOutput == null || ReturnValue.strOutput == "") { message = "出来高"; }
 
-                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
-                { return; }
-
-            }
-
-
-            //未入力箇所が無いときは出来高に不正がないか調べる
-            if (message == "")
-            {
-
-                for (int i = 0; i < 6; i++)
+                if (message != "")
                 {
-                    if (ReturnValue.iaOutputQuantity[i] != 0 && ReturnValue.iaOutputNumber[i] == 1)
-                    {
-                        message = "OK";
-                        break;
+                    message = message + "が入力されていませんが続行しますか？";
 
-                    }
 
-                }
-
-                if (message != "OK")
-                {
-
-                    if (ShowMessageDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？") == MessageBoxResult.Cancel)
+                    if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
                     { return; }
 
-
                 }
 
-            }
 
-            //フルーツ種別が変更されていたら、設定のフルーツ種別を追加/削除する
-            if(IsFruitModified)
-            {
-                if (ModuleData.Fruits.Array != null && strModifiedFruit != null && strModifiedFruit != "")
+                //未入力箇所が無いときは出来高に不正がないか調べる
+                if (message == "")
                 {
 
-                    List<string> csvField = new List<string>();
-                    csvField = ModuleData.Fruits.Array[0];
-
-                    int cols = csvField.Count;
-
-                    int flag = 0;
-
-
-                    var el =
-                        from p in csvField
-                        where p == strModifiedFruit
-                        select p;
-
-                    
-
-                    if(el.Count<string>() != 0)
+                    for (int i = 0; i < 6; i++)
                     {
-                        flag = 1;
-                    }
-
-                    //新規文字列かどうかを確認する
-                    //for (int j = 0; j < cols; j++)
-                    //{
-
-                    //    if (csvField[j] == strModifiedFruit)
-                    //    {
-                    //        flag = 1;
-                    //        break;
-                    //    }
-
-                    //}
-
-                    
-                    
-                    if(ReturnValue.bKind)
-                    {
-                        if(flag == 0)
+                        if (ReturnValue.iaOutputQuantity[i] != 0 && ReturnValue.iaOutputNumber[i] == 1)
                         {
-                            csvField.Add(strModifiedFruit);
+                            message = "OK";
+                            break;
+
                         }
 
                     }
-                    else
-                    {
-                        if(flag == 1)
-                        {
-                            csvField.Remove(strModifiedFruit);
 
-                        }
+                    if (message != "OK")
+                    {
+
+                        if (ShowMessageDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？") == MessageBoxResult.Cancel)
+                        { return; }
 
 
                     }
-
-                    if(flag != -1)
-                    {
-                        //ArreyListをDataTableに変換してCsvStreamFruisを更新する
-                        DataTable TempData = new DataTable();
-
-                        foreach (var str in csvField )
-                        {
-                            TempData.Columns.Add(str);
-
-                        }
-
-                        DataRow row = TempData.NewRow();
-
-                        for(int i = 0;i < csvField.Count;i++)
-                        {
-                            row[i] = csvField[i];
-
-                        }
-
-                        TempData.Rows.Add(row);
-
-                        string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
-
-
-
-                        Settings.csvStreamFruit = strcsv;
-
-
-                    }
-
-
-
-
 
                 }
 
+                //フルーツ種別が変更されていたら、設定のフルーツ種別を追加/削除する
+                if (IsFruitModified)
+                {
+                    if (ModuleData.Fruits.Array != null && strModifiedFruit != null && strModifiedFruit != "")
+                    {
+
+                        List<string> csvField = new List<string>();
+                        csvField = ModuleData.Fruits.Array[0];
+
+                        int cols = csvField.Count;
+
+                        int flag = 0;
+
+
+                        var el =
+                            from p in csvField
+                            where p == strModifiedFruit
+                            select p;
+
+
+
+                        if (el.Count<string>() != 0)
+                        {
+                            flag = 1;
+                        }
+
+                        //新規文字列かどうかを確認する
+                        //for (int j = 0; j < cols; j++)
+                        //{
+
+                        //    if (csvField[j] == strModifiedFruit)
+                        //    {
+                        //        flag = 1;
+                        //        break;
+                        //    }
+
+                        //}
+
+
+
+                        if (ReturnValue.bKind)
+                        {
+                            if (flag == 0)
+                            {
+                                csvField.Add(strModifiedFruit);
+                            }
+
+                        }
+                        else
+                        {
+                            if (flag == 1)
+                            {
+                                csvField.Remove(strModifiedFruit);
+
+                            }
+
+
+                        }
+
+                        if (flag != -1)
+                        {
+                            //ArreyListをDataTableに変換してCsvStreamFruisを更新する
+                            DataTable TempData = new DataTable();
+
+                            foreach (var str in csvField)
+                            {
+                                TempData.Columns.Add(str);
+
+                            }
+
+                            DataRow row = TempData.NewRow();
+
+                            for (int i = 0; i < csvField.Count; i++)
+                            {
+                                row[i] = csvField[i];
+
+                            }
+
+                            TempData.Rows.Add(row);
+
+                            string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
+
+
+
+                            Settings.csvStreamFruit = strcsv;
+
+
+                        }
+
+
+
+
+
+                    }
+
+                }
+
+
+                //入力済みフラグを立てる
+                ReturnValue.bActionable = true;
+                //IsModified = true;
+
+
+                //出来高データ本体にデータをインポート
+                Original.Data_Import(ReturnValue);
+
+
+                //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+
             }
-
-
-            //入力済みフラグを立てる
-            ReturnValue.bActionable = true;
-            //IsModified = true;
-
-
-            //出来高データ本体にデータをインポート
-            Original.Data_Import(ReturnValue);
-
-
-            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
             this.Close();
         }
@@ -691,17 +696,22 @@ namespace Wpf_Dekidaka_app
         private void Button_Cancel_Press(object sender)
         {
 
-            string message = "現在の変更内容を破棄\nして戻りますか？";
+            if(IsModified)
+            { 
+                string message = "現在の変更内容を破棄\nして戻りますか？";
 
-            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
-            { return; }
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+                { return; }
 
 
-            //ReturnValue.Data_Import(Original);
+                //ReturnValue.Data_Import(Original);
 
-            IsModified = false;
+                IsModified = false;
 
-            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+                //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+
+
+            }
 
             this.Close();
 
