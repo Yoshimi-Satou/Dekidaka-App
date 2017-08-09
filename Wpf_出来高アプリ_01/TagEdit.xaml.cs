@@ -38,9 +38,27 @@ namespace Wpf_Dekidaka_app
 
         public TagEdit(Dekidaka_Data Dekidaka)
         {
-            TagContext.strCow = Dekidaka.strContentsOfWork.Split('(')[0];
+
+            if (Dekidaka.strContentsOfWork == null || Dekidaka.strCommodity == null)
+            {
+                OKCancelDlg re = new OKCancelDlg("品名か作業内容に入力がありません");
+
+                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+                re.ShowDialog();
+
+                TagContext.strCow = "";
+                TagContext.strCommodity = "";
+
+
+            }
+            else
+            {
+                TagContext.strCow = Dekidaka.strContentsOfWork.Split('(')[0];
+                TagContext.strCommodity = Dekidaka.strCommodity;
+            }
+
             TagContext.strArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ");
-            TagContext.strCommodity = Dekidaka.strCommodity;
             TagContext.iQuantity = Dekidaka.iaOutputQuantity[0];
             TagContext.strSize = Dekidaka.strSize;
             TagContext.iCopyCount = 1;

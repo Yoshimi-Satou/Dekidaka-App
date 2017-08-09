@@ -138,6 +138,19 @@ namespace Wpf_Dekidaka_app
 
             Tag_Control tc;
 
+
+            if (Dekidaka.strContentsOfWork == null || Dekidaka.strCommodity == null)
+            {
+                OKCancelDlg re = new OKCancelDlg("品名か作業内容に入力がありません");
+
+                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+                re.ShowDialog();
+
+                return;
+
+            }
+
             //出来高内容
             string CoW = Dekidaka.strContentsOfWork.Split('(')[0];
             string stryArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ");
