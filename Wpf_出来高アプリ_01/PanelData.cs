@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,18 +28,19 @@ namespace Wpf_Dekidaka_app
             ModuleData.Panel.Array = null;
 
 
+            //パネルデータを読み込む
             if (ModuleData.Panel.LoadData("PanelData.csv"))
             {
-                //パネルデータに日付データを追加する
+                //読み込めたらパネルデータに日付データを追加する
 
                 //ヘッダカラム
-                ArrayList field = (ArrayList)ModuleData.Panel.Array[0];
+                List<string> field = ModuleData.Panel.Array[0];
                 field.Add("OutputShipment");
 
                 //データロウ　日付分
                 for (int i = 1; i < 9; i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add(DateTime.Today.AddDays(i - 1).ToShortDateString().Substring(5, 5) + "%5");
 
@@ -52,7 +54,7 @@ namespace Wpf_Dekidaka_app
 
                 for (int i = 9; i < ModuleData.Panel.Array.Count && (i - 9 < size.Length); i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add(size[i - 9]);
 
@@ -63,16 +65,19 @@ namespace Wpf_Dekidaka_app
                 //データロウ　空欄
                 for (int i = 9 + size.Length; i < ModuleData.Panel.Array.Count; i++)
                 {
-                    field = (ArrayList)ModuleData.Panel.Array[i];
+                    field = ModuleData.Panel.Array[i];
 
                     field.Add("");
 
 
                 }
 
+                //追加されたので再度データテーブルを設定
+                ModuleData.Panel.Table = CSVTool.CSVTool.ListToDataTable(ModuleData.Panel.Array);
 
 
             }
+
 
             //各種データの読み込み
             if (!ModuleData.FG.LoadData("FG_Net.csv"))
@@ -100,7 +105,8 @@ namespace Wpf_Dekidaka_app
     public class CsvData
     {
 
-        public ArrayList Array = null;
+        public List<List<string>> Array = null;
+        public DataTable Table = null;
 
         /// <summary>
         /// データをロードする
@@ -127,7 +133,7 @@ namespace Wpf_Dekidaka_app
             }
             catch (Exception)
             {
-                MessageBox.Show(path + "が開けません");
+                //MessageBox.Show(path + "が開けません");
 
                 return false;
 
@@ -136,6 +142,7 @@ namespace Wpf_Dekidaka_app
 
             //csvデータをArrayListに読み込む
             LoadDataFromString(csvstream);
+
 
             return true;
 
@@ -150,8 +157,11 @@ namespace Wpf_Dekidaka_app
         {
 
 
-            //csvデータをArrayListに読み込む
-            Array = CSVTool.CSVTool.CsvToArrayList2(csvstream);
+            //csvデータをListに読み込む
+            Array = CSVTool.CSVTool.CsvToList(csvstream);
+
+            //ListをDataTableに変換して保持
+            Table = CSVTool.CSVTool.ListToDataTable(Array);
 
             return;
 

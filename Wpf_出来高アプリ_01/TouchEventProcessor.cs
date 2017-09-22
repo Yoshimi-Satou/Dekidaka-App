@@ -16,6 +16,8 @@ namespace Wpf_Dekidaka_app
     class TouchEventProcessor
     {
 
+        //System.Media.SoundPlayer TouchSound = new System.Media.SoundPlayer("button.wav");
+
         public TouchEventProcessor()
         {
 
@@ -41,7 +43,7 @@ namespace Wpf_Dekidaka_app
         }
 
         /// <summary>
-        /// タッチアップイベント時に呼び出して、キャプチャやe.Handledを制御して、指定されたメソッドを実行するメソッド
+        /// ボタンタッチアップイベント時に呼び出して、キャプチャやe.Handledを制御して、指定されたメソッドを実行するメソッド
         /// <param name="sender">イベント送信元オブジェクト</param>
         /// <param name="e">タッチイベントパラメータ</param>
         /// <param name="Prs">実行するメソッド</param>
@@ -61,6 +63,9 @@ namespace Wpf_Dekidaka_app
 
             if (bounds.Contains(tp.Position))
             {
+
+                //System.Media.SystemSounds.Beep.Play();
+                //TouchSound.Play();
 
                 //指定されたメソッドを実行する
                 Prs(sender);

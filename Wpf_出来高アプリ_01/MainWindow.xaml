@@ -8,94 +8,96 @@
         Title="出来高入力アプリ" Height="800" Width="1280" WindowState="Maximized" WindowStyle="None"  ResizeMode="NoResize">
     <!--WindowState="Maximized" WindowStyle="None">-->
 
+    <Grid>
+        <Viewbox Stretch="Fill">
 
-    <Viewbox Stretch="Fill">
 
+            <Grid Height="769" Width="1272" FocusManager.IsFocusScope="True">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA2CAEC" Offset="1"/>
+                        <GradientStop Color="#FFA7ECAA"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Rectangle HorizontalAlignment="Left" Height="54" Margin="81,44,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="203" Fill="#FFE4E4E4"/>
 
-        <Grid Height="769" Width="1272" FocusManager.IsFocusScope="True">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FFA2CAEC" Offset="1"/>
-                    <GradientStop Color="#FFA7ECAA"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Rectangle HorizontalAlignment="Left" Height="54" Margin="81,44,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="203" Fill="#FFE4E4E4"/>
+                <DataGrid x:Name="dataGrid" Margin="81,117,70,135" Background="White" BorderBrush="#FF346391" RenderTransformOrigin="0.5,0.5" AutoGeneratingColumn="dataGrid_AutoGeneratingColumn" IsReadOnly="True" FontSize="32" AutoGenerateColumns="False" FontFamily="Meiryo UI" CanUserSortColumns="False">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
 
-            <DataGrid x:Name="dataGrid" Margin="81,117,70,135" Background="White" BorderBrush="#FF346391" RenderTransformOrigin="0.5,0.5" AutoGeneratingColumn="dataGrid_AutoGeneratingColumn" IsReadOnly="True" FontSize="32" AutoGenerateColumns="False" FontFamily="Meiryo UI" CanUserSortColumns="False">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
 
-                <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" FontSize="24" Binding="{Binding iUID}" MaxWidth="45" />
+                        <DataGridTextColumn Header="班" Binding="{Binding iPartGroup}" MaxWidth="45" />
+                        <DataGridTextColumn Header="得意先" Binding="{Binding strCustomar}" MaxWidth="150" />
+                        <DataGridTextColumn Header="品名" Binding="{Binding strCommodity}" MaxWidth="160" />
+                        <!--<DataGridTextColumn Header="入荷" Binding="{Binding iArrival}" MaxWidth="55" />-->
+                        <DataGridTextColumn Header="作業内容" Binding="{Binding strContentsOfWork}" MaxWidth="160" />
 
-                    <DataGridTextColumn Header="ID" FontSize="24" Binding="{Binding iUID}" MaxWidth="45" />
-                    <DataGridTextColumn Header="班" Binding="{Binding iPartGroup}" MaxWidth="45" />
-                    <DataGridTextColumn Header="得意先" Binding="{Binding strCustomar}" MaxWidth="150" />
-                    <DataGridTextColumn Header="品名" Binding="{Binding strCommodity}" MaxWidth="160" />
-                    <!--<DataGridTextColumn Header="入荷" Binding="{Binding iArrival}" MaxWidth="55" />-->
-                    <DataGridTextColumn Header="作業内容" Binding="{Binding strContentsOfWork}" MaxWidth="160" />
-
-                    <DataGridTextColumn Header="出来高" FontSize="24" Binding="{Binding strOutput}" MaxWidth="160" />
-                    <DataGridTextColumn Header="開始" Binding="{Binding strStartTime}" MaxWidth="110" />
-                    <DataGridTextColumn Header="終了" Binding="{Binding strEndTime}" MaxWidth="110" />
+                        <DataGridTextColumn Header="出来高" FontSize="24" Binding="{Binding strOutput}" MaxWidth="160" />
+                        <DataGridTextColumn Header="開始" Binding="{Binding strStartTime}" MaxWidth="110" />
+                        <DataGridTextColumn Header="終了" Binding="{Binding strEndTime}" MaxWidth="110" />
 
                     
-                    <DataGridTemplateColumn Header="編集" MaxWidth="75" >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="Button_Edit" Content="{Binding strEditButton}" Tag="{Binding}" Background="#BFE8FFDB" BorderThickness="4" PreviewMouseLeftButtonUp="Button_Edit_PreviewMouseLeftButtonUp" PreviewTouchUp="Edit_TouchUp" PreviewTouchDown="button_TouchDown"/>
+                        <DataGridTemplateColumn Header="編集" MaxWidth="75" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="Button_Edit" Content="{Binding strEditButton}" Tag="{Binding}" Background="#BFE8FFDB" BorderThickness="4" PreviewMouseLeftButtonUp="Button_Edit_PreviewMouseLeftButtonUp" PreviewTouchUp="Edit_TouchUp" PreviewTouchDown="button_TouchDown"/>
 
-                            </DataTemplate>
+                                </DataTemplate>
 
-                        </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
 
-                    </DataGridTemplateColumn>
+                        </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="印刷" MaxWidth="75" >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="Button_Print" Content="印刷" Tag="{Binding}" Background="{Binding BlPrintBottonColor}" BorderThickness="4" PreviewMouseLeftButtonUp="Button_Print_Click" PreviewTouchUp="button_Print_TouchUp" PreviewTouchDown="button_TouchDown" IsEnabled="{Binding bActionable}"/>
+                        <DataGridTemplateColumn Header="印刷" MaxWidth="75" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="Button_Print" Content="印刷" Tag="{Binding}" Background="{Binding BlPrintBottonColor}" BorderThickness="4" PreviewMouseLeftButtonUp="Button_Print_Click" PreviewTouchUp="button_Print_TouchUp" PreviewTouchDown="button_TouchDown" IsEnabled="{Binding bActionable}"/>
 
-                            </DataTemplate>
+                                </DataTemplate>
 
-                        </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
 
-                    </DataGridTemplateColumn>
+                        </DataGridTemplateColumn>
 
 
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
 
-            </DataGrid>
+                </DataGrid>
             
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="81,44,0,0" TextWrapping="Wrap" Text="出来高一覧" VerticalAlignment="Top" Height="54" Width="203" FontFamily="Meiryo UI" FontSize="36" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="81,44,0,0" TextWrapping="Wrap" Text="出来高一覧" VerticalAlignment="Top" Height="54" Width="203" FontFamily="Meiryo UI" FontSize="36" TextAlignment="Center"/>
             
-            <DatePicker x:Name="TodayDate"  CalendarStyle="{StaticResource styleCalendar}" Margin="0,61,128,0" VerticalAlignment="Top" Height="31" HorizontalAlignment="Right" Width="122" FontSize="16" RenderTransformOrigin="0.5,0.5" DisplayDate="{Binding mwInputDate}" Text="{Binding mwInputDate}" SelectedDateChanged="TodayDate_SelectedDateChanged" >
-                <DatePicker.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="2" ScaleY="2"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </DatePicker.RenderTransform>
-            </DatePicker>
+                <DatePicker x:Name="TodayDate"  CalendarStyle="{StaticResource styleCalendar}" Margin="0,61,128,0" VerticalAlignment="Top" Height="31" HorizontalAlignment="Right" Width="122" FontSize="16" RenderTransformOrigin="0.5,0.5" DisplayDate="{Binding mwInputDate}" Text="{Binding mwInputDate}" SelectedDateChanged="TodayDate_SelectedDateChanged" >
+                    <DatePicker.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </DatePicker.RenderTransform>
+                </DatePicker>
 
 
-            <Button x:Name="button_Clear" Content="入力クリア" HorizontalAlignment="Left" Margin="692,0,0,26" VerticalAlignment="Bottom" Width="183" Height="56" FontSize="36" Background="#FFFF8000" BorderBrush="#FF958761" BorderThickness="4" FontFamily="Meiryo UI" Template="{DynamicResource ButtonControlTemplate1}" TouchUp="button_Clear_TouchUp" PreviewMouseLeftButtonUp="button_Clear_Click" TouchDown="button_TouchDown"/>
-            <Button x:Name="button_send" Content="保存" HorizontalAlignment="Right" Margin="0,0,70,26" VerticalAlignment="Bottom" Width="198" Height="56" FontSize="36" Background="#FFAAEA86" BorderBrush="#FF37E5EE" FontFamily="Meiryo UI" TouchUp="button_send_TouchUp" PreviewMouseLeftButtonUp="button_send_Click" TouchDown="button_TouchDown"/>
+                <Button x:Name="button_Clear" Content="入力クリア" HorizontalAlignment="Left" Margin="692,0,0,26" VerticalAlignment="Bottom" Width="183" Height="56" FontSize="36" Background="#FFFF8000" BorderBrush="#FF958761" BorderThickness="4" FontFamily="Meiryo UI" Template="{DynamicResource ButtonControlTemplate1}" TouchUp="button_Clear_TouchUp" PreviewMouseLeftButtonUp="button_Clear_Click" TouchDown="button_TouchDown"/>
+                <Button x:Name="button_send" Content="保存" HorizontalAlignment="Right" Margin="0,0,70,26" VerticalAlignment="Bottom" Width="198" Height="56" FontSize="36" Background="#FFAAEA86" BorderBrush="#FF37E5EE" FontFamily="Meiryo UI" TouchUp="button_send_TouchUp" PreviewMouseLeftButtonUp="button_send_Click" TouchDown="button_TouchDown"/>
 
-            <TextBox x:Name="WriteMember" HorizontalAlignment="Left" Height="49" Margin="550,49,0,0" TextWrapping="Wrap" Text="{Binding mwWriteMember}" VerticalAlignment="Top" Width="237" FontSize="36" MouseDoubleClick="WriteMember_MouseDoubleClick" TouchUp="WriteMember_TouchDown"/>
-            <TextBox x:Name="textBox_GroupNo" HorizontalAlignment="Left" Height="49" Margin="313,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontFamily="Meiryo UI" FontSize="36" Text="{Binding mwPartGroupNo}" TouchUp="textBox_GroupNo_TouchDown" MouseDoubleClick="textBox_GroupNo_MouseDoubleClick"/>
-            <TextBlock x:Name="textBlock_Group" HorizontalAlignment="Left" Margin="313,20,0,0" TextWrapping="Wrap" Text="班番号" VerticalAlignment="Top" Width="68" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
-            <TextBlock x:Name="textBlock_WriteMember" HorizontalAlignment="Left" Margin="550,20,0,0" TextWrapping="Wrap" Text="記入者名" VerticalAlignment="Top" Width="237" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
-            <TextBox x:Name="textBox_PartNumber" HorizontalAlignment="Left" Height="49" Margin="427,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontFamily="Meiryo UI" FontSize="36" Text="{Binding mwPartNumber}" TouchUp="textBox_PartNumber_TouchDown" MouseDoubleClick="textBox_PartNumber_MouseDoubleClick"/>
-            <TextBlock x:Name="textBlock_PartNumber" HorizontalAlignment="Left" Margin="427,20,0,0" TextWrapping="Wrap" Text="人数" VerticalAlignment="Top" Width="68" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
-            <Button x:Name="button_Exit" Content="終了" HorizontalAlignment="Left" Margin="81,0,0,41" VerticalAlignment="Bottom" Width="69" Height="41" FontSize="18" Background="#FF7CA6FF" PreviewMouseLeftButtonUp="button_Exit_Click" Click="button_Exit_Click" TouchUp="button_Exit_TouchUp" TouchDown="button_TouchDown"/>
-            <Button x:Name="button_setting" Content="設定" HorizontalAlignment="Left" Margin="185,0,0,41" VerticalAlignment="Bottom" Width="75" Height="41" Background="#FF79FFBC" FontSize="18" PreviewMouseLeftButtonUp="button_setting_Click" TouchDown="button_TouchDown" TouchUp="button_setting_TouchUp"/>
-            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="81,639,0,0" TextWrapping="Wrap" Text="「人数」と「記入者名」を入力して、「編集」列の「作成」を押すと入力画面になります。" VerticalAlignment="Top" Height="35" Width="1121" FontSize="22"/>
+                <TextBox x:Name="WriteMember" HorizontalAlignment="Left" Height="49" Margin="550,49,0,0" TextWrapping="Wrap" Text="{Binding mwWriteMember}" VerticalAlignment="Top" Width="237" FontSize="36" MouseDoubleClick="WriteMember_MouseDoubleClick" TouchUp="WriteMember_TouchDown"/>
+                <TextBox x:Name="textBox_GroupNo" HorizontalAlignment="Left" Height="49" Margin="313,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontFamily="Meiryo UI" FontSize="36" Text="{Binding mwPartGroupNo}" TouchUp="textBox_GroupNo_TouchDown" MouseDoubleClick="textBox_GroupNo_MouseDoubleClick"/>
+                <TextBlock x:Name="textBlock_Group" HorizontalAlignment="Left" Margin="313,20,0,0" TextWrapping="Wrap" Text="班番号" VerticalAlignment="Top" Width="68" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
+                <TextBlock x:Name="textBlock_WriteMember" HorizontalAlignment="Left" Margin="550,20,0,0" TextWrapping="Wrap" Text="記入者名" VerticalAlignment="Top" Width="237" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
+                <TextBox x:Name="textBox_PartNumber" HorizontalAlignment="Left" Height="49" Margin="427,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontFamily="Meiryo UI" FontSize="36" Text="{Binding mwPartNumber}" TouchUp="textBox_PartNumber_TouchDown" MouseDoubleClick="textBox_PartNumber_MouseDoubleClick"/>
+                <TextBlock x:Name="textBlock_PartNumber" HorizontalAlignment="Left" Margin="427,20,0,0" TextWrapping="Wrap" Text="人数" VerticalAlignment="Top" Width="68" Height="29" FontFamily="Meiryo UI" FontSize="22" TextAlignment="Center"/>
+                <Button x:Name="button_Exit" Content="終了" HorizontalAlignment="Left" Margin="81,0,0,41" VerticalAlignment="Bottom" Width="69" Height="41" FontSize="18" Background="#FF7CA6FF" PreviewMouseLeftButtonUp="button_Exit_Click" Click="button_Exit_Click" TouchUp="button_Exit_TouchUp" TouchDown="button_TouchDown"/>
+                <Button x:Name="button_setting" Content="設定" HorizontalAlignment="Left" Margin="185,0,0,41" VerticalAlignment="Bottom" Width="75" Height="41" Background="#FF79FFBC" FontSize="18" PreviewMouseLeftButtonUp="button_setting_Click" TouchDown="button_TouchDown" TouchUp="button_setting_TouchUp"/>
+                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="81,639,0,0" TextWrapping="Wrap" Text="「人数」と「記入者名」を入力して、「編集」列の「作成」を押すと入力画面になります。" VerticalAlignment="Top" Height="35" Width="1121" FontSize="22"/>
 
-        </Grid>
-    </Viewbox>
+            </Grid>
+        </Viewbox>
+        <Grid x:Name="Grid_Opa" Background="#7F000000" Visibility="Collapsed" />
+    </Grid>
 </Window>

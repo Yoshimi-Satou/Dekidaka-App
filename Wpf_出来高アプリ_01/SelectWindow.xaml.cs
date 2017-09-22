@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Collections;
 using Wpf_Dekidaka_app.Bind;
 using System.Data;
+using System.Collections.Generic;
 
 namespace Wpf_Dekidaka_app
 {
@@ -28,11 +29,9 @@ namespace Wpf_Dekidaka_app
         public SelectWindow(string sendedtext,string InputText = "")
         {
 
-            //パネルデータの最大数を設定
-            SelectionData.iDataIndexNumber = 48;
 
             //データコンテキスト用のデータの用意
-            swContext = new SelectionData();
+            swContext = new SelectionData(48);
 
 
             Sentext = sendedtext;
@@ -43,70 +42,92 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.Panel.Array != null)
             {
 
-                ArrayList csvData = ModuleData.Panel.Array;
+
+                List<List<string>> csvData = ModuleData.Panel.Array;
+                DataTable csvTable = ModuleData.Panel.Table;
 
 
                 //csvの行数を保持 （csvData[index]が一行分のデータ）
-                int csvRow = csvData.Count;
+                int csvRow = csvTable.Rows.Count;
                 int TargetColNo = -1; //目的のデータの列番号を入れる変数
 
 
-                //csvFieldでcsvData行の中の列セルにアクセスする
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+                ////csvFieldでcsvData行の中の列セルにアクセスする
+                //List<string> csvField = csvData[0];//1行目にアクセスして、データのヘッダ名を調べる
+
+                ////親ウィンドウから送られた文字列でヘッダ名を検索する
+                //for (int i = 0; i < csvField.Count; i++)
+                //{
+                //    string FieldText = (string)csvField[i];
+                //    if (FieldText == sendedtext)
+                //    {
+                //        TargetColNo = i;
+                //        break;
+
+                //    }
+
+                //}
 
 
-                //親ウィンドウから送られた文字列でヘッダ名を検索する
-                for (int i = 0; i < csvField.Count; i++)
+
+
+                DataTable PanelData = new DataTable();
+
+                try
                 {
-                    string FieldText = (string)csvField[i];
-                    if (FieldText == sendedtext)
-                    {
-                        TargetColNo = i;
-                        break;
-
-                    }
-
+                    //パネルデータを抽出テキストの列で絞り込む
+                    PanelData = csvTable.DefaultView.ToTable("PanelData", false, Sentext);
                 }
-
-                //見つからなかったらメッセージを表示
-                if (TargetColNo == -1)
+                catch
                 {
+                    //見つからなかったらメッセージを表示
                     MessageBox.Show(sendedtext + "のデータが見つかりません");
                     TargetColNo = 0;
+
                 }
-                else //見つかったらパネルデータの設定
+
+
+
+                if (TargetColNo != 0)
                 {
-                    for (int i = 1; i < csvRow && i < 48; i++)
+
+                    int count = 0;
+
+                    foreach (DataRow drEle in PanelData.AsEnumerable())
                     {
 
-                        csvField = (ArrayList)csvData[i];
-                        string ftext = (string)csvField[TargetColNo];
+                        string ftext = drEle.Field<string>(Sentext);
 
                         if (ftext != "")
                         {
-                            swContext.bIsButtonEnable(true, i - 1);
+                            swContext.bIsButtonEnable(true, count);
 
                             string[] txdata = ftext.Split('%');
 
-                            swContext.strButtonText(txdata[0], i - 1);
+                            swContext.strButtonText(txdata[0], count);
 
                             if (txdata.Count<string>() > 1)
                             {
                                 int color = 0;
                                 if (int.TryParse(txdata[1], out color))
                                 {
-                                    swContext.intButtonColor(color, i - 1);
+                                    swContext.intButtonColor(color, count);
                                 }
                                 else
-                                { swContext.intButtonColor(0, i - 1); }
+                                { swContext.intButtonColor(0, count); }
                             }
                             else
-                            { swContext.intButtonColor(0, i - 1); }
+                            { swContext.intButtonColor(0, count); }
 
 
                         }
+
+                        count++;
+                        if (count > 47) break;
+
+
                     }
+
 
 
                     //拡張パネル設定
@@ -114,13 +135,15 @@ namespace Wpf_Dekidaka_app
                     {
                         csvData = ModuleData.ExtPanel.Array;
 
+                        List<string> csvField;
+
                         //親ウィンドウから送られた文字列で拡張データのヘッダ名を検索する
                         int TargetRowNo = -1;
 
                         for (int i = 0; i < csvData.Count; i++)
                         {
-                            csvField = (ArrayList)csvData[i];
-                            string FieldText = (string)csvField[0];
+                            csvField = csvData[i];
+                            string FieldText = csvField[0];
                             if (FieldText == sendedtext)
                             {
                                 TargetRowNo = i;
@@ -133,12 +156,12 @@ namespace Wpf_Dekidaka_app
                         //見つかったらパネルに設定
                         if(TargetRowNo != -1)
                         {
-                            csvField = (ArrayList)csvData[TargetRowNo];
+                            csvField = csvData[TargetRowNo];
 
                             for (int i = 1; i < csvField.Count; i++)
                             {
 
-                                string ftext = (string)csvField[i];
+                                string ftext = csvField[i];
 
                                 if (ftext != "")
                                 {
@@ -332,9 +355,9 @@ namespace Wpf_Dekidaka_app
                     {
                         //拡張パネルデータが無いなら作成する
 
-                        ModuleData.ExtPanel.Array = new ArrayList();
+                        ModuleData.ExtPanel.Array = new List<List<string>>();
 
-                        ArrayList addfield = new ArrayList();
+                        List<string> addfield = new List<string>();
 
                         addfield.Add(Sentext);
                         addfield.Add(ReturnText);
@@ -352,8 +375,8 @@ namespace Wpf_Dekidaka_app
                     { 
 
 
-                        ArrayList csvData = ModuleData.ExtPanel.Array;
-                        ArrayList csvField;
+                        List<List<string>> csvData = ModuleData.ExtPanel.Array;
+                        List<string> csvField;
 
 
                         //親ウィンドウから送られた文字列で拡張データのヘッダ名を検索する
@@ -361,8 +384,8 @@ namespace Wpf_Dekidaka_app
 
                         for (int i = 0; i < csvData.Count; i++)
                         {
-                            csvField = (ArrayList)csvData[i];
-                            string FieldText = (string)csvField[0];
+                            csvField = csvData[i];
+                            string FieldText = csvField[0];
                             if (FieldText == Sentext)
                             {
                                 TargetRowNo = i;
@@ -376,7 +399,7 @@ namespace Wpf_Dekidaka_app
                         //見つからなかったら拡張データ行を作成して1項目目に入力文字列を追加する
                         if(TargetRowNo == -1)
                         {
-                            ArrayList addfield = new ArrayList();
+                            List<string> addfield = new List<string>();
 
                             addfield.Add(Sentext);
                             addfield.Add(ReturnText);
@@ -389,13 +412,13 @@ namespace Wpf_Dekidaka_app
                         }
                         else
                         {
-                            csvField = (ArrayList)csvData[TargetRowNo];
+                            csvField = csvData[TargetRowNo];
 
                             bool IsExist = false;
 
                             for(int i = 1; i < 5;i++)
                             {
-                                if((string)csvField[i] == ReturnText)
+                                if(csvField[i] == ReturnText)
                                 {
                                     IsExist = true;
                                     break;
@@ -447,23 +470,23 @@ namespace Wpf_Dekidaka_app
                 //ArreyListをDataTableに変換してCsvStreamFruisを更新する
                 DataTable TempData = new DataTable();
 
-                ArrayList field = (ArrayList)ModuleData.ExtPanel.Array[0];
+                List<string> field = ModuleData.ExtPanel.Array[0];
 
                 foreach (var Col in field)
                 {
-                    TempData.Columns.Add((string)Col);
+                    TempData.Columns.Add(Col);
                 }
 
                 
 
-                foreach(ArrayList el in (ArrayList)ModuleData.ExtPanel.Array)
+                foreach(List<string> el in ModuleData.ExtPanel.Array)
                 { 
 
                     DataRow row = TempData.NewRow();
 
                     for (int i = 0; i < el.Count; i++)
                     {
-                        row[i] = ((string)el[i]);
+                        row[i] = (el[i]);
 
                     }
 
@@ -472,10 +495,8 @@ namespace Wpf_Dekidaka_app
                     
                 }
 
-
-                CSVTool.CSVTool csv = new CSVTool.CSVTool();
-
-                string strcsv = csv.ConvertDataTableToCsvStream(TempData, false);
+                
+                string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
 
 
 

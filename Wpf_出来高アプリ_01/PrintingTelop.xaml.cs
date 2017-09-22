@@ -176,6 +176,20 @@ namespace Wpf_Dekidaka_app
             //横向き印刷設定
             bool LandScape = Settings.PrintLandscape;
 
+            //
+            if (Dekidaka.strContentsOfWork == null || Dekidaka.strCommodity == null )
+            {
+                OKCancelDlg re = new OKCancelDlg("品名か作業内容に入力がありません");
+
+                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+                re.ShowDialog();
+
+                return;
+
+            }
+
+
 
             //複数日分の出来高の場合
             if (Dekidaka.bMulti)
@@ -349,7 +363,8 @@ namespace Wpf_Dekidaka_app
 
                         //作業内容文字列を作成
                         string CoW = "";
-                        if(LandScape)
+                        
+                        if (LandScape)
                         {
 
                             CoW = Dekidaka.strCommodity + " " + (Dekidaka.strSize == "" || Dekidaka.strSize == null ? "" : Dekidaka.strSize + ", ") + Dekidaka.strContentsOfWork.Split('(')[0];
@@ -621,6 +636,10 @@ namespace Wpf_Dekidaka_app
 
 
         }
+
+
+
+
 
         /// <summary>
         /// 設定を読み出して、印刷設定を取得する

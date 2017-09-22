@@ -8,6 +8,9 @@ using System.ComponentModel;
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media;
 
 namespace Wpf_Dekidaka_app
 {
@@ -40,10 +43,19 @@ namespace Wpf_Dekidaka_app
         /// </summary>
         private TouchEventProcessor tp = new TouchEventProcessor();
 
+        /// <summary>
+        /// データが変更された時に立つフラグ
+        /// </summary>
         public bool IsModified = false;
 
+        /// <summary>
+        /// 品名に対する果実の種別が変更されたときに立つフラグ
+        /// </summary>
         private bool IsFruitModified = false;
         private string strModifiedFruit = "";
+
+
+        private Brush SelectedBg = new SolidColorBrush(Color.FromRgb(0xFF, 0xD8, 0xD8));
 
         /// <summary>
         /// 入力ウィンドウを初期化する
@@ -62,7 +74,7 @@ namespace Wpf_Dekidaka_app
             DataContext = ReturnValue;
 
             //出来高のイベントが変更された時に呼び出されるイベントを登録
-            ReturnValue.PropertyChanged += DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged += DekidakaPropertyChanged;
 
             //日付欄の初期化
             this.OutputShipment0.IsEnabled = ReturnValue.bMulti;
@@ -141,9 +153,9 @@ namespace Wpf_Dekidaka_app
             //データが読み込まれていれば
             if (ModuleData.Materials.Array != null)
             {
-                //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.Materials.Array[0];
+                //Listの行数と列数をもらう
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.Materials.Array[0];
 
                 int rows = ModuleData.Materials.Array.Count;
                 int cols = csvField.Count;
@@ -156,29 +168,29 @@ namespace Wpf_Dekidaka_app
                 //項目を見ていく
                 for (int i = 1; i < rows;i++)
                 {
-                    csvField = (ArrayList)ModuleData.Materials.Array[i];
+                    csvField = ModuleData.Materials.Array[i];
 
 
                     //作業内容を見る
-                    if (!IsMached(CheckRegEx((string)csvField[2]), Data.strContentsOfWork == null ? "" : Data.strContentsOfWork)) { continue; }
+                    if (!IsMached(CheckRegEx(csvField[2]), Data.strContentsOfWork == null ? "" : Data.strContentsOfWork)) { continue; }
 
                     //品名を見る
-                    if (!IsMached(CheckRegEx((string)csvField[1]), Data.strCommodity == null ? "" : Data.strCommodity)) { continue; }
+                    if (!IsMached(CheckRegEx(csvField[1]), Data.strCommodity == null ? "" : Data.strCommodity)) { continue; }
 
                     //得意先がマッチするか見る
-                    if ( !IsMached(CheckRegEx((string)csvField[0]) , Data.strCustomar == null ? "" : Data.strCustomar)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[0]) , Data.strCustomar == null ? "" : Data.strCustomar)) { continue; }
                         
                     //サイズを見る
-                    if ( !IsMached(CheckRegEx((string)csvField[3]), Data.strSize == null ? "" : Data.strSize)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[3]), Data.strSize == null ? "" : Data.strSize)) { continue; }
 
                     //産地を見る
-                    if ( !IsMached(CheckRegEx((string)csvField[4]), Data.strProductionArea == null ? "" : Data.strProductionArea)) { continue; }
+                    if ( !IsMached(CheckRegEx(csvField[4]), Data.strProductionArea == null ? "" : Data.strProductionArea)) { continue; }
 
 
                     //全てマッチしたら資材と数を入力する
                     for (int j = 0; j < 3; j++)
                     {
-                        string MateName = (string)csvField[MatelialstrCol + j * 2];
+                        string MateName = csvField[MatelialstrCol + j * 2];
 
                         if (MateName == "") { break; }
 
@@ -208,7 +220,7 @@ namespace Wpf_Dekidaka_app
 
                                 //数
                                 int mnum;
-                                if(int.TryParse((string)csvField[MatelialnumCol + j * 2], out mnum))
+                                if(int.TryParse(csvField[MatelialnumCol + j * 2], out mnum))
                                 { Data.iMaterialsNumber(mnum, materials_count); }
                                 else { Data.iMaterialsNumber(1, materials_count); }
                                                 
@@ -229,7 +241,7 @@ namespace Wpf_Dekidaka_app
                 } //for i
                 
 
-            }// if arrey
+            }// if array
 
             
             //終わったらイベントを再登録
@@ -253,9 +265,23 @@ namespace Wpf_Dekidaka_app
             new System.Text.RegularExpressions.Regex(RegExString, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
             //正規表現と一致する対象を1つ検索
-            System.Text.RegularExpressions.Match m = r.Match(MatchString);
 
-            return m.Success;
+            try
+            { 
+                System.Text.RegularExpressions.Match m = r.Match(MatchString);
+
+                return m.Success;
+
+            }
+            catch
+            {
+                MessageBox.Show("正規表現が不正です");
+
+                return false;
+            }
+
+
+
 
 
         }
@@ -299,10 +325,10 @@ namespace Wpf_Dekidaka_app
             if (ModuleData.FG.Array != null)
             {
 
-                
+
                 //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.FG.Array[0];
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.FG.Array[0];
 
                 int rows = ModuleData.FG.Array.Count;
                 int cols = csvField.Count;
@@ -321,15 +347,15 @@ namespace Wpf_Dekidaka_app
 
                     for (int i = 0; i < rows && flag == -1; i++)
                     {
-                        csvField = (ArrayList)ModuleData.FG.Array[i];
+                        csvField = ModuleData.FG.Array[i];
 
 
                         for (int j = 1; j < cols; j++)
                         {
 
-                            if ((string)csvField[j] == ""){ break; }
+                            if (csvField[j] == ""){ break; }
 
-                            if ((string)csvField[j] == Data.straMaterials[index])
+                            if (csvField[j] == Data.straMaterials[index])
                             {
                                 flag = i;
                                 break;
@@ -348,12 +374,12 @@ namespace Wpf_Dekidaka_app
                 if(flag != -1)
                 {
                     bool IsExist = false;
-                    csvField = (ArrayList)ModuleData.FG.Array[flag];
+                    csvField = ModuleData.FG.Array[flag];
 
                     for (int materials_count = 0; materials_count < 6; materials_count++)
                     {
                      
-                        if (Data.straMaterials[materials_count] == (string)csvField[0])
+                        if (Data.straMaterials[materials_count] == csvField[0])
                         {
                             IsExist = true;
                             break;
@@ -368,7 +394,7 @@ namespace Wpf_Dekidaka_app
                             if (Data.straMaterials[materials_count] == "" || Data.straMaterials[materials_count] == null)
                             {
 
-                                Data.strMaterials( (string)csvField[0], materials_count);
+                                Data.strMaterials(csvField[0], materials_count);
 
                                 break;
                             }
@@ -405,30 +431,37 @@ namespace Wpf_Dekidaka_app
             {
 
 
-                //Arraylistの行数と列数をもらう
-                ArrayList csvField = new ArrayList();
-                csvField = (ArrayList)ModuleData.Fruits.Array[0];
+                //Listの行数と列数をもらう
+                List<string> csvField = new List<string>();
+                csvField = ModuleData.Fruits.Array[0];
 
                 int cols = csvField.Count;
 
                 int flag = -1;
 
-                //文字列として比較する
+
+                var el =    from p in csvField
+                            where p == Data.strCommodity
+                            select p;
 
 
-                for (int j = 0; j < cols; j++)
+
+                if (el.Count<string>() != 0)
                 {
-
-                    if ((string)csvField[j] == "") { break; }
-
-                    if ((string)csvField[j] == Data.strCommodity)
-                    {
-                        flag = 1;
-                        break;
-                    }
-
-
+                    flag = 1;
                 }
+
+                //文字列として比較する
+                //for (int j = 0; j < cols; j++)
+                //{
+                //    if (csvField[j] == "") { break; }
+
+                //    if (csvField[j] == Data.strCommodity)
+                //    {
+                //        flag = 1;
+                //        break;
+                //    }
+                //}
 
                 if (flag == 1)
                 {
@@ -470,6 +503,23 @@ namespace Wpf_Dekidaka_app
 
         }
 
+
+        private MessageBoxResult ShowMessageDlg(string message)
+        {
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+            OKCancelDlg re = new OKCancelDlg(message);
+
+            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            re.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            return re.result;
+
+        }
+
         /// <summary>
         /// 確定ボタンが押されたときの処理
         /// </summary>
@@ -477,26 +527,24 @@ namespace Wpf_Dekidaka_app
         private void Button_Submit_Press(object sender)
         {
 
+            //変更されていなければそのままウィンドウを閉じる
+            if (!IsModified) { this.Close(); return; }
+            
             //未入力箇所を調べる
             string message = "";
 
-            if(ReturnValue.strCustomar == null || ReturnValue.strCustomar == "") { message = "発注者"; }
-            if(ReturnValue.strCommodity == null || ReturnValue.strCommodity == "") { message = "品名"; }
-            if(ReturnValue.strContentsOfWork == null || ReturnValue.strContentsOfWork == "") { message = "作業内容"; }
-            if(ReturnValue.strEndTime == "0:00") { message = "終了時刻"; }
-            if(ReturnValue.strOutput == null || ReturnValue.strOutput == "") { message = "出来高"; }
+            if (ReturnValue.strCustomar == null || ReturnValue.strCustomar == "") { message = "発注者"; }
+            if (ReturnValue.strCommodity == null || ReturnValue.strCommodity == "") { message = "品名"; }
+            if (ReturnValue.strContentsOfWork == null || ReturnValue.strContentsOfWork == "") { message = "作業内容"; }
+            if (ReturnValue.strEndTime == "0:00") { message = "終了時刻"; }
+            if (ReturnValue.strOutput == null || ReturnValue.strOutput == "") { message = "出来高"; }
 
             if (message != "")
             {
                 message = message + "が入力されていませんが続行しますか？";
 
-                OKCancelDlg re = new OKCancelDlg(message);
 
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
-
-                if (re.result == MessageBoxResult.Cancel)
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
                 { return; }
 
             }
@@ -520,13 +568,7 @@ namespace Wpf_Dekidaka_app
                 if (message != "OK")
                 {
 
-                    OKCancelDlg re = new OKCancelDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？");
-
-                    re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                    re.ShowDialog();
-
-                    if (re.result == MessageBoxResult.Cancel)
+                    if (ShowMessageDlg("出来高に「○○ × 1」がありません。\n端数はありませんか？") == MessageBoxResult.Cancel)
                     { return; }
 
 
@@ -535,35 +577,48 @@ namespace Wpf_Dekidaka_app
             }
 
             //フルーツ種別が変更されていたら、設定のフルーツ種別を追加/削除する
-            if(IsFruitModified)
+            if (IsFruitModified)
             {
                 if (ModuleData.Fruits.Array != null && strModifiedFruit != null && strModifiedFruit != "")
                 {
 
-                    ArrayList csvField = new ArrayList();
-                    csvField = (ArrayList)ModuleData.Fruits.Array[0];
+                    List<string> csvField = new List<string>();
+                    csvField = ModuleData.Fruits.Array[0];
 
                     int cols = csvField.Count;
 
                     int flag = 0;
 
-                    //新規文字列かどうかを確認する
-                    for (int j = 0; j < cols; j++)
+
+                    var el =
+                        from p in csvField
+                        where p == strModifiedFruit
+                        select p;
+
+
+
+                    if (el.Count<string>() != 0)
                     {
-
-                        if ((string)csvField[j] == strModifiedFruit)
-                        {
-                            flag = 1;
-                            break;
-                        }
-
+                        flag = 1;
                     }
 
-                    
-                    
-                    if(ReturnValue.bKind)
+                    //新規文字列かどうかを確認する
+                    //for (int j = 0; j < cols; j++)
+                    //{
+
+                    //    if (csvField[j] == strModifiedFruit)
+                    //    {
+                    //        flag = 1;
+                    //        break;
+                    //    }
+
+                    //}
+
+
+
+                    if (ReturnValue.bKind)
                     {
-                        if(flag == 0)
+                        if (flag == 0)
                         {
                             csvField.Add(strModifiedFruit);
                         }
@@ -571,51 +626,40 @@ namespace Wpf_Dekidaka_app
                     }
                     else
                     {
-                        if(flag == 1)
+                        if (flag == 1)
                         {
                             csvField.Remove(strModifiedFruit);
 
                         }
 
-
                     }
 
-                    if(flag != -1)
+                    if (flag != -1)
                     {
                         //ArreyListをDataTableに変換してCsvStreamFruisを更新する
                         DataTable TempData = new DataTable();
 
-                        foreach (var str in csvField )
+                        foreach (var str in csvField)
                         {
-                            TempData.Columns.Add((string)str);
+                            TempData.Columns.Add(str);
 
                         }
 
                         DataRow row = TempData.NewRow();
 
-                        for(int i = 0;i < csvField.Count;i++)
+                        for (int i = 0; i < csvField.Count; i++)
                         {
-                            row[i] = ((string)csvField[i]);
+                            row[i] = csvField[i];
 
                         }
 
                         TempData.Rows.Add(row);
 
-
-                        CSVTool.CSVTool csv = new CSVTool.CSVTool();
-
-                        string strcsv = csv.ConvertDataTableToCsvStream(TempData, false);
-
-
+                        string strcsv = CSVTool.CSVTool.ConvertDataTableToCsvStream(TempData, false);
 
                         Settings.csvStreamFruit = strcsv;
 
-
                     }
-
-
-
-
 
                 }
 
@@ -630,8 +674,8 @@ namespace Wpf_Dekidaka_app
             //出来高データ本体にデータをインポート
             Original.Data_Import(ReturnValue);
 
+            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
             this.Close();
         }
@@ -663,32 +707,22 @@ namespace Wpf_Dekidaka_app
         private void Button_Cancel_Press(object sender)
         {
 
-            // Configure message box
-            string message = "現在の変更内容を破棄\nして戻りますか？";
-            //string caption = "確認";
-            //MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            //MessageBoxImage icon = MessageBoxImage.Information;
-            //MessageBoxResult defaultResult = MessageBoxResult.OK;
-            //MessageBoxOptions options = MessageBoxOptions.None;
-            //// Show message box
-            //MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult, options);
+            if(IsModified)
+            { 
+                string message = "現在の変更内容を破棄\nして戻りますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
-
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+                { return; }
 
 
+                //ReturnValue.Data_Import(Original);
 
-            if (re.result == MessageBoxResult.Cancel) { return; }
+                IsModified = false;
+
+                //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
 
-            //ReturnValue.Data_Import(Original);
-
-            IsModified = false;
-
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+            }
 
             this.Close();
 
@@ -722,31 +756,21 @@ namespace Wpf_Dekidaka_app
         {
 
 
-            // Configure message box
             string message = "内容が削除されますが\nよろしいですか？";
-            //string caption = "確認";
-            //MessageBoxButton buttons = MessageBoxButton.OKCancel;
-            //MessageBoxImage icon = MessageBoxImage.Information;
-            //MessageBoxResult defaultResult = MessageBoxResult.OK;
-            //MessageBoxOptions options = MessageBoxOptions.None;
-            //// Show message box
-            //MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult, options);
 
-            OKCancelDlg re = new OKCancelDlg(message);
-
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+            { return; }
 
 
-            if (re.result == MessageBoxResult.Cancel) { return; }
-
+            this.Grid_Opa.Visibility = Visibility.Visible;
             ConfirmationWindow conf = new ConfirmationWindow("削除");
             conf.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             conf.ShowDialog();
 
-            if(conf.result == false) { return; }
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            if (conf.result == false) { return; }
 
             ReturnValue.bActionable = false;
 
@@ -754,7 +778,7 @@ namespace Wpf_Dekidaka_app
 
             IsModified = true;
 
-            ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
+            //ReturnValue.PropertyChanged -= DekidakaPropertyChanged;
 
 
             this.Close();
@@ -1117,6 +1141,9 @@ namespace Wpf_Dekidaka_app
         private int TouchPanelTenkeyShow(int value = 0) 
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+
             //MessageBox.Show("ダブルクリック");
 
             //var txtbx_sender = (TextBox)sender;
@@ -1132,6 +1159,9 @@ namespace Wpf_Dekidaka_app
             tw.ShowDialog();
 
             IsModified = true;
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
 
             return tw.result;
 
@@ -1164,49 +1194,6 @@ namespace Wpf_Dekidaka_app
 
             return number;
 
-
-
-        }
-
-
-        private void OutputQuantity_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-            int index = IndexSerch((TextBox)sender);
-            
-            if(index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
-
-
-
-            if(result != -1)
-            {
-                ReturnValue.iOutputQuantity(result, index);
-            }
-
-
-        }
-
-        private void OutputQuantity_TouchUp(object sender, TouchEventArgs e)
-        {
-
-            int index = IndexSerch((TextBox)sender);
-
-            if (index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
-
-            
-
-            if (result != -1)
-            {
-                ReturnValue.iOutputQuantity(result, index);
-            }
 
 
         }
@@ -1249,31 +1236,74 @@ namespace Wpf_Dekidaka_app
         }
 
 
-        private void OutputNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OutputQuantity_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int index = IndexSerch((TextBox)sender);
+
+            OutputQuantity_Press(sender);
+
+
+        }
+
+        private void OutputQuantity_TouchUp(object sender, TouchEventArgs e)
+        {
+
+            OutputQuantity_Press(sender);
+
+
+        }
+
+        private void OutputQuantity_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
             int result = -1;
 
-            result = TouchPanelTenkeyShow(ReturnValue.iaOutputNumber[index]);
+            result = TouchPanelTenkeyShow(ReturnValue.iaOutputQuantity[index]);
 
 
 
             if (result != -1)
             {
-                ReturnValue.iOutputNumber(result, index);
-
+                ReturnValue.iOutputQuantity(result, index);
             }
+
+            tb.Background = Bc;
+
+
+        }
+
+
+        private void OutputNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OutputNumber_Press(sender);
 
         }
 
         private void OutputNumber_TouchUp(object sender, TouchEventArgs e)
         {
-            
 
-            int index = IndexSerch((TextBox)sender);
+            OutputNumber_Press(sender);
+        }
+
+        private void OutputNumber_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
@@ -1287,34 +1317,35 @@ namespace Wpf_Dekidaka_app
             {
                 ReturnValue.iOutputNumber(result, index);
             }
+
+            tb.Background = Bc;
+
         }
+
 
         private void MaterialsNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int index = IndexSerch((TextBox)sender);
-
-            if (index == -1) { return; }
-
-            int result = -1;
-
-            result = TouchPanelTenkeyShow(ReturnValue.iaMaterialsNumber[index]);
-
-
-
-            if (result != -1)
-            {
-                ReturnValue.iMaterialsNumber(result, index);
-
-            }
+            MaterialsNumber_Press(sender);
 
         }
 
         private void MaterialsNumber_TouchUp(object sender, TouchEventArgs e)
         {
 
-            
+            MaterialsNumber_Press(sender);
 
-            int index = IndexSerch((TextBox)sender);
+        }
+
+        private void MaterialsNumber_Press(object sender)
+        {
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
+
+            int index = IndexSerch(tb);
 
             if (index == -1) { return; }
 
@@ -1330,12 +1361,20 @@ namespace Wpf_Dekidaka_app
 
             }
 
+            tb.Background = Bc;
 
         }
 
+
         private void StartTime_TouchUp(object sender, TouchEventArgs e)
         {
-            
+
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
 
             DateTime result = GetInputTime(ReturnValue.dtStartTime);
             DateTime None = new DateTime(1, 1, 1);
@@ -1345,11 +1384,19 @@ namespace Wpf_Dekidaka_app
                 ReturnValue.dtStartTime = result;
             }
 
+            tb.Background = Bc;
+
+
         }
 
         private void EndTime_TouchUp(object sender, TouchEventArgs e)
         {
-            
+
+            TextBox tb = (TextBox)sender;
+
+            Brush Bc = tb.Background;
+
+            tb.Background = SelectedBg;
 
             DateTime result = GetInputTime(ReturnValue.dtEndTime);
             DateTime None = new DateTime(1, 1, 1);
@@ -1359,6 +1406,7 @@ namespace Wpf_Dekidaka_app
                 ReturnValue.dtEndTime = result;
             }
 
+            tb.Background = Bc;
 
         }
 
@@ -1370,11 +1418,16 @@ namespace Wpf_Dekidaka_app
         private DateTime GetInputTime(DateTime dtTime)
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             TimeInput tiw = new TimeInput(dtTime);
 
             //tiw.Topmost = true;
 
             tiw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             DateTime resultTime;
 
@@ -1668,10 +1721,13 @@ namespace Wpf_Dekidaka_app
         private void Button_Print_Press(object sender)
         {
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             TagEdit te = new TagEdit(ReturnValue);
 
             te.ShowDialog();
 
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
         }

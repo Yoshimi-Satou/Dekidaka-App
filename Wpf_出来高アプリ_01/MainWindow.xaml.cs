@@ -64,6 +64,8 @@ namespace Wpf_Dekidaka_app
         private int BackupSaveCount = 0;
 
 
+        //private System.Media.SoundPlayer TouchSound;
+
         //private Settings Preference  = null;
 
         /// <summary>
@@ -118,6 +120,7 @@ namespace Wpf_Dekidaka_app
 
             // DataGridに設定する
             this.dataGrid.ItemsSource = DekiDakaDataCollection;
+
 
 
             
@@ -326,6 +329,24 @@ namespace Wpf_Dekidaka_app
             EditDataAsync(sender);
         }
 
+
+        private MessageBoxResult ShowMessageDlg(string message)
+        {
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
+            OKCancelDlg re = new OKCancelDlg(message);
+
+            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            re.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
+            return re.result;
+
+        }
+
+
         /// <summary>
         /// 入力用の子ウィンドウを開いて出来高データを入力する。変更されたら一時データとバックアップを保存する
         /// </summary>
@@ -355,11 +376,7 @@ namespace Wpf_Dekidaka_app
 
                 string message = "記入者名と人数を設定して下さい。";
 
-                OKCancelDlg re = new OKCancelDlg(message);
-
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
+                ShowMessageDlg(message);
 
                 return ;
 
@@ -439,14 +456,19 @@ namespace Wpf_Dekidaka_app
                 StateW.Topmost = true;
                 StateW.Show();
 
-                
+                int iState = 0;
 
-                await Task.Run(() =>{ SaveTempData(); } );
-
+                await Task.Run(() =>{ iState = SaveTempData(); } );
 
                 StateW.Close();
                 StateW = null;
 
+                if (iState != 1)
+                { 
+                    string message = string.Format("一時保存に失敗しました({0})", iState == 10 ? "一時パスアクセス不可" : "バックアップパスアクセス不可" );
+
+                    ShowMessageDlg(message);
+                }
 
             }
             else
@@ -465,8 +487,8 @@ namespace Wpf_Dekidaka_app
         /// <summary>
         /// 一時データとバックアップデータを保存する
         /// </summary>
-        /// <returns></returns>
-        private bool SaveTempData()
+        /// <returns>1 = 成功 10=一時ファイルパスが見つからない 11=バックアップフォルダが見つからない</returns>
+        private int SaveTempData()
         {
 
             DataTable TempData;
@@ -485,8 +507,8 @@ namespace Wpf_Dekidaka_app
 
                 if (Settings.CreateDirectory(tempfilepath) != true)
                 {
-                    MessageBox.Show(tempfilepath + " の作成に失敗しました");
-                    return false;
+                    //MessageBox.Show(tempfilepath + " の作成に失敗しました");
+                    return 10;
                 }
                 //System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(tempfilepath);
             }
@@ -521,8 +543,7 @@ namespace Wpf_Dekidaka_app
             sr.Close();
 
             //出来高データをCSVとして書き込む
-            CSVTool.CSVTool tool = new CSVTool.CSVTool();
-            tool.ConvertDataTableToCsv(TempData, filename, true, true);
+            CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true, true);
 
 
             //バックアップデータを保存する
@@ -540,21 +561,21 @@ namespace Wpf_Dekidaka_app
 
                     if (Settings.CreateDirectory(Settings.BackupFilePath) != true)
                     {
-                        MessageBox.Show(Settings.BackupFilePath + " の作成に失敗しました");
-                        return false;
+                        //MessageBox.Show(Settings.BackupFilePath + " の作成に失敗しました");
+                        return 11;
                     }
                     //System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(tempfilepath);
                 }
 
 
-                tool.ConvertDataTableToCsv(TempData, filename, true, false);
+                CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true, false);
 
                 BackupSaveCount = (BackupSaveCount + 1) % Settings.BackupSaveGeneration;
 
 
             }
 
-            return true;
+            return 1;
 
 
 
@@ -570,13 +591,8 @@ namespace Wpf_Dekidaka_app
 
             string message = "現在の出来高を保存しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if(re.result == MessageBoxResult.Cancel)
+            if(ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
 
@@ -615,7 +631,8 @@ namespace Wpf_Dekidaka_app
 
                     if(Settings.CreateDirectory(filepath) != true)
                     {
-                        MessageBox.Show(filepath + " の作成に失敗しました");
+                        message = "書き込み先フォルダが見つかりません";
+                        ShowMessageDlg(message);
                         return;
                     }
 
@@ -627,9 +644,7 @@ namespace Wpf_Dekidaka_app
 
 
             //CSVとして保存する
-            CSVTool.CSVTool tool = new CSVTool.CSVTool();
-
-            if (tool.ConvertDataTableToCsv(TempData, filename, true, false) == false)
+            if (CSVTool.CSVTool.ConvertDataTableToCsv(TempData, filename, true,false) == false)
             {
                 message = "出来高の保存に失敗しました。";
             }
@@ -641,12 +656,9 @@ namespace Wpf_Dekidaka_app
 
 
             //結果のメッセージを表示
-            re = new OKCancelDlg(message);
+            ShowMessageDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            re.ShowDialog();
-            
 
             return;
 
@@ -824,10 +836,12 @@ namespace Wpf_Dekidaka_app
 
             TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
 
-
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
 
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             if (sw.result != -1) { mwContext.mwPartGroupNo = sw.result; }
 
@@ -838,11 +852,15 @@ namespace Wpf_Dekidaka_app
         private void textBox_GroupNo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
 
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartGroupNo = sw.result; }
@@ -854,11 +872,16 @@ namespace Wpf_Dekidaka_app
 
         private void textBox_PartNumber_TouchDown(object sender, TouchEventArgs e)
         {
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
 
 
+
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
@@ -868,11 +891,15 @@ namespace Wpf_Dekidaka_app
         private void textBox_PartNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber); 
+            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
 
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
 
             sw.ShowDialog();
+
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
             if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
@@ -974,20 +1001,20 @@ namespace Wpf_Dekidaka_app
 
             string message = "現在の出来高を消去しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
             ConfirmationWindow conf = new ConfirmationWindow("クリア");
 
             conf.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             conf.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
+
 
             if (conf.result == false)
             { return; }
@@ -1052,13 +1079,8 @@ namespace Wpf_Dekidaka_app
 
             string message = "アプリを終了しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
             this.Close();
@@ -1076,7 +1098,11 @@ namespace Wpf_Dekidaka_app
 
             pw.Topmost = true;
 
+            this.Grid_Opa.Visibility = Visibility.Visible;
+
             pw.ShowDialog();
+
+            this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
 
@@ -1092,7 +1118,11 @@ namespace Wpf_Dekidaka_app
 
                 pw.Topmost = true;
 
+                this.Grid_Opa.Visibility = Visibility.Visible;
+
                 pw.ShowDialog();
+
+                this.Grid_Opa.Visibility = Visibility.Collapsed;
 
             };
 
@@ -1127,6 +1157,7 @@ namespace Wpf_Dekidaka_app
 
         private void button_Print_TouchUp(object sender, TouchEventArgs e)
         {
+            
             EventProcess Prs = Button_Print_Press;
 
             tp.button_TouchUp(sender, e, Prs);
@@ -1154,13 +1185,8 @@ namespace Wpf_Dekidaka_app
             //内容を確認するダイアログ
             string message = Row.strCustomar + "の" + Row.strCommodity + Row.strContentsOfWork + "のテロップを印刷しますか？";
 
-            OKCancelDlg re = new OKCancelDlg(message);
 
-            re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            re.ShowDialog();
-
-            if (re.result == MessageBoxResult.Cancel)
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
             { return; }
 
 
@@ -1170,13 +1196,8 @@ namespace Wpf_Dekidaka_app
             {
                 message = "出来高が入力されていませんがよろしいですか？";
 
-                re = new OKCancelDlg(message);
 
-                re.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-                re.ShowDialog();
-
-                if (re.result == MessageBoxResult.Cancel)
+                if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
                 { return; }
             }
 
@@ -1184,7 +1205,7 @@ namespace Wpf_Dekidaka_app
             StateWindow StateW = new StateWindow("印刷データ作成中");
 
             StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            StateW.Topmost = true;
+            //StateW.Topmost = false;
 
             StateW.Show();
 
@@ -1194,14 +1215,20 @@ namespace Wpf_Dekidaka_app
             //現在の出来高データでテロップを設定
             Pt.TelopSetting();
 
+            //StateW.cx.strDisplayMessage = "プリンタに送信中";
+
+
             //印刷する
             Pt.Print();
+
 
             //印刷ボタンの色を変える
             Row.SetPrintBottonColor(0);
 
             StateW.Close();
             StateW = null;
+
+
 
         }
 

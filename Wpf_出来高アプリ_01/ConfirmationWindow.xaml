@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Dekidaka_app"
         mc:Ignorable="d"
-        Title="確認入力" Height="649" Width="649" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
-    <Grid Background="#FFFF7070">
-        <Grid Margin="25,25,25,25" Background="White">
+        Title="確認入力" Height="649" Width="649" WindowStartupLocation="CenterScreen" WindowStyle="none" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize">
+    <Grid>
+        <Border BorderBrush="#FFFF7070" BorderThickness="25" CornerRadius="20" Background="White" >
+        <Grid Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -32,5 +33,6 @@
 
 
         </Grid>
+        </Border>
     </Grid>
 </Window>
