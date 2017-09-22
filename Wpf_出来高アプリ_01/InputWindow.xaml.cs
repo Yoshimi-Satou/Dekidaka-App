@@ -265,9 +265,23 @@ namespace Wpf_Dekidaka_app
             new System.Text.RegularExpressions.Regex(RegExString, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
             //正規表現と一致する対象を1つ検索
-            System.Text.RegularExpressions.Match m = r.Match(MatchString);
 
-            return m.Success;
+            try
+            { 
+                System.Text.RegularExpressions.Match m = r.Match(MatchString);
+
+                return m.Success;
+
+            }
+            catch
+            {
+                MessageBox.Show("正規表現が不正です");
+
+                return false;
+            }
+
+
+
 
 
         }

@@ -637,6 +637,10 @@ namespace Wpf_Dekidaka_app
 
         }
 
+
+
+
+
         /// <summary>
         /// 設定を読み出して、印刷設定を取得する
         /// </summary>

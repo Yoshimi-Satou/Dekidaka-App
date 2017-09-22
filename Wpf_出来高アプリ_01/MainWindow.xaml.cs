@@ -456,14 +456,19 @@ namespace Wpf_Dekidaka_app
                 StateW.Topmost = true;
                 StateW.Show();
 
-                
+                int iState = 0;
 
-                await Task.Run(() =>{ SaveTempData(); } );
-
+                await Task.Run(() =>{ iState = SaveTempData(); } );
 
                 StateW.Close();
                 StateW = null;
 
+                if (iState != 1)
+                { 
+                    string message = string.Format("一時保存に失敗しました({0})", iState == 10 ? "一時パスアクセス不可" : "バックアップパスアクセス不可" );
+
+                    ShowMessageDlg(message);
+                }
 
             }
             else
@@ -482,8 +487,8 @@ namespace Wpf_Dekidaka_app
         /// <summary>
         /// 一時データとバックアップデータを保存する
         /// </summary>
-        /// <returns></returns>
-        private bool SaveTempData()
+        /// <returns>1 = 成功 10=一時ファイルパスが見つからない 11=バックアップフォルダが見つからない</returns>
+        private int SaveTempData()
         {
 
             DataTable TempData;
@@ -502,8 +507,8 @@ namespace Wpf_Dekidaka_app
 
                 if (Settings.CreateDirectory(tempfilepath) != true)
                 {
-                    MessageBox.Show(tempfilepath + " の作成に失敗しました");
-                    return false;
+                    //MessageBox.Show(tempfilepath + " の作成に失敗しました");
+                    return 10;
                 }
                 //System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(tempfilepath);
             }
@@ -556,8 +561,8 @@ namespace Wpf_Dekidaka_app
 
                     if (Settings.CreateDirectory(Settings.BackupFilePath) != true)
                     {
-                        MessageBox.Show(Settings.BackupFilePath + " の作成に失敗しました");
-                        return false;
+                        //MessageBox.Show(Settings.BackupFilePath + " の作成に失敗しました");
+                        return 11;
                     }
                     //System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(tempfilepath);
                 }
@@ -570,7 +575,7 @@ namespace Wpf_Dekidaka_app
 
             }
 
-            return true;
+            return 1;
 
 
 
@@ -626,7 +631,8 @@ namespace Wpf_Dekidaka_app
 
                     if(Settings.CreateDirectory(filepath) != true)
                     {
-                        MessageBox.Show(filepath + " の作成に失敗しました");
+                        message = "書き込み先フォルダが見つかりません";
+                        ShowMessageDlg(message);
                         return;
                     }
 
@@ -1198,7 +1204,7 @@ namespace Wpf_Dekidaka_app
             StateWindow StateW = new StateWindow("印刷データ作成中");
 
             StateW.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            StateW.Topmost = true;
+            //StateW.Topmost = false;
 
             StateW.Show();
 
@@ -1208,14 +1214,20 @@ namespace Wpf_Dekidaka_app
             //現在の出来高データでテロップを設定
             Pt.TelopSetting();
 
+            //StateW.cx.strDisplayMessage = "プリンタに送信中";
+
+
             //印刷する
             Pt.Print();
+
 
             //印刷ボタンの色を変える
             Row.SetPrintBottonColor(0);
 
             StateW.Close();
             StateW = null;
+
+
 
         }
 

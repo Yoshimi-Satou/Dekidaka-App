@@ -236,7 +236,7 @@ namespace Wpf_Dekidaka_app
             }
             catch (Exception)
             {
-                MessageBox.Show(path + " が開けません");
+                //MessageBox.Show(path + " が開けません");
 
                 //設定ファイルが開けなかったらfalseを返して失敗を通知する
                 return false;

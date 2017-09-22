@@ -133,7 +133,7 @@ namespace Wpf_Dekidaka_app
             }
             catch (Exception)
             {
-                MessageBox.Show(path + "が開けません");
+                //MessageBox.Show(path + "が開けません");
 
                 return false;
 
