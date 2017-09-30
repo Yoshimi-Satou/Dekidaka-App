@@ -422,6 +422,7 @@ namespace Wpf_Dekidaka_app
 
 
             Row.strOutput = ""; //更新を通知
+            Row.iOutputSubTotal = 0; //更新を通知
 
             //元の編集状態が未編集で、編集済みで返ってきた場合は新しい行を追加する
             if (bEdited == false && Row.bActionable == true)

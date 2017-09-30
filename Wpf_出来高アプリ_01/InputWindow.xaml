@@ -9,7 +9,7 @@
         Title="入力ウィンドウ" Height="800" Width="1280" WindowState="Maximized" WindowStyle="None"  ResizeMode="NoResize">
     <!--WindowState="Maximized" WindowStyle="None">-->
     <!-- ↑コンバーターの定義のためのxmlns:Conv="clr-namespace:Wpf_Dekidaka_app.Bind.Converters" -->
-    
+
     <!-- コンバータークラスの実体化-->
     <Window.Resources>
         <Conv:BrsConverter x:Key="BrsConverter"/>
@@ -116,7 +116,7 @@
                 <Rectangle Fill="{Binding strSize, Converter={StaticResource BrsConverter}}" HorizontalAlignment="Left" Height="75" Margin="0,293,0,0" RadiusY="10" RadiusX="10" Stroke="Black" VerticalAlignment="Top" Width="256"/>
                 <TextBox x:Name="Size" HorizontalAlignment="Left" Height="47" Margin="114,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="36" Text="{Binding strSize}" TextAlignment="Center" SelectionOpacity="1" MouseDoubleClick="Size_MouseDoubleClick" TouchUp="Size_TouchUp"/>
                 <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,307,0,0" TextWrapping="Wrap" Text="サイズ" VerticalAlignment="Top" Height="43" Width="88" FontSize="36" TextDecorations="Underline" TextAlignment="Center"/>
-                <CheckBox x:Name="checkBox_MultiDay" Content="日付項目有効" HorizontalAlignment="Left" Margin="897,543,0,0" VerticalAlignment="Top" Width="129" Height="15" RenderTransformOrigin="0.5,0.5" IsChecked="{Binding bMulti}" Checked="checkBox_MultiDay_Checked" Unchecked="checkBox_MultiDay_Unchecked" TouchDown="CheckBox_TouchDown" TouchUp="checkBox_MultiDay_TouchUp" PreviewTouchDown="CheckBox_TouchDown" Click="checkBox_MultiDay_Click">
+                <CheckBox x:Name="checkBox_MultiDay" Content="日付項目有効" HorizontalAlignment="Left" Margin="883,543,0,0" VerticalAlignment="Top" Width="101" Height="15" RenderTransformOrigin="0.5,0.5" IsChecked="{Binding bMulti}" Checked="checkBox_MultiDay_Checked" Unchecked="checkBox_MultiDay_Unchecked" TouchDown="CheckBox_TouchDown" TouchUp="checkBox_MultiDay_TouchUp" PreviewTouchDown="CheckBox_TouchDown" Click="checkBox_MultiDay_Click">
                     <CheckBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -138,11 +138,13 @@
                 <TextBox x:Name="OutputShipment5" Margin="0,0,348,232" TextWrapping="Wrap" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="24" TextAlignment="Right" Text="{Binding straShipment[5]}" MouseDoubleClick="OutputShipmext_MouseDoubleClick" TouchUp="OutputShipmext_TouchUp"/>
                 <TextBlock x:Name="textBlock_Shipment" Margin="0,0,348,535" TextWrapping="Wrap" Text="日付" FontSize="20" TextAlignment="Center" HorizontalAlignment="Right" Width="74" Height="26" VerticalAlignment="Bottom"/>
                 <TextBlock x:Name="textBlock_OutputNumber" Margin="0,0,22,551" TextWrapping="Wrap" Text="個数" FontSize="36" TextAlignment="Center" HorizontalAlignment="Right" Width="120" Height="49" VerticalAlignment="Bottom" TextDecorations="Underline"/>
+                <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="1110,535,0,0" TextWrapping="Wrap" Text="{Binding iOutputSubTotal}" VerticalAlignment="Top" Height="31" Width="120" FontSize="20"/>
+                <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="1044,535,0,0" TextWrapping="Wrap" Text="総数" VerticalAlignment="Top" RenderTransformOrigin="-0.021,1.209" Height="31" Width="61" FontSize="20" TextAlignment="Right"/>
                 <!--<Button x:Name="button_Print" Content="テロップ印刷" HorizontalAlignment="Right" Margin="0,0,247,0" VerticalAlignment="Bottom" Width="151" Height="70" FontSize="24" Background="#FFE4E4E3"  PreviewMouseLeftButtonUp="Button_Print_Click" IsEnabled="{Binding bActionable}" TouchUp="button_Print_TouchUp" TouchDown="button_TouchDown"/>-->
 
             </Grid>
         </Viewbox>
         <Grid x:Name="Grid_Opa" Background="#7F000000" Visibility="Collapsed" />
     </Grid>
-    
+
 </Window>

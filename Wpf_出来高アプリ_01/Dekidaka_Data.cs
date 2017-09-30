@@ -298,6 +298,7 @@ namespace DekiDaka_Data
                 _iaOutputQuantity = value;
                 OnPropertyChanged("strOutput");
                 OnPropertyChanged("iaOutputQuantity");
+                OnPropertyChanged("iOutputSubTotal");
 
             }
 
@@ -316,6 +317,7 @@ namespace DekiDaka_Data
 
                 OnPropertyChanged("strOutput");
                 OnPropertyChanged("iaOutputQuantity");
+                OnPropertyChanged("iOutputSubTotal");
 
                 return true;
             }
@@ -343,6 +345,7 @@ namespace DekiDaka_Data
                 _iaOutputNumber = value;
                 OnPropertyChanged("strOutput");
                 OnPropertyChanged("iaOutputNumber");
+                OnPropertyChanged("iOutputSubTotal");
 
             }
 
@@ -361,6 +364,7 @@ namespace DekiDaka_Data
 
                 OnPropertyChanged("strOutput");
                 OnPropertyChanged("iaOutputNumber");
+                OnPropertyChanged("iOutputSubTotal");
 
                 return true;
             }
@@ -729,6 +733,32 @@ namespace DekiDaka_Data
 
 
         }
+
+        public int iOutputSubTotal
+        {
+
+            get {
+
+
+                int subtotal = 0; 
+
+                for(int i = 0; i < MaxIndex;i++)
+                {
+                    subtotal = subtotal + _iaOutputQuantity[i] * _iaOutputNumber[i];
+                }
+
+                return subtotal;
+            }
+
+
+            set
+            {
+                OnPropertyChanged("iOutputSubTotal");
+            }
+
+        }
+
+
 
         /// <summary>
         /// 資材をまとめた文字列を返す、代入時はプロパティ変更通知のみの動作

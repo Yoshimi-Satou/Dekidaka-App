@@ -38,6 +38,8 @@
                         <DataGridTextColumn Header="作業内容" Binding="{Binding strContentsOfWork}" MaxWidth="160" />
 
                         <DataGridTextColumn Header="出来高" FontSize="24" Binding="{Binding strOutput}" MaxWidth="160" />
+                        <DataGridTextColumn Header="総数" FontSize="24" Binding="{Binding iOutputSubTotal}" MaxWidth="80" />
+                        
                         <DataGridTextColumn Header="開始" Binding="{Binding strStartTime}" MaxWidth="110" />
                         <DataGridTextColumn Header="終了" Binding="{Binding strEndTime}" MaxWidth="110" />
 
