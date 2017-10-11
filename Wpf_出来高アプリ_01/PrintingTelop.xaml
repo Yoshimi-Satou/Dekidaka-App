@@ -21,6 +21,7 @@
                     <RowDefinition x:Name="CoWRow" Height="Auto" MinHeight="160"/>
                     <RowDefinition x:Name="AreaDayRow" Height="Auto" MinHeight="70"/>
                     <RowDefinition x:Name="OutputRow" Height="Auto" MinHeight="400"/>
+                    <RowDefinition x:Name="SubTotalRow" Height="Auto" MinHeight="70"/>
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
@@ -48,7 +49,12 @@
                     <TextBlock x:Name="textBlock_OutPut" TextWrapping="Wrap" FontSize="100" TextAlignment="Center" Text="{Binding strOutput}"/>
                 </Border>
 
-                <Border Height="60" Width="464" VerticalAlignment="Top" Grid.Row="5" Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Height="Auto" Width="464" Grid.Row="5" Grid.Column="1">
+                    <TextBlock x:Name="textBlock_SubTotal" TextWrapping="Wrap" Text="{Binding strSubtotal}" FontSize="60" TextAlignment="Right"/>
+                </Border>
+
+                <Border Height="60" Width="464" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,0,1" />
+
 
 
             </Grid>
@@ -111,12 +117,12 @@
     <Viewbox x:Name="ViewBox" Height="Auto" Width="484"  RenderTransformOrigin="0.5,0.5">
 
         <!-- セレクタでテンプレートを切り替える　-->
-        <ContentControl Content="{Binding}"
-                ContentTemplateSelector="{StaticResource PrintSelector}"/>
+        <!--<ContentControl Content="{Binding}"
+                ContentTemplateSelector="{StaticResource PrintSelector}"/>-->
 
         <!-- デザイン作業用　-->
-        <!--<ContentControl Content="{Binding}"
-                ContentTemplate="{StaticResource LandscapeTemplate}"/>-->
+        <ContentControl Content="{Binding}"
+                ContentTemplate="{StaticResource PortraitTemplate}"/>
 
     </Viewbox>
 

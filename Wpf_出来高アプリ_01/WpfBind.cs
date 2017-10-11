@@ -733,6 +733,21 @@ namespace Wpf_Dekidaka_app.Bind
 
         }
 
+        private String _strSubtotal;
+        public string strSubtotal
+        {
+            get { return _strSubtotal; }
+
+            set
+            {
+                _strSubtotal = value;
+                OnPropertyChanged("strSubtotal");
+
+            }
+
+
+        }
+
 
 
 

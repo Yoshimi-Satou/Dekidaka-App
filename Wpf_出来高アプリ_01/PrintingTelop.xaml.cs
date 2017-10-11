@@ -28,7 +28,7 @@ namespace Wpf_Dekidaka_app
         /// <param name="strConOfWork">作業内容</param>
         /// <param name="strOutput">出来高</param>
         /// <param name="strDayArea">産地と日付</param>
-        public Telop_Control(string strCustomer = "発注者", string strConOfWork = "作業内容", string strOutput = "出来高" ,string strDayArea = "")
+        public Telop_Control(string strCustomer = "発注者", string strConOfWork = "作業内容", string strOutput = "出来高" ,string strDayArea = "", string strSubtotal = "")
         {
             //データコンテキストの設定
 
@@ -36,7 +36,7 @@ namespace Wpf_Dekidaka_app
             TelopData.strConOfWork = strConOfWork;
             TelopData.strOutput = strOutput;
             TelopData.strDayArea = strDayArea;
-
+            TelopData.strSubtotal = strSubtotal;
             InitializeComponent();
 
             DataContext = TelopData;
@@ -258,6 +258,7 @@ namespace Wpf_Dekidaka_app
                         }
 
                         string strDayArea;
+                        string strSubtotal = "";
 
                         DateTime dt;
                         bool IsDateTime = DateTime.TryParse(Dekidaka.straShipment[ShipmentBlock[i]], out dt);
@@ -265,7 +266,7 @@ namespace Wpf_Dekidaka_app
 
                         if (LandScape)
                         {
-                            strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ") +
+                            strDayArea = "計" + Dekidaka.iOutputSubTotal.ToString() + " " + Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ") +
                                          Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
 
                         }
@@ -273,7 +274,11 @@ namespace Wpf_Dekidaka_app
                         {
                             strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産\n" : "") +
                                          Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
+
+                            strSubtotal = "計" + Dekidaka.iOutputSubTotal.ToString();
                         }
+
+
 
 
 
@@ -379,7 +384,7 @@ namespace Wpf_Dekidaka_app
 
 
                         //印刷内容を作成する
-                        tc[TpCount] = new Telop_Control(Dekidaka.strCustomar, CoW, Output, strDayArea);
+                        tc[TpCount] = new Telop_Control(Dekidaka.strCustomar, CoW, Output, strDayArea, strSubtotal);
 
 
                         //印刷可能範囲に合わせてViewboxで拡大縮小する
