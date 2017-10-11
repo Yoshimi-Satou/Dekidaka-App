@@ -117,12 +117,12 @@
     <Viewbox x:Name="ViewBox" Height="Auto" Width="484"  RenderTransformOrigin="0.5,0.5">
 
         <!-- セレクタでテンプレートを切り替える　-->
-        <!--<ContentControl Content="{Binding}"
-                ContentTemplateSelector="{StaticResource PrintSelector}"/>-->
+        <ContentControl Content="{Binding}"
+                ContentTemplateSelector="{StaticResource PrintSelector}"/>
 
         <!-- デザイン作業用　-->
-        <ContentControl Content="{Binding}"
-                ContentTemplate="{StaticResource PortraitTemplate}"/>
+        <!--<ContentControl Content="{Binding}"
+                ContentTemplate="{StaticResource PortraitTemplate}"/>-->
 
     </Viewbox>
 
