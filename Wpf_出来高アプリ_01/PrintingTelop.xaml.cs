@@ -311,6 +311,7 @@ namespace Wpf_Dekidaka_app
 
                             }
 
+                            //産地日付に計も表示
                             strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ") +
                                          Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "") +
                                          "  計" + iSubtotal;
@@ -338,6 +339,7 @@ namespace Wpf_Dekidaka_app
 
                             }
 
+                            //産地日付と計を設定
                             strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産\n" : "") +
                                          Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
 
