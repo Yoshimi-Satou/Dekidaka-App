@@ -264,30 +264,18 @@ namespace Wpf_Dekidaka_app
                         bool IsDateTime = DateTime.TryParse(Dekidaka.straShipment[ShipmentBlock[i]], out dt);
 
 
-                        if (LandScape)
-                        {
-                            strDayArea = "計" + Dekidaka.iOutputSubTotal.ToString() + " " + Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ") +
-                                         Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
-
-                        }
-                        else
-                        {
-                            strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産\n" : "") +
-                                         Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
-
-                            strSubtotal = "計" + Dekidaka.iOutputSubTotal.ToString();
-                        }
-
-
-
-
 
                         //出来高文字列を作成
                         string Output = "";
                         int OutputNum = 0;
+                        int iSubtotal = 0;
 
                         if (LandScape)
                         {
+
+
+
+
                             for (int Count = ShipmentBlock[i]; Count < ShipmentBlock[i] + outputrows; Count++)
                             {
                                 //出来高が3項目なら改行をして連結する
@@ -298,7 +286,9 @@ namespace Wpf_Dekidaka_app
                                     {
 
                                         Output = Output + Dekidaka.iaOutputQuantity[Count].ToString() + "×" + Dekidaka.iaOutputNumber[Count].ToString() + "\n";
+                                        
                                         OutputNum++;
+
 
                                     }
 
@@ -316,17 +306,23 @@ namespace Wpf_Dekidaka_app
                                     }
 
                                 }
-
+                                iSubtotal = iSubtotal + Dekidaka.iaOutputQuantity[Count] * Dekidaka.iaOutputNumber[Count];
 
 
                             }
+
+                            strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ") +
+                                         Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "") +
+                                         "  計" + iSubtotal;
 
 
 
 
                         }
                         else
-                        { 
+                        {
+
+
                             for (int j = 0; j < outputrows; j++)
                             {
 
@@ -337,9 +333,15 @@ namespace Wpf_Dekidaka_app
 
                                 }
 
+                                iSubtotal = iSubtotal + Dekidaka.iaOutputQuantity[ShipmentBlock[i] + j] * Dekidaka.iaOutputNumber[ShipmentBlock[i] + j];
+
 
                             }
-                            
+
+                            strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産\n" : "") +
+                                         Dekidaka.straShipment[ShipmentBlock[i]] + (IsDateTime ? "分" : "");
+
+                            strSubtotal = "計" + iSubtotal.ToString();
 
                         }
 
@@ -456,6 +458,7 @@ namespace Wpf_Dekidaka_app
                 //出来高内容
                 string CoW = "";
                 string strDayArea = Dekidaka.strProductionArea + (Dekidaka.strProductionArea != "" && Dekidaka.strProductionArea != null ? "産 " : " ");
+                string strSubtotal = "計" + Dekidaka.iOutputSubTotal.ToString();
                 string Output = null;
 
 
@@ -463,6 +466,8 @@ namespace Wpf_Dekidaka_app
                 //横向き印刷時
                 if (LandScape)
                 {
+                    //産地日付に計も表示する
+                    strDayArea = strDayArea + " " + strSubtotal;
 
                     CoW = Dekidaka.strCommodity + " " + (Dekidaka.strSize == "" || Dekidaka.strSize == null ? "" : Dekidaka.strSize + ", ") + Dekidaka.strContentsOfWork.Split('(')[0];
                     int OutputNum = 0;
@@ -549,7 +554,7 @@ namespace Wpf_Dekidaka_app
                 }
 
                 //印刷内容を作成する
-                Telop_Control tc = new Telop_Control(Dekidaka.strCustomar, CoW, Output, strDayArea);
+                Telop_Control tc = new Telop_Control(Dekidaka.strCustomar, CoW, Output, strDayArea, strSubtotal);
 
 
                 //印刷可能範囲に合わせてViewboxで拡大縮小する
