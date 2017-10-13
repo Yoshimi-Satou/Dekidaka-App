@@ -634,6 +634,8 @@ namespace Wpf_Dekidaka_app
                     {
                         message = "書き込み先フォルダが見つかりません";
                         ShowMessageDlg(message);
+                        StateW.Close();
+                        StateW = null;
                         return;
                     }
 
