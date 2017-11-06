@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Dekidaka_app"
         mc:Ignorable="d"
+        FocusManager.FocusedElement="{Binding ElementName=textBox_Confirm}"
         Title="確認入力" Height="649" Width="649" WindowStartupLocation="CenterScreen" WindowStyle="none" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize">
     <Grid>
         <Border BorderBrush="#FFFF7070" BorderThickness="25" CornerRadius="20" Background="White" >
