@@ -330,6 +330,7 @@ namespace Wpf_Dekidaka_app
                 if (re.result == MessageBoxResult.Cancel) { this.Topmost = true; return; }
 
                 Main.Load_Data(dlg.FileName);
+                Main.SaveTempData();
 
             }
 

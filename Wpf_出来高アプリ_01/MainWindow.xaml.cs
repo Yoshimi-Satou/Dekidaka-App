@@ -128,7 +128,7 @@ namespace Wpf_Dekidaka_app
         }
 
         /// <summary>
-        /// 出来高データを読み込むする
+        /// 出来高データを読み込む
         /// </summary>
         /// <param name="filepath">データファイルのパス</param>
         public void Load_Data(string filepath)
@@ -489,7 +489,7 @@ namespace Wpf_Dekidaka_app
         /// 一時データとバックアップデータを保存する
         /// </summary>
         /// <returns>1 = 成功 10=一時ファイルパスが見つからない 11=バックアップフォルダが見つからない</returns>
-        private int SaveTempData()
+        public int SaveTempData()
         {
 
             DataTable TempData;
@@ -829,12 +829,17 @@ namespace Wpf_Dekidaka_app
 
         private void textBox_GroupNo_TouchDown(object sender, TouchEventArgs e)
         {
-            
+
             //MessageBox.Show("ダブルクリック");
 
             //var txtbx_sender = (TextBox)sender;
 
             //string sendtext = txtbx_sender.Name;
+
+            string message = "班番号は管理者のみが変更してください。\n続けますか？";
+
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+            { return; }
 
 
             TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
@@ -854,6 +859,11 @@ namespace Wpf_Dekidaka_app
 
         private void textBox_GroupNo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
+            string message = "班番号は管理者のみが変更してください。\n続けますか？";
+
+            if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+            { return; }
 
             TenKeyBord sw = new TenKeyBord(mwContext.mwPartGroupNo);
 
