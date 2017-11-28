@@ -332,7 +332,7 @@ namespace Wpf_Dekidaka_app
         /// <summary>
         /// 確認メッセージダイアログを表示する
         /// </summary>
-        /// <param name="message">表示するメッセージ内容</param>
+        /// <param name="message">表示するメッセージ内容を指定</param>
         /// <returns></returns>
         private MessageBoxResult ShowMessageDlg(string message)
         {
