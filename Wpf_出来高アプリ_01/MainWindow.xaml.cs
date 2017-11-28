@@ -329,7 +329,11 @@ namespace Wpf_Dekidaka_app
             EditDataAsync(sender);
         }
 
-
+        /// <summary>
+        /// 確認メッセージダイアログを表示する
+        /// </summary>
+        /// <param name="message">表示するメッセージ内容</param>
+        /// <returns></returns>
         private MessageBoxResult ShowMessageDlg(string message)
         {
             this.Grid_Opa.Visibility = Visibility.Visible;
