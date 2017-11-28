@@ -885,26 +885,22 @@ namespace Wpf_Dekidaka_app
 
         private void textBox_PartNumber_TouchDown(object sender, TouchEventArgs e)
         {
-            TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
-
-
-
-            this.Grid_Opa.Visibility = Visibility.Visible;
-
-            sw.ShowDialog();
-
-
-            this.Grid_Opa.Visibility = Visibility.Collapsed;
-
-
-            if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
+            textBox_PartNumber_Edit(sender);
 
         }
 
         private void textBox_PartNumber_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
+            textBox_PartNumber_Edit(sender);
+
+        }
+
+        private void textBox_PartNumber_Edit(object sender)
+        {
+
             TenKeyBord sw = new TenKeyBord(mwContext.mwPartNumber);
+
 
 
             this.Grid_Opa.Visibility = Visibility.Visible;
@@ -915,33 +911,51 @@ namespace Wpf_Dekidaka_app
             this.Grid_Opa.Visibility = Visibility.Collapsed;
 
 
-            if (sw.result != -1) { mwContext.mwPartNumber = sw.result; }
+            if (sw.result != -1)
+            {
+                mwContext.mwPartNumber = sw.result;
+
+                if (DekiDakaDataCollection.Count > 1)
+                {
+                    string message = "既に入力されている人数も変更しますか？";
+
+                    if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+                    { return; }
+
+                    PartNumber_ModifyAll(sw.result);
+
+                }
+
+
+            }
+
 
         }
+
+
+        private void PartNumber_ModifyAll(int iPartNum)
+        {
+            foreach(Dekidaka_Data dData in DekiDakaDataCollection)
+            {
+                dData.iPartNumber = iPartNum;
+            }
+        }
+
 
         private void WriteMember_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            TextBox bx = (TextBox)sender;
-            var sw = new SelectWindow(bx.Name, mwContext.mwWriteMember);
-            sw.swContext.bIsInputButtonEnable =  true;
-
-
-            sw.ShowDialog();
-
-
-            if (sw.ReturnText != null)
-            {
-                mwContext.mwWriteMember = sw.ReturnText;
-            }
-
-
-
-            
+            WriteMember_Edit(sender);
 
         }
 
         private void WriteMember_TouchDown(object sender, TouchEventArgs e)
+        {
+            WriteMember_Edit(sender);
+
+        }
+
+        private void WriteMember_Edit(object sender)
         {
 
             TextBox bx = (TextBox)sender;
@@ -954,17 +968,33 @@ namespace Wpf_Dekidaka_app
 
             if (sw.ReturnText != null)
             {
-                
                 mwContext.mwWriteMember = sw.ReturnText;
+
+                if (DekiDakaDataCollection.Count > 1)
+                {
+                    string message = "既に入力されている記入者も変更しますか？";
+
+                    if (ShowMessageDlg(message) == MessageBoxResult.Cancel)
+                    { return; }
+
+                    WriteMember_ModifyAll(sw.ReturnText);
+
+                }
+
             }
 
-
-
-           
-
-
-
         }
+
+
+
+        private void WriteMember_ModifyAll(string strWriteMem)
+        {
+            foreach (Dekidaka_Data dData in DekiDakaDataCollection)
+            {
+                dData.strWriteMember = strWriteMem;
+            }
+        }
+
 
         private void button_send_Click(object sender, MouseButtonEventArgs e)
         {
